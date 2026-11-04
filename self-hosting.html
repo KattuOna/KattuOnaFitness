@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Self-hosting Kattuona's AI</title>
+<title>Self-hosting KattuOna's AI</title>
 <style>
   :root { --bg:#ffffff; --fg:#1b1d1f; --muted:#5b6168; --accent:#0a7d55; --line:#e3e6e8; --code-bg:#f3f5f6; }
   @media (prefers-color-scheme: dark) { :root { --bg:#111315; --fg:#eceef0; --muted:#a3a9b0; --accent:#3ddc97; --line:#2a2e32; --code-bg:#1b1e21; } }
@@ -28,10 +28,10 @@
 </head>
 <body>
 <main>
-<h1>Run your own AI server for Kattuona</h1>
+<h1>Run your own AI server for KattuOna</h1>
 <p class="muted">For people who'd rather not rely on anyone else's server for the AI coach.</p>
 
-<p>Kattuona's AI features (coach chat, food/exercise lookups, meal ideas, readiness check, program builder) can talk to
+<p>KattuOna's AI features (coach chat, food/exercise lookups, meal ideas, readiness check, program builder) can talk to
 <strong>any</strong> server that speaks the same simple protocol &mdash; not just the one built into the app. This page
 is for anyone who wants to run that server themselves: on a spare computer, a home server, a small VPS, whatever you
 have. Your questions and your fitness data then go only to a machine you control, running a free local AI model
@@ -44,7 +44,7 @@ below tells that assistant exactly what to build.</p>
 <h2>1. What you'll end up with</h2>
 <ul>
   <li>A small, free local AI model running on your computer (via <a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a>), so nothing leaves your network to answer a question.</li>
-  <li>A small gateway program in front of it that Kattuona can reach, which checks a per-person access key before answering.</li>
+  <li>A small gateway program in front of it that KattuOna can reach, which checks a per-person access key before answering.</li>
   <li>One access key per person who'll use it (you, your partner, each family member) &mdash; each key is just a name and a random string, easy to create or delete.</li>
   <li>A way to reach it from outside your home network when you're out, if you want that (a tool like <a href="https://tailscale.com" target="_blank" rel="noopener">Tailscale</a> is the simplest way &mdash; it gives your home computer a private address only your own devices can reach, with no ports opened to the public internet).</li>
 </ul>
@@ -58,12 +58,12 @@ below tells that assistant exactly what to build.</p>
 
 <h2>3. The prompt</h2>
 <p>Open a terminal on the computer that will run the server, start your AI coding assistant in an empty folder, and
-paste the whole box below as your first message. It describes the exact small HTTP service Kattuona expects, so the
+paste the whole box below as your first message. It describes the exact small HTTP service KattuOna expects, so the
 assistant can build it, test it, and set it up to start automatically.</p>
 
 <div class="copybar"><span class="muted">Paste this into your local AI assistant</span>
 <button class="copy" onclick="copyPrompt()">Copy prompt</button></div>
-<div class="box"><pre id="promptBox"><code>I want to set up a small self-hosted AI server on this computer, for a fitness app called Kattuona to
+<div class="box"><pre id="promptBox"><code>I want to set up a small self-hosted AI server on this computer, for a fitness app called KattuOna to
 talk to. Please do all of the following, explaining each step as you go, and actually run the
 commands yourself rather than just telling me what to run:
 
@@ -103,7 +103,7 @@ commands yourself rather than just telling me what to run:
 5. Tell me, in plain terms: the port number it's listening on, exactly how to run add-key / revoke /
    list-keys afterwards, and where the keys file lives. If I want to reach this server from outside
    my home network, suggest installing Tailscale (https://tailscale.com) and tell me the address
-   Kattuona should use once that's set up -- don't open any ports directly on my router.
+   KattuOna should use once that's set up -- don't open any ports directly on my router.
 
 Please actually install, write, test and start all of this yourself rather than just giving me
 instructions to run manually, and show me the real output of each test so I can see it worked.
@@ -113,8 +113,8 @@ instructions to run manually, and show me the real output of each test so I can 
 faster, a different port, and so on) before pasting it. Your assistant may ask a couple of follow-up questions about
 your specific machine &mdash; that's normal, answer them and let it continue.</p>
 
-<h2>4. Pointing Kattuona at it</h2>
-<p>Once your assistant reports back the address and port, open Kattuona &rarr; Settings &rarr; AI engine &rarr; <strong>Another
+<h2>4. Pointing KattuOna at it</h2>
+<p>Once your assistant reports back the address and port, open KattuOna &rarr; Settings &rarr; AI engine &rarr; <strong>Another
 server</strong>, and enter:</p>
 <ul>
   <li><strong>Address</strong> &mdash; e.g. <code>http://100.x.x.x:8766</code> if you're using Tailscale, or your
@@ -130,18 +130,18 @@ just one person's access later without affecting anyone else.</p>
 <h3>Add someone</h3>
 <p>On the computer running the server (or over SSH), run the helper your assistant set up, for example:</p>
 <div class="box"><pre><code>add-key NAME</code></pre></div>
-<p>This prints a new key once. Copy it into that person's Kattuona app under Settings &rarr; AI engine &rarr; Another
+<p>This prints a new key once. Copy it into that person's KattuOna app under Settings &rarr; AI engine &rarr; Another
 server.</p>
 <h3>Remove someone</h3>
 <div class="box"><pre><code>revoke NAME</code></pre></div>
-<p>Their key stops working immediately. Their Kattuona app will show a connection error until a new key is entered.</p>
+<p>Their key stops working immediately. Their KattuOna app will show a connection error until a new key is entered.</p>
 <h3>See who currently has access</h3>
 <div class="box"><pre><code>list-keys</code></pre></div>
 <p>This lists names only, never the keys themselves, so you can confirm who's set up without exposing anyone's key.</p>
 
 <div class="note"><p><strong>Keep in mind:</strong> this is your own server, so you're responsible for keeping that
 computer reasonably secure and its keys private. If you ever suspect a key has leaked, revoke it and issue a new one.
-Kattuona's developer cannot see or access anything on a server you run yourself.</p></div>
+KattuOna's developer cannot see or access anything on a server you run yourself.</p></div>
 
 <h2>6. Questions</h2>
 <p><a href="mailto:Kattu0na@gmail.com">Kattu0na@gmail.com</a></p>
