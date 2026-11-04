@@ -1,66 +1,162 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Self-Hosting Your AI Server — BALIN</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Self-hosting Kattuona's AI</title>
 <style>
-  body { font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; max-width: 720px; margin: 40px auto; padding: 0 20px; line-height: 1.6; color: #222; }
-  h1 { font-size: 28px; margin-bottom: 4px; }
-  h2 { font-size: 20px; margin-top: 36px; border-bottom: 1px solid #eee; padding-bottom: 6px; }
-  code, pre { background: #f5f5f7; border-radius: 6px; padding: 2px 6px; font-size: 14px; }
-  pre { padding: 12px 16px; overflow-x: auto; }
-  .note { background: #f0f4ff; border-left: 4px solid #6366f1; padding: 10px 14px; border-radius: 4px; margin: 16px 0; }
-  ol, ul { padding-left: 22px; }
-  footer { margin-top: 48px; font-size: 13px; color: #888; }
+  :root { --bg:#ffffff; --fg:#1b1d1f; --muted:#5b6168; --accent:#0a7d55; --line:#e3e6e8; --code-bg:#f3f5f6; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#111315; --fg:#eceef0; --muted:#a3a9b0; --accent:#3ddc97; --line:#2a2e32; --code-bg:#1b1e21; } }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width:760px; margin:0 auto; padding:32px 16px 64px; }
+  h1 { font-size:1.9rem; margin:0 0 4px; }
+  h2 { font-size:1.2rem; margin:32px 0 8px; padding-top:16px; border-top:1px solid var(--line); }
+  h3 { font-size:1.02rem; margin:20px 0 6px; }
+  p, li { color:var(--fg); } .muted { color:var(--muted); }
+  a { color:var(--accent); }
+  ol, ul { padding-left:22px; }
+  li { margin:6px 0; }
+  code { background:var(--code-bg); border:1px solid var(--line); border-radius:4px; padding:1px 5px; font-size:.9em; }
+  pre { background:var(--code-bg); border:1px solid var(--line); border-radius:8px; padding:14px; overflow-x:auto; font-size:.88rem; line-height:1.5; }
+  pre code { background:none; border:none; padding:0; }
+  .box { background:var(--code-bg); border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin:14px 0; }
+  .copybar { display:flex; justify-content:space-between; align-items:center; margin:18px 0 6px; }
+  button.copy { font:inherit; font-size:.85rem; background:var(--accent); color:#06231a; border:none; border-radius:6px; padding:6px 12px; cursor:pointer; }
+  button.copy:active { opacity:.8; }
+  .note { border-left:3px solid var(--accent); padding:2px 14px; margin:14px 0; }
 </style>
 </head>
 <body>
+<main>
+<h1>Run your own AI server for Kattuona</h1>
+<p class="muted">For people who'd rather not rely on anyone else's server for the AI coach.</p>
 
-<h1>Set up your own AI server</h1>
-<p>Every AI feature in Balin — Balin himself, motivation, reminders, diet advice, and voice — runs through an AI server you point the app at. You don't need to use a company's paid API; you can run a free, private server yourself on a spare computer or a cloud VM. This guide walks through the easiest option: <strong>Ollama</strong>.</p>
+<p>Kattuona's AI features (coach chat, food/exercise lookups, meal ideas, readiness check, program builder) can talk to
+<strong>any</strong> server that speaks the same simple protocol &mdash; not just the one built into the app. This page
+is for anyone who wants to run that server themselves: on a spare computer, a home server, a small VPS, whatever you
+have. Your questions and your fitness data then go only to a machine you control, running a free local AI model
+(no subscription, no company in the middle).</p>
 
-<div class="note">Your data never has to leave a server you control. Nothing in this setup requires paying anyone.</div>
+<p>You don't need to know how to code. You do need a computer that can stay on (or be turned on when you want to use
+the AI), and an AI coding assistant &mdash; such as Claude Code &mdash; that can run commands on it for you. The prompt
+below tells that assistant exactly what to build.</p>
 
-<h2>1. Install Ollama</h2>
-<p>Ollama runs AI models locally and exposes them over a simple API — this is what Balin's "Another server" option expects.</p>
+<h2>1. What you'll end up with</h2>
 <ul>
-  <li><strong>Windows / Mac / Linux:</strong> download from <a href="https://ollama.com/download" target="_blank" rel="noopener">ollama.com/download</a> and install it.</li>
+  <li>A small, free local AI model running on your computer (via <a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a>), so nothing leaves your network to answer a question.</li>
+  <li>A small gateway program in front of it that Kattuona can reach, which checks a per-person access key before answering.</li>
+  <li>One access key per person who'll use it (you, your partner, each family member) &mdash; each key is just a name and a random string, easy to create or delete.</li>
+  <li>A way to reach it from outside your home network when you're out, if you want that (a tool like <a href="https://tailscale.com" target="_blank" rel="noopener">Tailscale</a> is the simplest way &mdash; it gives your home computer a private address only your own devices can reach, with no ports opened to the public internet).</li>
 </ul>
 
-<h2>2. Download a model</h2>
-<p>Open a terminal (Command Prompt / PowerShell / Terminal) and run:</p>
-<pre>ollama pull llama3.2</pre>
-<p>This downloads a small, fast model that runs well even on modest hardware. You can swap in a larger model later if your machine can handle it.</p>
-
-<h2>3. Allow outside connections (optional, for your phone to reach it)</h2>
-<p>By default Ollama only listens on the same machine. To let your phone connect to it over your home network or the internet, you need to bind it to all network interfaces:</p>
+<h2>2. What you'll need</h2>
 <ul>
-  <li><strong>Windows:</strong> set an environment variable <code>OLLAMA_HOST</code> to <code>0.0.0.0:11434</code>, then restart Ollama.</li>
-  <li><strong>Mac/Linux:</strong> run <code>OLLAMA_HOST=0.0.0.0:11434 ollama serve</code></li>
+  <li>A computer you can leave running (even an old laptop works for a small model). Linux, macOS or Windows (with WSL) all work.</li>
+  <li>An AI coding assistant installed there that can run shell commands on your behalf &mdash; <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a> is a straightforward option, but any assistant with the same ability will do.</li>
+  <li>About 20&ndash;30 minutes.</li>
 </ul>
-<div class="note">If your phone and server are on the same Wi-Fi network, you can use your computer's local IP address (e.g. <code>http://192.168.1.23:11434</code>) directly — no extra setup needed beyond this step.</div>
 
-<h2>4. Find your server address</h2>
-<p>If you're only using it at home over Wi-Fi, your server address is your computer's local IP and port, for example:</p>
-<pre>http://192.168.1.23:11434</pre>
-<p>To find your local IP: on Windows run <code>ipconfig</code> and look for "IPv4 Address"; on Mac/Linux run <code>ifconfig</code> or <code>ip addr</code>.</p>
-<p>If you want to reach it from outside your home network (e.g. mobile data), you'll need to either port-forward on your router, or use a tunneling service such as <a href="https://tailscale.com" target="_blank" rel="noopener">Tailscale</a> or <a href="https://ngrok.com" target="_blank" rel="noopener">ngrok</a> to get a stable, reachable address. Balin needs an <code>https://</code> address if you're using a tunnel like ngrok.</p>
+<h2>3. The prompt</h2>
+<p>Open a terminal on the computer that will run the server, start your AI coding assistant in an empty folder, and
+paste the whole box below as your first message. It describes the exact small HTTP service Kattuona expects, so the
+assistant can build it, test it, and set it up to start automatically.</p>
 
-<h2>5. Enter it in Balin</h2>
-<ol>
-  <li>Open Balin → Settings → AI engine.</li>
-  <li>Choose <strong>Another server</strong>.</li>
-  <li>Enter your server address (e.g. <code>http://192.168.1.23:11434</code> or your tunnel's <code>https://</code> URL).</li>
-  <li>Leave Access key blank (Ollama doesn't require one by default) unless you've set up authentication yourself.</li>
-  <li>Model field: type <code>llama3.2</code> (or whatever model you pulled).</li>
-  <li>Tap <strong>Save &amp; test</strong>.</li>
-</ol>
+<div class="copybar"><span class="muted">Paste this into your local AI assistant</span>
+<button class="copy" onclick="copyPrompt()">Copy prompt</button></div>
+<div class="box"><pre id="promptBox"><code>I want to set up a small self-hosted AI server on this computer, for a fitness app called Kattuona to
+talk to. Please do all of the following, explaining each step as you go, and actually run the
+commands yourself rather than just telling me what to run:
 
-<h2>Keeping it running</h2>
-<p>Your computer needs to be on and Ollama running whenever you want Balin's AI features to work. If that's inconvenient, consider running Ollama on a cheap always-on device (an old laptop, a Raspberry Pi 4/5 with enough RAM, or a small cloud VM) instead of your main computer.</p>
+1. Install Ollama (https://ollama.com) if it isn't already installed, and pull a small, fast
+   instruction-tuned model suitable for CPU use (something in the 1-4B parameter range, such as
+   llama3.2:3b-instruct-q4_K_M or a similarly sized alternative you judge to be a good fit for this
+   machine's hardware). Confirm Ollama answers a test prompt on localhost:11434 before moving on.
 
-<footer>Need help? This is a self-hosted, optional setup — Balin works fine without it if you'd rather use an API key instead.</footer>
+2. Write a small HTTP gateway program (Python standard library only, no extra dependencies beyond
+   what's already installed) that:
+   - Listens on a local port of your choice (pick one not already in use, e.g. 8766, and tell me
+     which).
+   - Exposes POST /chat/completions, accepting a JSON body shaped like an OpenAI-style chat
+     completion request: {"model": "...", "messages": [{"role": "...", "content": "..."}], ...}.
+     Forward the messages to the local Ollama model and return a response in the same
+     OpenAI-compatible shape: {"choices": [{"message": {"role": "assistant", "content": "..."}}]}.
+   - Requires an `Authorization: Bearer <key>` header on every request. Keep a plain text file of
+     valid keys, one per line, formatted as "name key" (e.g. "alex 7f3a9c2b1e..."), stored
+     somewhere only this machine's admin can read (not world-readable). Reject requests with a
+     missing or wrong key with HTTP 401, and don't log the key itself anywhere.
+   - Caps request body size at a sane limit (e.g. 50KB) and returns 413 if exceeded.
+   - Logs only minimal metadata per request (which person's key was used, timestamp, how long it
+     took) -- never the message content, since this may include personal health/fitness details.
+   - Add a small command-line helper (or a few short shell scripts) to add a new key for a person
+     ("add-key NAME" -- generates a random key, appends "NAME key" to the keys file, prints the new
+     key once so I can copy it), to remove one ("revoke NAME" -- deletes that person's line), and to
+     list current names without printing their keys ("list-keys").
 
+3. Set this gateway up as a service that starts automatically when the computer boots/restarts
+   (systemd on Linux, launchd on macOS, or Task Scheduler / NSSM on Windows -- whichever fits this
+   machine), and start it now.
+
+4. Test it end-to-end: create one key for me, send a real chat request with it using curl and
+   confirm a sensible model reply comes back, send a request with a wrong key and confirm I get
+   401, and send an oversized request and confirm I get 413.
+
+5. Tell me, in plain terms: the port number it's listening on, exactly how to run add-key / revoke /
+   list-keys afterwards, and where the keys file lives. If I want to reach this server from outside
+   my home network, suggest installing Tailscale (https://tailscale.com) and tell me the address
+   Kattuona should use once that's set up -- don't open any ports directly on my router.
+
+Please actually install, write, test and start all of this yourself rather than just giving me
+instructions to run manually, and show me the real output of each test so I can see it worked.
+</code></pre></div>
+
+<p class="muted">Swap in whatever details you want changed (a different model size if your computer is slower or
+faster, a different port, and so on) before pasting it. Your assistant may ask a couple of follow-up questions about
+your specific machine &mdash; that's normal, answer them and let it continue.</p>
+
+<h2>4. Pointing Kattuona at it</h2>
+<p>Once your assistant reports back the address and port, open Kattuona &rarr; Settings &rarr; AI engine &rarr; <strong>Another
+server</strong>, and enter:</p>
+<ul>
+  <li><strong>Address</strong> &mdash; e.g. <code>http://100.x.x.x:8766</code> if you're using Tailscale, or your
+    computer's local address plus port if you're only using it at home.</li>
+  <li><strong>Key</strong> &mdash; the key your assistant generated for you (or for whichever family member is setting
+    up their phone).</li>
+</ul>
+<p>Test the connection from that same screen before leaving it.</p>
+
+<h2>5. Adding or removing people</h2>
+<p>Each person who'll use your server should have their own key, so you can tell them apart in your logs and remove
+just one person's access later without affecting anyone else.</p>
+<h3>Add someone</h3>
+<p>On the computer running the server (or over SSH), run the helper your assistant set up, for example:</p>
+<div class="box"><pre><code>add-key NAME</code></pre></div>
+<p>This prints a new key once. Copy it into that person's Kattuona app under Settings &rarr; AI engine &rarr; Another
+server.</p>
+<h3>Remove someone</h3>
+<div class="box"><pre><code>revoke NAME</code></pre></div>
+<p>Their key stops working immediately. Their Kattuona app will show a connection error until a new key is entered.</p>
+<h3>See who currently has access</h3>
+<div class="box"><pre><code>list-keys</code></pre></div>
+<p>This lists names only, never the keys themselves, so you can confirm who's set up without exposing anyone's key.</p>
+
+<div class="note"><p><strong>Keep in mind:</strong> this is your own server, so you're responsible for keeping that
+computer reasonably secure and its keys private. If you ever suspect a key has leaked, revoke it and issue a new one.
+Kattuona's developer cannot see or access anything on a server you run yourself.</p></div>
+
+<h2>6. Questions</h2>
+<p><a href="mailto:Kattu0na@gmail.com">Kattu0na@gmail.com</a></p>
+</main>
+<script>
+function copyPrompt(){
+  try {
+    var text = document.getElementById('promptBox').innerText;
+    navigator.clipboard.writeText(text);
+    var btn = document.querySelector('button.copy');
+    var old = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(function(){ btn.textContent = old; }, 1500);
+  } catch(e) {}
+}
+</script>
 </body>
 </html>
