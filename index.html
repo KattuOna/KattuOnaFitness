@@ -129,21 +129,39 @@ KattuOna can look up that product's name and nutrition facts. This is the one pl
 has built in a fixed third party rather than one you choose yourself; see Open Food Facts' own privacy policy,
 linked above, for how they handle that request.</p>
 
-<h2>8. Anonymous, shared food and exercise database</h2>
+<h2>8. Shop (optional)</h2>
+<p>The Shop screen shows supplements and gear that may be useful for training, with a link to buy each one.
+KattuOna doesn't sell anything itself and doesn't handle payments: tapping a product opens that product's page in
+your browser, on the seller's own site, the same as tapping any other link -- you finish checkout there, and
+KattuOna never sees your payment details. Some of these links are affiliate links, which may earn the developer a
+small commission at no extra cost to you; this doesn't change what KattuOna does with your data.</p>
+<p>The product list itself -- names, prices, photos and links -- comes from a plain content file in KattuOna's own
+GitHub repository, fetched over HTTPS each time you open the Shop screen. Product photos may be loaded from
+whichever image address is listed there. Neither of these requests includes anything about you: it's the same
+request every KattuOna install makes, not one built from your logs or profile.</p>
+<p><strong>Personalize Shop (optional, off by default):</strong> Shop has a tune icon in its own top corner that
+lets you turn on personalization -- using logs already on your phone to decide which products show first (it only
+reorders the list; it never adds, hides, or removes a product). Four sources, each its own switch you control: food
+&amp; nutrition logs, workout history, body goal, and recent soreness. Turning personalization on, or any of its
+four switches, never sends anything anywhere -- the reordering happens entirely on your phone, and you can turn any
+part of it off again at any time from that same tune icon. A "Featured" section at the top of Shop is chosen by the
+developer and is the same for everyone; it isn't affected by personalization.</p>
+
+<h2>9. Anonymous, shared food and exercise database</h2>
 <p>When you log a food or workout that isn't already in the app's built-in list, the app may contribute that item's
 name and nutrition or exercise values to a shared, anonymous database (hosted on Google Firebase) so other users
 searching for the same item don't have to enter it from scratch. This only ever includes the food/workout name and
 its nutritional or exercise values — never your personal logs, your name, or anything that identifies you. It can't
 be traced back to you, and nothing you log privately is ever included.</p>
 
-<h2>9. Crash reports and app integrity</h2>
+<h2>10. Crash reports and app integrity</h2>
 <p>The app uses Firebase Crashlytics and Firebase App Check. Crashlytics sends a crash report (the error, device
 model, Android version and a random installation ID — not linked to your name or any account) so problems can be
-fixed; it never includes your logs or profile. App Check confirms requests to the shared database in Section 8 come
+fixed; it never includes your logs or profile. App Check confirms requests to the shared database in Section 9 come
 from a genuine copy of the app, without needing a sign-in. See Google's own handling of this data at
 <a href="https://firebase.google.com/support/privacy">firebase.google.com/support/privacy</a>.</p>
 
-<h2>10. What the developer never does</h2>
+<h2>11. What the developer never does</h2>
 <ul>
   <li>No advertising, no ad tracking, no advertising ID.</li>
   <li>No analytics on what you do in the app.</li>
@@ -152,7 +170,7 @@ from a genuine copy of the app, without needing a sign-in. See Google's own hand
   <li>No account or login of any kind to create, lose, or have breached.</li>
 </ul>
 
-<h2>11. Summary of data that can leave your phone</h2>
+<h2>12. Summary of data that can leave your phone</h2>
 <div class="wrap">
 <table>
   <tr><th>Data</th><th>Sent to</th><th>When</th></tr>
@@ -162,13 +180,14 @@ from a genuine copy of the app, without needing a sign-in. See Google's own hand
   <tr><td>Your logs, settings and custom foods/exercises</td><td>Your own server, or your own Google Drive</td><td>Only if you turn that backup destination on</td></tr>
   <tr><td>Name and values of a new custom food/exercise</td><td>Shared, anonymous list in Firestore</td><td>When you log an item that isn't already in KattuOna's built-in list</td></tr>
   <tr><td>Crash details, device model, a random installation ID</td><td>Firebase Crashlytics</td><td>When the app crashes</td></tr>
+  <tr><td>Nothing about you -- just a request for the public product list and photos</td><td>KattuOna's own GitHub repository, and whichever image address is listed there</td><td>Every time you open the Shop screen</td></tr>
   <tr><td>Steps and sleep sessions</td><td>Read from Health Connect, not sent anywhere by KattuOna</td><td>Only if you grant Health Connect access</td></tr>
   <tr><td>Whether a day is a holiday</td><td>Read from your calendar, not sent anywhere by KattuOna</td><td>Only if you grant calendar access</td></tr>
   <tr><td>Bedtime/wake times (plus confidence, motion and light readings for them)</td><td>Read from Android's Sleep API, not sent anywhere by KattuOna</td><td>Only if you grant the "Physical activity" permission and turn on automatic sleep detection</td></tr>
 </table>
 </div>
 
-<h2>12. Deleting your data</h2>
+<h2>13. Deleting your data</h2>
 <p>There is no KattuOna account, so there is nothing to delete on the developer's end — every copy of your data is
 somewhere you control (a step-by-step version of this section is also at
 <a href="delete-account.html">delete-account.html</a>):</p>
@@ -181,11 +200,11 @@ somewhere you control (a step-by-step version of this section is also at
   <li><strong>Calendar:</strong> remove KattuOna's calendar access in Android Settings at any time.</li>
 </ul>
 
-<h2>13. Children</h2>
+<h2>14. Children</h2>
 <p>KattuOna is intended for users aged 14 and up, and the app enforces this at setup. It is not directed at children
 under 13, and the developer does not knowingly collect data from children under 13.</p>
 
-<h2>14. Changes and contact</h2>
+<h2>15. Changes and contact</h2>
 <p>If this policy changes, the date at the top changes too, and for any material change, notice will be given inside
 the app. Questions or requests: <a href="mailto:Kattu0na@gmail.com">Kattu0na@gmail.com</a>.</p>
 </main>
