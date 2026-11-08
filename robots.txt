@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /
+Allow: /privacy.html
+Allow: /terms.html
+Allow: /delete-account.html
+Allow: /self-hosting.html
+Allow: /api-keys.html
