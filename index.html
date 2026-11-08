@@ -106,6 +106,13 @@
   .trust svg { width:14px; height:14px; flex-shrink:0; }
   .trust:hover { color:var(--text-dark); }
 
+  .quicklinks { display:flex; gap:9px; flex-wrap:wrap; margin-top:22px; opacity:0; transform:translateY(14px);
+    animation:riseIn .7s .4s cubic-bezier(.2,.7,.2,1) forwards; }
+  .qchip { display:inline-flex; align-items:center; gap:7px; padding:8px 14px; border-radius:100px; border:1px solid var(--line-light);
+    font-size:.8rem; font-weight:650; text-decoration:none; color:var(--text-dark); transition:border-color .25s ease, transform .25s ease; }
+  .qchip:hover { border-color:var(--ember); transform:translateY(-1px); }
+  .qchip svg { width:14px; height:14px; flex-shrink:0; }
+
   @keyframes riseIn { to { opacity:1; transform:translateY(0); } }
 
   /* ---------- kicker + word rotator ---------- */
@@ -121,6 +128,7 @@
   .shot-card { position:relative; border-radius:22px; overflow:hidden; background:var(--ink2);
     box-shadow:0 26px 60px -22px rgba(10,8,4,.4), 0 0 0 1px var(--line-dark); }
   .shot-card img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+  .shot-card img[src*="chat-kattu"] { object-position:top left; }
   .shot-card .badge { position:absolute; top:13px; left:13px; display:inline-flex; align-items:center; gap:6px;
     padding:6px 11px 6px 9px; border-radius:100px; background:rgba(13,14,19,.74); backdrop-filter:blur(8px);
     color:var(--text-light); font-size:.7rem; font-weight:700; letter-spacing:.01em; }
@@ -212,6 +220,80 @@
   .m-cap p { font-size:.85rem; color:var(--muted-on-paper); margin:0; }
   @media (prefers-reduced-motion: reduce) { .marquee-track { animation:none; overflow-x:auto; } }
 
+  /* ---------- explore: interactive tabbed demo ---------- */
+  .explore { padding:14px 0 100px; }
+  .explore-grid { display:grid; grid-template-columns:.86fr 1.14fr; gap:12px 52px; align-items:center; margin-top:40px; }
+  @media (max-width:900px) { .explore-grid { grid-template-columns:1fr; } }
+  .explore-tabs { display:flex; flex-direction:column; gap:3px; }
+  .etab { position:relative; text-align:left; background:none; border:none; font:inherit; cursor:pointer;
+    padding:15px 16px 15px 22px; border-radius:12px; color:var(--text-dark); transition:background .25s ease; }
+  .etab:hover { background:rgba(20,22,29,.035); }
+  .etab.active { background:rgba(20,22,29,.045); }
+  @media (prefers-color-scheme: dark) { .etab:hover { background:rgba(246,244,239,.045); } .etab.active { background:rgba(246,244,239,.06); } }
+  .etab .et-bar { position:absolute; left:0; top:4px; bottom:4px; width:3px; border-radius:3px; background:var(--line-light); overflow:hidden; }
+  .etab .et-bar i { display:block; width:100%; height:100%; background:var(--grad); transform:scaleY(0); transform-origin:top; }
+  .etab.active .et-bar i { animation:tabProgress 4.6s linear forwards; }
+  .etab[data-paused="1"].active .et-bar i { animation-play-state:paused; }
+  @keyframes tabProgress { from{ transform:scaleY(0); } to{ transform:scaleY(1); } }
+  .etab .et-title { font-weight:700; font-size:1rem; display:flex; align-items:center; gap:11px; }
+  .etab .et-title svg { width:19px; height:19px; flex-shrink:0; opacity:.75; }
+  .etab.active .et-title svg { opacity:1; color:var(--ember); }
+  .etab .et-desc { font-size:.86rem; color:var(--muted-on-paper); margin:0; max-height:0; opacity:0; overflow:hidden;
+    transition:max-height .35s cubic-bezier(.2,.7,.2,1), opacity .3s ease, margin-top .35s ease; line-height:1.5; }
+  .etab.active .et-desc { max-height:60px; opacity:1; margin-top:7px; }
+
+  .explore-stage { position:relative; display:flex; justify-content:center; height:480px; }
+  .explore-stage .glow { position:absolute; width:320px; height:320px; border-radius:50%; top:10%; left:50%; transform:translateX(-50%);
+    background:radial-gradient(circle, rgba(124,108,255,.22), transparent 65%); filter:blur(10px); animation:drift 9s ease-in-out infinite; }
+  .explore-shot { position:relative; width:240px; height:470px; z-index:1; }
+  .explore-shot img { transition:opacity .22s ease, transform .22s ease; }
+  .explore-shot.switching img { opacity:0; transform:scale(1.03); }
+  @media (max-width:460px) { .explore-stage { height:420px; } .explore-shot { width:210px; height:412px; } }
+
+  /* ---------- AI deep-dive (ink band) ---------- */
+  section.ai-deep { background:var(--ink); color:var(--text-light); padding:88px 0 94px; position:relative; overflow:hidden; }
+  .ai-deep .wrap { position:relative; z-index:1; }
+  .ai-deep-head { max-width:620px; }
+  .ai-deep-head .eyebrow-row { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+  .ai-deep-head .eyebrow-row .knot { width:30px; height:30px; }
+  .ai-deep-head .eyebrow-row span { font-weight:700; font-size:.9rem; color:var(--muted-on-ink); }
+  .ai-deep h2 { font-size:2rem; font-weight:800; letter-spacing:-0.02em; margin:0 0 14px; }
+  .ai-deep .lede2 { color:var(--muted-on-ink); font-size:1.02rem; max-width:560px; margin:0 0 30px; }
+
+  .ai-toggle { display:inline-flex; background:var(--ink2); border-radius:100px; padding:4px; gap:2px; margin-bottom:18px; flex-wrap:wrap; }
+  .ai-toggle button { font:inherit; font-size:.86rem; font-weight:700; padding:10px 18px; border-radius:100px; border:none; background:none;
+    color:var(--muted-on-ink); cursor:pointer; transition:background .25s ease, color .25s ease; }
+  .ai-toggle button.active { background:var(--grad); color:#1A1206; }
+  @media (max-width:560px) {
+    .ai-toggle { display:flex; flex-direction:column; border-radius:18px; width:100%; }
+    .ai-toggle button { border-radius:12px; text-align:left; width:100%; }
+  }
+  .ai-note { background:var(--ink2); border:1px solid var(--line-dark); border-radius:14px; padding:16px 18px; font-size:.9rem;
+    color:var(--muted-on-ink); line-height:1.55; max-width:560px; min-height:64px; }
+  .ai-note strong { color:var(--text-light); }
+
+  .ai-shots { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:44px; }
+  @media (max-width:860px) { .ai-shots { grid-template-columns:1fr; max-width:260px; margin-left:auto; margin-right:auto; gap:44px; } }
+  .ai-shot { opacity:0; transform:translateY(20px); transition:opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1); }
+  .ai-shot.in { opacity:1; transform:translateY(0); }
+  .ai-shot .shot-card { height:300px; transition:transform .25s ease; }
+  .ai-shot .shot-card:hover { transform:translateY(-6px); }
+  .ai-shot .ai-cap { margin-top:14px; }
+  .ai-shot .ai-cap h3 { font-size:.96rem; font-weight:700; margin:0 0 3px; }
+  .ai-shot .ai-cap p { font-size:.82rem; color:var(--muted-on-ink); margin:0; }
+
+  /* ---------- shop ---------- */
+  section.shop { padding:86px 0 90px; }
+  .shop-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:40px; }
+  @media (max-width:760px) { .shop-grid { grid-template-columns:1fr; } }
+  .shop-card { border:1px solid var(--line-light); border-radius:18px; padding:26px 24px; opacity:0; transform:translateY(16px);
+    transition:opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1), border-color .3s ease, box-shadow .3s ease; }
+  .shop-card.in { opacity:1; transform:translateY(0); }
+  .shop-card:hover { border-color:rgba(255,59,47,.3); box-shadow:0 18px 36px -22px rgba(0,0,0,.25); }
+  .shop-card .icon { width:34px; height:34px; color:var(--ember); margin-bottom:16px; }
+  .shop-card h3 { font-size:1.02rem; font-weight:700; margin:0 0 7px; }
+  .shop-card p { font-size:.88rem; color:var(--muted-on-paper); line-height:1.55; margin:0; }
+
   /* ---------- features (ink band, bento grid) ---------- */
   section.features { background:var(--ink); color:var(--text-light); padding:84px 0 92px; }
   .features h2 { font-size:2rem; font-weight:800; letter-spacing:-0.02em; margin:0 0 10px; max-width:560px; }
@@ -268,6 +350,17 @@
   .cmp-bar.kattuona .fill { background:var(--grad); }
   .cmp-bar .val { width:40px; text-align:right; font-weight:800; font-family:'Bricolage Grotesque'; font-size:.84rem; flex-shrink:0; }
 
+  .acc { grid-column:1 / -1; margin-top:34px; border-top:1px solid var(--line-light); }
+  .acc-item { border-bottom:1px solid var(--line-light); }
+  .acc-q { width:100%; display:flex; align-items:center; justify-content:space-between; gap:16px; background:none; border:none;
+    font:inherit; text-align:left; padding:17px 2px; cursor:pointer; color:var(--text-dark); }
+  .acc-q .t { font-weight:650; font-size:.95rem; }
+  .acc-q .chev { width:18px; height:18px; flex-shrink:0; transition:transform .3s cubic-bezier(.2,.7,.2,1); }
+  .acc-item.open .acc-q .chev { transform:rotate(180deg); }
+  .acc-a { max-height:0; overflow:hidden; transition:max-height .35s cubic-bezier(.2,.7,.2,1); }
+  .acc-a p { margin:0 0 16px; font-size:.88rem; color:var(--muted-on-paper); line-height:1.6; max-width:540px; }
+  .acc-item.open .acc-a { max-height:140px; }
+
   /* ---------- final cta ---------- */
   .cta-final { background:var(--grad); padding:80px 0; text-align:center; color:#1A1206; position:relative; overflow:hidden; }
   .cta-final .cf-kicker { display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:100px; background:rgba(26,18,6,.14);
@@ -319,10 +412,10 @@
       KattuOna
     </div>
     <nav class="links">
-      <a href="#features">Features</a>
-      <a href="#showcase">See it in action</a>
+      <a href="#explore">The app</a>
+      <a href="#ai">AI coach</a>
+      <a href="#shop">Shop</a>
       <a href="#privacy">Privacy</a>
-      <a href="privacy.html">Privacy policy</a>
     </nav>
   </div>
 </header>
@@ -344,6 +437,11 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6z"/></svg>
         Read the privacy policy
       </a>
+      <div class="quicklinks">
+        <a class="qchip" href="#ai"><svg viewBox="0 0 48 48" fill="none"><circle cx="18" cy="18" r="11" stroke="currentColor" stroke-width="4"/><circle cx="30" cy="30" r="11" stroke="currentColor" stroke-width="4"/></svg>AI coach, your way</a>
+        <a class="qchip" href="#privacy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6z"/></svg>Zero tracking</a>
+        <a class="qchip" href="#shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8h12l-1 11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 8zM9 8a3 3 0 0 1 6 0"/></svg>Shop, not sold to</a>
+      </div>
     </div>
     <div class="hero-stage">
       <div class="glow" aria-hidden="true"></div>
@@ -397,6 +495,14 @@
         <div class="shot-card"><img src="screens/habits.jpg" alt="Habits screen tracking sleep, body clock and daily habits" loading="lazy"><span class="badge"><span class="dot"></span>Habits</span></div>
         <div class="m-cap"><h3>The small stuff, tracked too</h3><p>Sleep, water, the habits that actually move things.</p></div>
       </div>
+      <div class="m-item">
+        <div class="shot-card"><img src="screens/chat-kattu.jpg" alt="Chat with Kattu screen answering how to use the app" loading="lazy"><span class="badge"><span class="dot"></span>Chat</span></div>
+        <div class="m-cap"><h3>Ask it anything about the app</h3><p>Kattu lives in the corner of every screen.</p></div>
+      </div>
+      <div class="m-item">
+        <div class="shot-card"><img src="screens/your-week.jpg" alt="Your week screen with streak, milestones and weight trend" loading="lazy"><span class="badge"><span class="dot"></span>Your week</span></div>
+        <div class="m-cap"><h3>The last 7 days, at a glance</h3><p>Streaks, milestones, and where your weight's heading.</p></div>
+      </div>
       <!-- set B (duplicate for a seamless loop) -->
       <div class="m-item" aria-hidden="true">
         <div class="shot-card"><img src="screens/hero-today.jpg" alt="" loading="lazy"><span class="badge"><span class="dot"></span>Today</span></div>
@@ -421,6 +527,76 @@
       <div class="m-item" aria-hidden="true">
         <div class="shot-card"><img src="screens/habits.jpg" alt="" loading="lazy"><span class="badge"><span class="dot"></span>Habits</span></div>
         <div class="m-cap"><h3>The small stuff, tracked too</h3><p>Sleep, water, the habits that actually move things.</p></div>
+      </div>
+      <div class="m-item" aria-hidden="true">
+        <div class="shot-card"><img src="screens/chat-kattu.jpg" alt="" loading="lazy"><span class="badge"><span class="dot"></span>Chat</span></div>
+        <div class="m-cap"><h3>Ask it anything about the app</h3><p>Kattu lives in the corner of every screen.</p></div>
+      </div>
+      <div class="m-item" aria-hidden="true">
+        <div class="shot-card"><img src="screens/your-week.jpg" alt="" loading="lazy"><span class="badge"><span class="dot"></span>Your week</span></div>
+        <div class="m-cap"><h3>The last 7 days, at a glance</h3><p>Streaks, milestones, and where your weight's heading.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="explore" id="explore">
+  <div class="wrap">
+    <div class="sc-head">
+      <h2>Tap through the app</h2>
+      <p>Six real screens, not a slideshow — pick one, or let it run on its own.</p>
+    </div>
+    <div class="explore-grid">
+      <div class="explore-tabs" role="tablist" aria-label="App screens">
+        <button class="etab active" type="button"
+          data-img="screens/hero-today.jpg" data-badge="Today"
+          data-alt="Today screen with calorie and macro rings, streak, and the day's next step">
+          <span class="et-bar"><i></i></span>
+          <span class="et-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7M6 10v9h12v-9"/></svg>Today</span>
+          <p class="et-desc">Calories, macros, water, streak, and the one thing to do next — not a wall of numbers.</p>
+        </button>
+        <button class="etab" type="button"
+          data-img="screens/showcase-aichef.jpg" data-badge="AI Chef"
+          data-alt="AI Chef Architect screen generating recipe ideas from the fridge">
+          <span class="et-bar"><i></i></span>
+          <span class="et-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v7a3 3 0 0 0 6 0V3M9 10v11M17 3c-2 2-2 5 0 7v11"/></svg>AI Chef</span>
+          <p class="et-desc">Tell it what's in the fridge — it designs a recipe that hits your macros exactly.</p>
+        </button>
+        <button class="etab" type="button"
+          data-img="screens/showcase-workout.jpg" data-badge="Workouts"
+          data-alt="Start a workout screen: home, gym, cardio, mobility or yoga">
+          <span class="et-bar"><i></i></span>
+          <span class="et-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6M8 7v10M20 9v6M16 7v10M8 12h8"/></svg>Workouts</span>
+          <p class="et-desc">Freeform logging, or let Kattu build a program around your schedule and recovery.</p>
+        </button>
+        <button class="etab" type="button"
+          data-img="screens/showcase-recovery.jpg" data-badge="Recovery"
+          data-alt="3D muscle recovery screen showing sore versus fresh muscle groups">
+          <span class="et-bar"><i></i></span>
+          <span class="et-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.35-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6C19 16.65 12 21 12 21z"/></svg>Recovery</span>
+          <p class="et-desc">A 3D model of which muscles are actually ready to train again — not a guess.</p>
+        </button>
+        <button class="etab" type="button"
+          data-img="screens/habits.jpg" data-badge="Habits"
+          data-alt="Habits screen tracking sleep, body clock and daily habits">
+          <span class="et-bar"><i></i></span>
+          <span class="et-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>Habits</span>
+          <p class="et-desc">Sleep, morning light, breathing — the science-based daily stuff that compounds.</p>
+        </button>
+        <button class="etab" type="button"
+          data-img="screens/ask-coach.jpg" data-badge="Ask your coach"
+          data-alt="Insights screen with Ask your coach AI box and weekly trend charts">
+          <span class="et-bar"><i></i></span>
+          <span class="et-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9m7 10V4m7 15v-7"/></svg>Ask your coach</span>
+          <p class="et-desc">"How was my protein this week?" — answered from your actual logs, not generic advice.</p>
+        </button>
+      </div>
+      <div class="explore-stage">
+        <div class="glow" aria-hidden="true"></div>
+        <div class="shot-card explore-shot" id="exploreShot">
+          <img src="screens/hero-today.jpg" alt="Today screen with calorie and macro rings, streak, and the day's next step" id="exploreImg" loading="lazy">
+          <span class="badge"><span class="dot"></span><span id="exploreBadge">Today</span></span>
+        </div>
       </div>
     </div>
   </div>
@@ -473,6 +649,69 @@
   </div>
 </section>
 
+<section class="ai-deep" id="ai">
+  <div class="wrap">
+    <div class="ai-deep-head">
+      <div class="eyebrow-row">
+        <svg class="knot" viewBox="0 0 48 48" fill="none"><circle cx="18" cy="18" r="11" stroke="var(--violet)" stroke-width="4"/><circle cx="30" cy="30" r="11" stroke="var(--violet)" stroke-width="4"/></svg>
+        <span>Kattu, your AI coach</span>
+      </div>
+      <h2>One coach. Wherever you want it to live.</h2>
+      <p class="lede2">Most apps bolt on "AI" that quietly reports back to the developer. KattuOna's doesn't —
+      because it isn't the developer's AI to begin with. Pick how it runs:</p>
+
+      <div class="ai-toggle" id="aiToggle" role="tablist" aria-label="AI setup options">
+        <button class="active" data-note="<strong>Off by default.</strong> Every tracking feature — workouts, meals, habits, recovery, backups — works completely normally with no AI configured at all. Kattu just won't answer questions or build programs for you.">No AI, just tracking</button>
+        <button data-note="<strong>You choose the provider.</strong> Paste in your own API key for the AI service you already trust, in Settings → AI engine. Requests go straight from your phone to that provider — never through a KattuOna server, because there isn't one.">A provider you pick</button>
+        <button data-note="<strong>Point it at your own hardware.</strong> Run a model yourself — a home server, a NAS, even a laptop on your desk — and have KattuOna talk to that instead. Nothing about your training or meals ever leaves a device you control.">Your own hardware</button>
+      </div>
+      <div class="ai-note" id="aiNote"><strong>Off by default.</strong> Every tracking feature — workouts, meals, habits, recovery, backups — works completely normally with no AI configured at all. Kattu just won't answer questions or build programs for you.</div>
+    </div>
+
+    <div class="ai-shots">
+      <div class="ai-shot">
+        <div class="shot-card"><img src="screens/chat-kattu.jpg" alt="Chat with Kattu screen explaining how the app works" loading="lazy"><span class="badge"><span class="dot"></span>Chat</span></div>
+        <div class="ai-cap"><h3>Ask it anything</h3><p>Kattu lives in the corner of every screen, ready with context on where you are in the app.</p></div>
+      </div>
+      <div class="ai-shot">
+        <div class="shot-card"><img src="screens/ask-coach.jpg" alt="Ask your coach box inside the Insights screen" loading="lazy"><span class="badge"><span class="dot"></span>Insights</span></div>
+        <div class="ai-cap"><h3>It reads your real data</h3><p>"How was my protein this week?" gets answered from your actual logs — not a generic tip.</p></div>
+      </div>
+      <div class="ai-shot">
+        <div class="shot-card"><img src="screens/build-program.jpg" alt="Build a training program screen with goals, days per week and session length" loading="lazy"><span class="badge"><span class="dot"></span>Programs</span></div>
+        <div class="ai-cap"><h3>It builds your program</h3><p>Training style, goals, days per week, time per session — a full plan, built around you.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="shop" id="shop">
+  <div class="wrap">
+    <div class="sc-head">
+      <h2>A shop that isn't selling you out</h2>
+      <p>KattuOna has a Shop tab for gear and supplements — built on the same no-tracking rule as everything
+      else in the app.</p>
+    </div>
+    <div class="shop-grid">
+      <div class="shop-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h2l2.6 13.4a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.6L22 7H6"/><circle cx="9" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg>
+        <h3>Picked from your own logs</h3>
+        <p>Turn on "Personalize Shop" and it reorders products using workouts and meals already on your phone — your goal, your soreness, your history. Off by default, and nothing about it is ever sent anywhere.</p>
+      </div>
+      <div class="shop-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+        <h3>You check out elsewhere</h3>
+        <p>Tap a product and it opens the seller's own page in your browser. KattuOna never sees or handles your payment details — it's just a link.</p>
+      </div>
+      <div class="shop-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2.5 2.5"/></svg>
+        <h3>No account, no checkout markup</h3>
+        <p>Same rule as the rest of the app: nothing to sign into, no price games tied to a profile you never created.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="privacy" id="privacy">
   <div class="wrap privacy-grid">
     <div>
@@ -513,6 +752,31 @@
         <div class="cmp-label">Data left behind after uninstall</div>
         <div class="cmp-bar typical"><span class="tag">Typical</span><div class="track"><div class="fill" data-w="80"></div></div><span class="val">Some</span></div>
         <div class="cmp-bar kattuona"><span class="tag">KattuOna</span><div class="track"><div class="fill" data-w="0"></div></div><span class="val">0</span></div>
+      </div>
+    </div>
+
+    <div class="acc" id="privacyAcc">
+      <div class="acc-item open">
+        <button class="acc-q" type="button"><span class="t">What never leaves your phone</span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="acc-a"><p>Every workout, meal, habit, weigh-in and the 3D recovery model — all of it lives on
+        your device unless you turn on an AI feature or pick a backup destination yourself.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-q" type="button"><span class="t">What only leaves if you turn on AI</span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="acc-a"><p>Profile info, health and fitness logs, chat messages, and — only if you snap a
+        photo for the AI Chef or a supplement label — that one photo. Sent once, to whichever provider or
+        server you configured, never saved by KattuOna.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-q" type="button"><span class="t">The only two outside calls the app itself makes</span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="acc-a"><p>A supplement barcode lookup (to Open Food Facts, a free public database — just the
+        product ID, not your data) and anonymous crash logs. That's the entire list.</p></div>
       </div>
     </div>
   </div>
@@ -568,9 +832,9 @@
     });
   }
 
-  // ---- scroll reveal: bento tiles, once each ----
+  // ---- scroll reveal: bento tiles, AI shots, shop cards, once each ----
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var targets = document.querySelectorAll('.tile');
+  var targets = document.querySelectorAll('.tile, .ai-shot, .shop-card');
   if (reduce || !('IntersectionObserver' in window)) {
     targets.forEach(function(t){ t.classList.add('in'); });
   } else {
@@ -628,9 +892,70 @@
     }
   }
 
+  // ---- explore: interactive tabbed demo (click, or auto-cycle) ----
+  var etabs = Array.prototype.slice.call(document.querySelectorAll('.etab'));
+  var exploreShot = document.getElementById('exploreShot');
+  var exploreImg = document.getElementById('exploreImg');
+  var exploreBadge = document.getElementById('exploreBadge');
+  if (etabs.length && exploreShot) {
+    var eIdx = 0;
+    var eTimer = null;
+    var setTab = function(i){
+      eIdx = i;
+      etabs.forEach(function(t, j){ t.classList.toggle('active', j === i); });
+      var tab = etabs[i];
+      exploreShot.classList.add('switching');
+      setTimeout(function(){
+        exploreImg.src = tab.getAttribute('data-img');
+        exploreImg.alt = tab.getAttribute('data-alt') || '';
+        exploreBadge.textContent = tab.getAttribute('data-badge') || '';
+        exploreShot.classList.remove('switching');
+      }, 180);
+    };
+    var scheduleNext = function(){
+      if (eTimer) clearTimeout(eTimer);
+      if (reduce) return;
+      eTimer = setTimeout(function(){ setTab((eIdx + 1) % etabs.length); scheduleNext(); }, 4600);
+    };
+    etabs.forEach(function(tab, i){
+      tab.addEventListener('click', function(){ setTab(i); scheduleNext(); });
+    });
+    scheduleNext();
+  }
+
+  // ---- AI setup toggle (click swaps the explanatory note) ----
+  var aiToggle = document.getElementById('aiToggle');
+  var aiNote = document.getElementById('aiNote');
+  if (aiToggle && aiNote) {
+    aiToggle.querySelectorAll('button').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        aiToggle.querySelectorAll('button').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        aiNote.style.opacity = '0';
+        setTimeout(function(){
+          aiNote.innerHTML = btn.getAttribute('data-note');
+          aiNote.style.opacity = '1';
+        }, 160);
+      });
+    });
+    aiNote.style.transition = 'opacity .2s ease';
+  }
+
+  // ---- privacy accordion ----
+  var privacyAcc = document.getElementById('privacyAcc');
+  if (privacyAcc) {
+    privacyAcc.querySelectorAll('.acc-item').forEach(function(item){
+      item.querySelector('.acc-q').addEventListener('click', function(){
+        var wasOpen = item.classList.contains('open');
+        privacyAcc.querySelectorAll('.acc-item').forEach(function(i){ i.classList.remove('open'); });
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+  }
+
   // ---- gentle 3D tilt on marquee screenshot cards ----
   if (!reduce && window.matchMedia && window.matchMedia('(hover: hover)').matches) {
-    document.querySelectorAll('.m-item .shot-card').forEach(function(card){
+    document.querySelectorAll('.m-item .shot-card, .ai-shot .shot-card').forEach(function(card){
       card.style.transition = 'transform .25s ease';
       card.addEventListener('mousemove', function(ev){
         var r = card.getBoundingClientRect();
