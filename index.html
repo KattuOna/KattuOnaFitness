@@ -129,7 +129,6 @@
   .shot-card { position:relative; border-radius:22px; overflow:hidden; background:var(--ink2);
     box-shadow:0 26px 60px -22px rgba(10,8,4,.4), 0 0 0 1px var(--line-dark); }
   .shot-card img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
-  .shot-card img[src*="chat-kattu"] { object-position:top left; }
   .shot-card .badge { position:absolute; top:13px; left:13px; display:inline-flex; align-items:center; gap:6px;
     padding:6px 11px 6px 9px; border-radius:100px; background:rgba(13,14,19,.74); backdrop-filter:blur(8px);
     color:var(--text-light); font-size:.7rem; font-weight:700; letter-spacing:.01em; }
@@ -254,6 +253,7 @@
   /* ---------- AI deep-dive (ink band) ---------- */
   section.ai-deep { background:var(--ink); color:var(--text-light); padding:88px 0 94px; position:relative; overflow:hidden; }
   .ai-deep .wrap { position:relative; z-index:1; }
+  .shot-card img[src*="chat-kattu"] { object-position:top left; }
   .ai-deep-head { max-width:620px; }
   .ai-deep-head .eyebrow-row { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
   .ai-deep-head .eyebrow-row .knot { width:30px; height:30px; }
@@ -448,8 +448,8 @@
     <div class="hero-stage">
       <div class="glow" aria-hidden="true"></div>
       <div class="shot-card shot-sub">
-        <img src="screens/showcase-aichef.jpg" alt="AI Chef Architect screen generating recipe ideas" loading="lazy">
-        <span class="badge"><span class="dot"></span>AI Chef</span>
+        <img src="screens/build-program.jpg" alt="Build a training program screen" loading="lazy">
+        <span class="badge"><span class="dot"></span>Programs</span>
       </div>
       <div class="shot-card shot-main">
         <img src="screens/hero-today.jpg" alt="KattuOna's Today screen: calorie and macro rings, streak, and the day's next step" loading="eager">
