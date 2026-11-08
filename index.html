@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <style>
   :root {
     --paper:#FBFAF7; --ink:#14161D; --ink2:#1D212B; --ink3:#262A37;
@@ -788,7 +789,7 @@
     <h2>Nobody else is building this.</h2>
     <p>No other app pairs real training and nutrition tracking with an AI coach you actually control — no
     account, no ads, no analytics, ever. Email me to get into closed testing before the public launch.</p>
-    <a class="btn primary" href="mailto:Kattu0na@gmail.com">Email Kattu0na@gmail.com</a>
+    <a class="btn primary" id="finalCta" href="mailto:Kattu0na@gmail.com">Email Kattu0na@gmail.com</a>
   </div>
 </section>
 
@@ -807,8 +808,43 @@
 
 </div><!-- /.page -->
 
+<!-- Lenis (MIT) -- smooth, weighted scrolling. canvas-confetti (MIT) -- the burst on unlock/CTA. -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
 <script>
 (function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- confetti burst (brand palette), skipped entirely if reduced-motion or the lib didn't load ----
+  var burst = function(originY){
+    if (reduce || typeof confetti !== 'function') return;
+    confetti({
+      particleCount: 90, spread: 70, startVelocity: 38, gravity: 1.1, ticks: 180,
+      origin: { x: 0.5, y: originY || 0.6 },
+      colors: ['#FF3B2F', '#FFC233', '#7C6CFF', '#2FE6A6']
+    });
+  };
+
+  // ---- Lenis: smooth, weighted scrolling (falls back to native if the lib didn't load) ----
+  var lenis = null;
+  if (!reduce && typeof Lenis === 'function') {
+    lenis = new Lenis({ duration: 1.05, smoothWheel: true, syncTouch: false });
+    document.documentElement.style.scrollBehavior = 'auto';
+    var raf = function(time){ lenis.raf(time); requestAnimationFrame(raf); };
+    requestAnimationFrame(raf);
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(ev){
+        var id = a.getAttribute('href');
+        if (id.length < 2) return;
+        var target = document.querySelector(id);
+        if (!target) return;
+        ev.preventDefault();
+        lenis.scrollTo(target, { offset: -70, duration: 1.1 });
+      });
+    });
+  }
+
   // ---- soft pre-launch gate ----
   var PASSWORD = "kattuona2026";
   var gate = document.getElementById('gate');
@@ -823,6 +859,7 @@
       var val = document.getElementById('gatePass').value;
       if (val === PASSWORD) {
         try { localStorage.setItem('ko_unlocked','1'); } catch(e){}
+        burst(0.35);
         gate.style.transition = 'opacity .25s ease';
         gate.style.opacity = '0';
         setTimeout(function(){ gate.remove(); body.classList.remove('gated'); }, 250);
@@ -833,7 +870,6 @@
   }
 
   // ---- scroll reveal: bento tiles, AI shots, shop cards, once each ----
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var targets = document.querySelectorAll('.tile, .ai-shot, .shop-card');
   if (reduce || !('IntersectionObserver' in window)) {
     targets.forEach(function(t){ t.classList.add('in'); });
@@ -850,9 +886,11 @@
     targets.forEach(function(t){ io.observe(t); });
   }
 
-  // ---- scroll progress bar ----
+  // ---- scroll progress bar (reads Lenis's own progress when it's running) ----
   var bar = document.getElementById('progress');
-  if (bar) {
+  if (bar && lenis) {
+    lenis.on('scroll', function(e){ bar.style.width = (e.progress * 100) + '%'; });
+  } else if (bar) {
     window.addEventListener('scroll', function(){
       var h = document.documentElement;
       var pct = (h.scrollTop) / ((h.scrollHeight - h.clientHeight) || 1) * 100;
@@ -939,6 +977,12 @@
       });
     });
     aiNote.style.transition = 'opacity .2s ease';
+  }
+
+  // ---- a small send-off on the final CTA ----
+  var finalCta = document.getElementById('finalCta');
+  if (finalCta) {
+    finalCta.addEventListener('click', function(){ burst(0.82); });
   }
 
   // ---- privacy accordion ----
