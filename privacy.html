@@ -91,6 +91,15 @@ sessions</strong> from Health Connect. It never writes to Health Connect. Steps 
 times feed your recovery check-in and bedtime reminders. This data is used only inside KattuOna, stays on your phone
 (it may be included if you turn on your own chosen backup destination), and is never used for advertising. You can
 withdraw access at any time in Health Connect or in KattuOna's Settings.</p>
+<p><strong>Advanced wearables (optional, separate permission):</strong> if you connect a continuous-sensing wearable
+(for example an Oura, WHOOP, Garmin, or Temple once it ships) that writes to Health Connect, KattuOna can separately
+ask to <strong>read</strong> <strong>skin temperature</strong>, <strong>heart-rate variability</strong>,
+<strong>VO2max</strong>, <strong>blood oxygen (SpO2)</strong>, and <strong>respiratory rate</strong> from Health
+Connect. This is requested only when you turn it on in Settings, and is used only to detect that such a device is
+connected and to show a plain heart-rate-variability-vs-weekly-average and latest-VO2max recovery read inside
+KattuOna -- skin temperature itself is currently only used to detect that a capable device is connected, not yet
+turned into a reading. None of this is sent anywhere; it stays on your phone the same as steps and sleep above. You
+can withdraw this access at any time in Health Connect or in KattuOna's Settings.</p>
 
 <h2>5. Calendar (optional)</h2>
 <p>If you turn on holiday-aware Smart Wake, KattuOna <strong>reads</strong> your calendar to check whether a day is a
@@ -195,6 +204,7 @@ from a genuine copy of the app, without needing a sign-in. See Google's own hand
   <tr><td>Nothing about you -- just a request for the public product list and photos</td><td>KattuOna's own GitHub repository, and whichever image address is listed there</td><td>Every time you open the Shop screen</td></tr>
   <tr><td>Whichever Shop personalization sources you've allowed (food/workout summary, goal, soreness) -- as plain text, never a photo or full logs</td><td>The AI server or provider <em>you</em> configured in Settings</td><td>Only if you turn on "Rank with your AI engine" in Shop's tune icon, at most once a day</td></tr>
   <tr><td>Steps and sleep sessions</td><td>Read from Health Connect, not sent anywhere by KattuOna</td><td>Only if you grant Health Connect access</td></tr>
+  <tr><td>Skin temperature, heart-rate variability, VO2max, blood oxygen and respiratory rate</td><td>Read from Health Connect, not sent anywhere by KattuOna</td><td>Only if you connect a supported wearable and grant the separate advanced-wearable permission</td></tr>
   <tr><td>Whether a day is a holiday</td><td>Read from your calendar, not sent anywhere by KattuOna</td><td>Only if you grant calendar access</td></tr>
   <tr><td>Bedtime/wake times (plus confidence, motion and light readings for them)</td><td>Read from Android's Sleep API, not sent anywhere by KattuOna</td><td>Only if you grant the "Physical activity" permission and turn on automatic sleep detection</td></tr>
 </table>
