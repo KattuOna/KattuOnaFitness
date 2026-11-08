@@ -273,8 +273,9 @@
     color:var(--muted-on-ink); line-height:1.55; max-width:560px; min-height:64px; }
   .ai-note strong { color:var(--text-light); }
 
-  .ai-shots { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:44px; }
-  @media (max-width:860px) { .ai-shots { grid-template-columns:1fr; max-width:260px; margin-left:auto; margin-right:auto; gap:44px; } }
+  .ai-shots { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:44px; }
+  @media (max-width:1060px) { .ai-shots { grid-template-columns:repeat(2,1fr); max-width:520px; margin-left:auto; margin-right:auto; gap:32px 20px; } }
+  @media (max-width:560px) { .ai-shots { grid-template-columns:1fr; max-width:260px; gap:44px; } }
   .ai-shot { opacity:0; transform:translateY(20px); transition:opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1); }
   .ai-shot.in { opacity:1; transform:translateY(0); }
   .ai-shot .shot-card { height:300px; transition:transform .25s ease; }
@@ -681,6 +682,10 @@
       <div class="ai-shot">
         <div class="shot-card"><img src="screens/build-program.jpg" alt="Build a training program screen with goals, days per week and session length" loading="lazy"><span class="badge"><span class="dot"></span>Programs</span></div>
         <div class="ai-cap"><h3>It builds your program</h3><p>Training style, goals, days per week, time per session — a full plan, built around you.</p></div>
+      </div>
+      <div class="ai-shot">
+        <div class="shot-card"><img src="screens/kattu-female.jpg" alt="Today screen showing Kattu as a female character" loading="lazy"><span class="badge"><span class="dot"></span>Today</span></div>
+        <div class="ai-cap"><h3>Kattu looks like you set them up</h3><p>Pick male or female during setup and both Kattu and the 3D recovery model switch to match — not just a palette swap.</p></div>
       </div>
     </div>
   </div>
