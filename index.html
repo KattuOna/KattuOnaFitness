@@ -374,9 +374,15 @@
   .cta-final .btn { transition:transform .2s ease, box-shadow .2s ease; }
   .cta-final .cf-support { margin-top:22px; padding-top:22px; border-top:1px solid rgba(26,18,6,.14); }
   .cta-final .cf-support > span { display:block; font-size:.85rem; opacity:.72; margin-bottom:12px; }
+  .cta-final .cf-support-row { display:flex; align-items:center; justify-content:center; gap:22px; flex-wrap:wrap; }
   .cta-final .cf-support-links { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
   .cta-final .cf-support-links .btn.ghost { border-color:rgba(26,18,6,.25); color:#1A1206; padding:9px 18px; font-size:.85rem; }
   .cta-final .cf-support-links .btn.ghost:hover { background:rgba(26,18,6,.08); }
+  .cta-final .cf-qr { display:flex; flex-direction:column; align-items:center; gap:6px; text-decoration:none; color:#1A1206; opacity:.85; transition:opacity .2s ease; }
+  .cta-final .cf-qr:hover { opacity:1; }
+  .cta-final .cf-qr img { width:72px; height:72px; border-radius:10px; background:#fff; padding:5px; box-shadow:0 6px 16px -6px rgba(26,18,6,.3); }
+  .cta-final .cf-qr span { font-size:.72rem; font-weight:700; }
+  @media (max-width:560px) { .cta-final .cf-support-row { flex-direction:column; gap:16px; } }
 
   footer { padding:34px 0 50px; }
   footer .wrap { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
@@ -801,9 +807,15 @@
     <a class="btn primary" id="finalCta" href="mailto:Kattu0na@gmail.com">Email Kattu0na@gmail.com</a>
     <div class="cf-support">
       <span>Free app, built solo. If it's helped you, you can chip in:</span>
-      <div class="cf-support-links">
-        <a class="btn ghost" href="https://www.buymeacoffee.com/athulhere" target="_blank" rel="noopener">Buy me a coffee</a>
-        <a class="btn ghost" href="upi://pay?pa=athulhere@upi&amp;pn=Kattu&amp;cu=INR">Pay via UPI</a>
+      <div class="cf-support-row">
+        <div class="cf-support-links">
+          <a class="btn ghost" href="https://www.buymeacoffee.com/kattuona" target="_blank" rel="noopener">Buy me a coffee</a>
+          <a class="btn ghost" href="upi://pay?pa=athulhere@upi&amp;pn=Kattu&amp;cu=INR">Pay via UPI</a>
+        </div>
+        <a class="cf-qr" href="https://www.buymeacoffee.com/kattuona" target="_blank" rel="noopener">
+          <img src="support/bmc-qr.png" width="96" height="96" alt="QR code to KattuOna's Buy Me a Coffee page" loading="lazy">
+          <span>Scan on your phone</span>
+        </a>
       </div>
     </div>
   </div>
