@@ -40,6 +40,15 @@
   @media (max-width:640px) { .wrap { padding:0 20px; } }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } *,*::before,*::after { animation-duration:.001ms !important; transition-duration:.001ms !important; } }
 
+  /* ---------- scroll progress + ambient background ---------- */
+  .progress { position:fixed; top:0; left:0; height:3px; width:0%; background:var(--grad); z-index:60; transition:width .1s linear; }
+  .ambient { position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none; }
+  .ambient span { position:absolute; border-radius:50%; filter:blur(60px); opacity:.5; animation:ambientDrift 16s ease-in-out infinite; }
+  .ambient span:nth-child(1){ width:420px; height:420px; background:radial-gradient(circle, rgba(255,59,47,.14), transparent 70%); top:-120px; left:-120px; }
+  .ambient span:nth-child(2){ width:460px; height:460px; background:radial-gradient(circle, rgba(124,108,255,.12), transparent 70%); top:40%; right:-160px; animation-delay:3s; }
+  .ambient span:nth-child(3){ width:380px; height:380px; background:radial-gradient(circle, rgba(47,230,166,.1), transparent 70%); bottom:-100px; left:20%; animation-delay:6s; }
+  @keyframes ambientDrift { 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(26px,-22px) scale(1.06); } }
+
   /* ---------- gate ---------- */
   .gate { position:fixed; inset:0; z-index:50; display:flex; align-items:center; justify-content:center;
     background:radial-gradient(circle at 30% 20%, rgba(255,59,47,.18), transparent 55%), var(--ink); padding:24px; }
@@ -99,16 +108,46 @@
 
   @keyframes riseIn { to { opacity:1; transform:translateY(0); } }
 
-  /* ---------- phone mockups ---------- */
-  .phone-wrap { position:relative; opacity:0; transform:translateY(18px) scale(.98); animation:riseIn .8s .22s cubic-bezier(.2,.7,.2,1) forwards; }
-  @media (max-width:900px) { .phone-wrap { display:flex; justify-content:center; margin-top:4px; } }
-  .phone { width:252px; border-radius:36px; background:#0B0C10; padding:9px; box-shadow:0 36px 70px -24px rgba(10,8,4,.45); position:relative; margin:0 auto; }
-  .phone::after { content:""; position:absolute; top:9px; left:50%; transform:translateX(-50%); width:84px; height:20px; background:#0B0C10; border-radius:0 0 14px 14px; z-index:2; }
-  .screen { background:var(--ink2); border-radius:28px; overflow:hidden; height:480px; padding:22px 18px 18px; display:flex; flex-direction:column; gap:16px; color:var(--text-light); position:relative; }
-  .screen.shot { padding:0; }
-  .screen.shot img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
-  .screen .s-time { font-size:.72rem; color:var(--muted-on-ink); font-weight:700; }
-  .screen .s-head { font-family:'Bricolage Grotesque'; font-size:1.1rem; font-weight:800; margin:2px 0 0; }
+  /* ---------- kicker + word rotator ---------- */
+  .kicker { display:inline-flex; align-items:center; gap:9px; padding:7px 15px 7px 11px; border-radius:100px; border:1px solid var(--line-light);
+    font-size:.8rem; font-weight:700; margin-bottom:20px; opacity:0; transform:translateY(10px); animation:riseIn .6s forwards; }
+  .kicker .dot { width:7px; height:7px; border-radius:50%; background:var(--grad); flex-shrink:0; box-shadow:0 0 0 0 rgba(255,59,47,.5); animation:dotPulse 2s infinite; }
+  @keyframes dotPulse { 0%{ box-shadow:0 0 0 0 rgba(255,59,47,.45); } 70%{ box-shadow:0 0 0 7px rgba(255,59,47,0); } 100%{ box-shadow:0 0 0 0 rgba(255,59,47,0); } }
+  .rotator { display:inline-block; vertical-align:middle; white-space:nowrap; opacity:1; transition:opacity .25s ease; }
+  .rotator.fading { opacity:0; }
+  @media (max-width:460px) { .kicker { max-width:calc(100% - 40px); } .rotator { white-space:normal; } }
+
+  /* ---------- screenshot presentation (no device bezel) ---------- */
+  .shot-card { position:relative; border-radius:22px; overflow:hidden; background:var(--ink2);
+    box-shadow:0 26px 60px -22px rgba(10,8,4,.4), 0 0 0 1px var(--line-dark); }
+  .shot-card img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+  .shot-card .badge { position:absolute; top:13px; left:13px; display:inline-flex; align-items:center; gap:6px;
+    padding:6px 11px 6px 9px; border-radius:100px; background:rgba(13,14,19,.74); backdrop-filter:blur(8px);
+    color:var(--text-light); font-size:.7rem; font-weight:700; letter-spacing:.01em; }
+  .shot-card .badge .dot { width:6px; height:6px; border-radius:50%; background:var(--mint); flex-shrink:0; box-shadow:0 0 0 0 rgba(47,230,166,.55); animation:dotPulse2 2s infinite; }
+  @keyframes dotPulse2 { 0%{ box-shadow:0 0 0 0 rgba(47,230,166,.5); } 70%{ box-shadow:0 0 0 6px rgba(47,230,166,0); } 100%{ box-shadow:0 0 0 0 rgba(47,230,166,0); } }
+
+  /* ---------- hero screenshot stage ---------- */
+  .hero-stage { position:relative; height:500px; opacity:0; transform:translateY(18px); animation:riseIn .8s .22s cubic-bezier(.2,.7,.2,1) forwards; }
+  .hero-stage .glow { position:absolute; width:360px; height:360px; border-radius:50%; top:4%; right:-10px;
+    background:radial-gradient(circle, rgba(255,59,47,.3), transparent 65%); filter:blur(8px); animation:drift 8s ease-in-out infinite; }
+  @keyframes drift { 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(-16px,14px); } }
+  .hero-stage .shot-card { position:absolute; width:230px; height:470px; }
+  .hero-stage .shot-main { top:14px; right:30px; z-index:2; transform:rotate(3deg); animation:floatY 5.5s ease-in-out infinite; }
+  .hero-stage .shot-sub { top:84px; right:240px; width:184px; height:376px; z-index:1; opacity:.94; transform:rotate(-7deg); animation:floatY 6.4s ease-in-out infinite .5s; }
+  @keyframes floatY { 0%,100%{ transform:translateY(0) rotate(var(--r,0deg)); } 50%{ transform:translateY(-11px) rotate(var(--r,0deg)); } }
+  .hero-stage .shot-main { --r:3deg; }
+  .hero-stage .shot-sub { --r:-7deg; }
+  @media (max-width:900px) {
+    .hero-stage { height:430px; display:flex; justify-content:center; }
+    .hero-stage .shot-sub { display:none; }
+    .hero-stage .shot-main { position:static; top:auto; right:auto; margin:0 auto; }
+    .hero-stage .glow { right:20%; }
+  }
+  .float-chat { position:absolute; left:-6px; bottom:22px; z-index:3; width:196px; background:var(--ink2); border:1px solid var(--line-dark);
+    border-radius:16px; padding:12px 13px; display:flex; flex-direction:column; gap:8px; box-shadow:0 22px 46px -18px rgba(10,8,4,.42);
+    animation:floatY 7s ease-in-out infinite .8s; --r:1deg; }
+  @media (max-width:900px) { .float-chat { display:none; } }
 
   .ring-row { display:flex; align-items:center; gap:16px; margin-top:6px; }
   .ring { width:112px; height:112px; flex-shrink:0; }
@@ -152,20 +191,26 @@
   .log-row .done { margin-left:auto; width:18px; height:18px; border-radius:50%; background:var(--mint); display:grid; place-items:center; }
   .log-row .done svg { width:10px; height:10px; stroke:#0B2A1E; }
 
-  /* ---------- showcase (scrolling phone row) ---------- */
-  .showcase { padding:10px 0 86px; overflow:hidden; }
+  /* ---------- showcase (auto-scrolling screenshot marquee) ---------- */
+  .showcase { padding:10px 0 86px; }
   .sc-head { max-width:560px; margin:0 0 40px; }
   .sc-head h2 { font-size:1.9rem; font-weight:800; letter-spacing:-0.02em; margin:0 0 10px; }
   .sc-head p { color:var(--muted-on-paper); margin:0; font-size:1.02rem; }
-  .sc-row { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; align-items:start; }
-  @media (max-width:900px) { .sc-row { grid-template-columns:1fr; max-width:280px; margin:0 auto; gap:56px; } }
-  .sc-item { opacity:0; transform:translateY(22px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
-  .sc-item.in { opacity:1; transform:translateY(0); }
-  .sc-item .phone { width:220px; }
-  .sc-item .screen { height:420px; padding:19px 15px 15px; }
-  .sc-cap { text-align:center; margin-top:18px; }
-  .sc-cap h3 { font-size:1.02rem; font-weight:700; margin:0 0 4px; }
-  .sc-cap p { font-size:.86rem; color:var(--muted-on-paper); margin:0; max-width:230px; margin-left:auto; margin-right:auto; }
+
+  .marquee { position:relative; overflow:hidden; margin:0 calc(-50vw + 50%); padding:14px 0; }
+  .marquee::before, .marquee::after { content:""; position:absolute; top:0; bottom:0; width:min(140px,10vw); z-index:2; pointer-events:none; }
+  .marquee::before { left:0; background:linear-gradient(90deg, var(--paper), transparent); }
+  .marquee::after { right:0; background:linear-gradient(270deg, var(--paper), transparent); }
+  .marquee-track { display:flex; gap:28px; width:max-content; padding:0 calc(50vw - 50% + 24px); animation:scrollX 42s linear infinite; }
+  .marquee:hover .marquee-track, .marquee:focus-within .marquee-track { animation-play-state:paused; }
+  @keyframes scrollX { from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+  .m-item { flex:0 0 auto; width:212px; }
+  .m-item .shot-card { width:212px; height:432px; transition:transform .25s ease; }
+  .m-item .shot-card:hover { transform:translateY(-6px) scale(1.015); }
+  .m-cap { margin-top:16px; }
+  .m-cap h3 { font-size:1rem; font-weight:700; margin:0 0 4px; }
+  .m-cap p { font-size:.85rem; color:var(--muted-on-paper); margin:0; }
+  @media (prefers-reduced-motion: reduce) { .marquee-track { animation:none; overflow-x:auto; } }
 
   /* ---------- features (ink band, bento grid) ---------- */
   section.features { background:var(--ink); color:var(--text-light); padding:84px 0 92px; }
@@ -178,9 +223,11 @@
     grid-template-areas: "workouts" "nutrition" "kattu" "sleep" "supplements" "privacy"; } }
 
   .tile { background:var(--ink2); border-radius:18px; padding:24px; display:flex; flex-direction:column; justify-content:flex-end; position:relative; overflow:hidden; border:1px solid var(--line-dark);
-    opacity:0; transform:translateY(16px); transition:opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1); }
+    opacity:0; transform:translateY(16px); transition:opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease, border-color .3s ease; }
   .tile.in { opacity:1; transform:translateY(0); }
-  .tile .icon { width:38px; height:38px; margin-bottom:auto; }
+  .tile:hover { border-color:rgba(255,194,51,.35); box-shadow:0 18px 40px -20px rgba(0,0,0,.5); }
+  .tile:hover .icon, .tile:hover .knot { transform:translateY(-3px) scale(1.08); }
+  .tile .icon { width:38px; height:38px; margin-bottom:auto; transition:transform .3s cubic-bezier(.2,.7,.2,1); }
   .tile h3 { margin:14px 0 6px; font-size:1.08rem; font-weight:700; }
   .tile p { margin:0; font-size:.88rem; color:var(--muted-on-ink); line-height:1.5; }
   .tile.big { grid-area:workouts; padding:30px; }
@@ -198,7 +245,7 @@
   .tile--sleep { grid-area:sleep; }
   .tile--supplements { grid-area:supplements; }
   .tile--privacy { grid-area:privacy; }
-  .tile--kattu .knot { width:38px; height:38px; margin-bottom:auto; }
+  .tile--kattu .knot { width:38px; height:38px; margin-bottom:auto; transition:transform .3s cubic-bezier(.2,.7,.2,1); }
 
   /* ---------- privacy scorecard ---------- */
   section.privacy { padding:80px 0; }
@@ -206,16 +253,31 @@
   @media (max-width:860px) { .privacy-grid { grid-template-columns:1fr; } }
   .privacy h2 { font-size:2rem; font-weight:800; letter-spacing:-0.02em; margin:0 0 16px; }
   .privacy .lede { margin:0; }
-  .score { border-top:1px solid var(--line-light); }
-  .score .row { display:flex; justify-content:space-between; align-items:center; padding:18px 0; border-bottom:1px solid var(--line-light); gap:18px; }
-  .score .row span.k { font-weight:600; }
-  .score .row span.v { font-family:'Bricolage Grotesque'; font-weight:800; color:var(--ember); white-space:nowrap; }
+  .cmp-legend { display:flex; gap:20px; margin:28px 0 22px; font-size:.82rem; color:var(--muted-on-paper); }
+  .cmp-legend span { display:inline-flex; align-items:center; gap:7px; }
+  .cmp-legend i { width:10px; height:10px; border-radius:3px; display:inline-block; }
+  .cmp-legend i.typical { background:rgba(255,59,47,.55); }
+  .cmp-legend i.us { background:var(--grad); }
+  .cmp-row + .cmp-row { margin-top:22px; }
+  .cmp-row .cmp-label { font-weight:650; font-size:.94rem; margin-bottom:10px; }
+  .cmp-bar { display:flex; align-items:center; gap:11px; margin-bottom:6px; }
+  .cmp-bar .tag { width:78px; flex-shrink:0; font-size:.72rem; color:var(--muted-on-paper); }
+  .cmp-bar .track { flex:1; height:8px; border-radius:6px; background:var(--line-light); overflow:hidden; }
+  .cmp-bar .fill { height:100%; border-radius:6px; width:0; transition:width 1.15s cubic-bezier(.2,.7,.2,1); }
+  .cmp-bar.typical .fill { background:rgba(255,59,47,.55); }
+  .cmp-bar.kattuona .fill { background:var(--grad); }
+  .cmp-bar .val { width:40px; text-align:right; font-weight:800; font-family:'Bricolage Grotesque'; font-size:.84rem; flex-shrink:0; }
 
   /* ---------- final cta ---------- */
-  .cta-final { background:var(--grad); padding:72px 0; text-align:center; color:#1A1206; }
-  .cta-final h2 { font-size:1.9rem; font-weight:800; letter-spacing:-0.02em; margin:0 0 10px; }
-  .cta-final p { margin:0 0 26px; opacity:.82; max-width:440px; margin-left:auto; margin-right:auto; }
+  .cta-final { background:var(--grad); padding:80px 0; text-align:center; color:#1A1206; position:relative; overflow:hidden; }
+  .cta-final .cf-kicker { display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:100px; background:rgba(26,18,6,.14);
+    font-size:.78rem; font-weight:800; letter-spacing:.01em; margin-bottom:16px; }
+  .cta-final .cf-kicker .dot { width:6px; height:6px; border-radius:50%; background:#1A1206; animation:dotPulse 2s infinite; }
+  .cta-final h2 { font-size:2.1rem; font-weight:800; letter-spacing:-0.02em; margin:0 0 10px; }
+  .cta-final p { margin:0 0 26px; opacity:.82; max-width:460px; margin-left:auto; margin-right:auto; font-size:1.02rem; }
   .cta-final .btn.primary { background:#1A1206; color:var(--text-light); }
+  .cta-final .btn.primary:hover { transform:translateY(-2px); box-shadow:0 14px 28px -10px rgba(26,18,6,.5); }
+  .cta-final .btn { transition:transform .2s ease, box-shadow .2s ease; }
 
   footer { padding:34px 0 50px; }
   footer .wrap { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
@@ -226,6 +288,9 @@
 </style>
 </head>
 <body class="gated">
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+<div class="ambient" aria-hidden="true"><span></span><span></span><span></span></div>
 
 <!-- soft pre-launch gate: keeps casual visitors + search engines out while in testing.
      NOT real security -- the password is readable in this file's source. privacy.html,
@@ -266,6 +331,7 @@
   <div class="streak" aria-hidden="true"><span></span><span></span><span></span></div>
   <div class="wrap hero-grid">
     <div>
+      <div class="kicker"><span class="dot" aria-hidden="true"></span><span class="rotator" id="kickerRotator">Not another calorie counter.</span></div>
       <h1 class="display">Train hard.<br>Eat right.<br><span class="grad">Own your data.</span></h1>
       <p class="lede">KattuOna tracks your workouts, meals, sleep and recovery, and layers an AI coach on top
       that you control — a provider you pick, or a model running on your own hardware.</p>
@@ -279,11 +345,19 @@
         Read the privacy policy
       </a>
     </div>
-    <div class="phone-wrap">
-      <div class="phone">
-        <div class="screen shot">
-          <img src="screens/hero-today.jpg" alt="KattuOna's Today screen: calorie and macro rings, streak, and the day's next step" loading="eager">
-        </div>
+    <div class="hero-stage">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="shot-card shot-sub">
+        <img src="screens/showcase-aichef.jpg" alt="AI Chef Architect screen generating recipe ideas" loading="lazy">
+        <span class="badge"><span class="dot"></span>AI Chef</span>
+      </div>
+      <div class="shot-card shot-main">
+        <img src="screens/hero-today.jpg" alt="KattuOna's Today screen: calorie and macro rings, streak, and the day's next step" loading="eager">
+        <span class="badge"><span class="dot"></span>Live</span>
+      </div>
+      <div class="float-chat" aria-hidden="true">
+        <div class="chat-bubble them">Ready for legs today — recovery's at 88%.</div>
+        <div class="chat-typing"><span></span><span></span><span></span></div>
       </div>
     </div>
   </div>
@@ -293,32 +367,60 @@
   <div class="wrap">
     <div class="sc-head">
       <h2>What it actually looks like</h2>
-      <p>Real screens from the app — the AI Chef, a workout start, and the 3D recovery view.</p>
+      <p>Real screens from the app, scrolling by on their own — hover to pause and look closer.</p>
     </div>
-    <div class="sc-row">
-      <div class="sc-item">
-        <div class="phone">
-          <div class="screen shot">
-            <img src="screens/showcase-aichef.jpg" alt="AI Chef Architect screen: generating recipe ideas from what's in the fridge, matched to a calorie and protein target" loading="lazy">
-          </div>
-        </div>
-        <div class="sc-cap"><h3>AI Chef, from your fridge</h3><p>Tell it what you have — it builds recipes that hit your target exactly.</p></div>
+  </div>
+  <div class="marquee" tabindex="0" aria-label="Screenshots of the KattuOna app">
+    <div class="marquee-track" id="marqueeTrack">
+      <!-- set A -->
+      <div class="m-item">
+        <div class="shot-card"><img src="screens/hero-today.jpg" alt="Today screen: calorie and macro rings, streak, and the day's next step" loading="lazy"><span class="badge"><span class="dot"></span>Today</span></div>
+        <div class="m-cap"><h3>Everything, one glance</h3><p>Calories, macros, streak, and what's next.</p></div>
       </div>
-      <div class="sc-item">
-        <div class="phone">
-          <div class="screen shot">
-            <img src="screens/showcase-workout.jpg" alt="Start a workout screen: choosing between home, gym, cardio, mobility or yoga" loading="lazy">
-          </div>
-        </div>
-        <div class="sc-cap"><h3>Workouts &amp; programs</h3><p>Log any session, or follow one built around your recovery.</p></div>
+      <div class="m-item">
+        <div class="shot-card"><img src="screens/showcase-aichef.jpg" alt="AI Chef Architect screen generating recipe ideas from the fridge" loading="lazy"><span class="badge"><span class="dot"></span>AI Chef</span></div>
+        <div class="m-cap"><h3>From your fridge to your macros</h3><p>Tell it what you have — it builds the recipe.</p></div>
       </div>
-      <div class="sc-item">
-        <div class="phone">
-          <div class="screen shot">
-            <img src="screens/showcase-recovery.jpg" alt="Muscle recovery screen: a 3D body model showing which muscle groups are sore versus fresh" loading="lazy">
-          </div>
-        </div>
-        <div class="sc-cap"><h3>Recovery, in 3D</h3><p>See exactly which muscles need more time before you train them again.</p></div>
+      <div class="m-item">
+        <div class="shot-card"><img src="screens/showcase-workout.jpg" alt="Start a workout screen: home, gym, cardio, mobility or yoga" loading="lazy"><span class="badge"><span class="dot"></span>Workouts</span></div>
+        <div class="m-cap"><h3>Any session, or a plan for you</h3><p>Freeform logging, or a program built around recovery.</p></div>
+      </div>
+      <div class="m-item">
+        <div class="shot-card"><img src="screens/showcase-recovery.jpg" alt="3D muscle recovery screen showing sore versus fresh muscle groups" loading="lazy"><span class="badge"><span class="dot"></span>Recovery</span></div>
+        <div class="m-cap"><h3>Know what's ready to train</h3><p>A 3D model, not a guess.</p></div>
+      </div>
+      <div class="m-item">
+        <div class="shot-card"><img src="screens/diet.jpg" alt="Diet screen showing meal cards for breakfast, lunch, snacks and dinner" loading="lazy"><span class="badge"><span class="dot"></span>Nutrition</span></div>
+        <div class="m-cap"><h3>Log it in seconds</h3><p>Hand entry, barcode, or a photo.</p></div>
+      </div>
+      <div class="m-item">
+        <div class="shot-card"><img src="screens/habits.jpg" alt="Habits screen tracking sleep, body clock and daily habits" loading="lazy"><span class="badge"><span class="dot"></span>Habits</span></div>
+        <div class="m-cap"><h3>The small stuff, tracked too</h3><p>Sleep, water, the habits that actually move things.</p></div>
+      </div>
+      <!-- set B (duplicate for a seamless loop) -->
+      <div class="m-item" aria-hidden="true">
+        <div class="shot-card"><img src="screens/hero-today.jpg" alt="" loading="lazy"><span class="badge"><span class="dot"></span>Today</span></div>
+        <div class="m-cap"><h3>Everything, one glance</h3><p>Calories, macros, streak, and what's next.</p></div>
+      </div>
+      <div class="m-item" aria-hidden="true">
+        <div class="shot-card"><img src="screens/showcase-aichef.jpg" alt="" loading="lazy"><span class="badge"><span class="dot"></span>AI Chef</span></div>
+        <div class="m-cap"><h3>From your fridge to your macros</h3><p>Tell it what you have — it builds the recipe.</p></div>
+      </div>
+      <div class="m-item" aria-hidden="true">
+        <div class="shot-card"><img src="screens/showcase-workout.jpg" alt="" loading="lazy"><span class="badge"><span class="dot"></span>Workouts</span></div>
+        <div class="m-cap"><h3>Any session, or a plan for you</h3><p>Freeform logging, or a program built around recovery.</p></div>
+      </div>
+      <div class="m-item" aria-hidden="true">
+        <div class="shot-card"><img src="screens/showcase-recovery.jpg" alt="" loading="lazy"><span class="badge"><span class="dot"></span>Recovery</span></div>
+        <div class="m-cap"><h3>Know what's ready to train</h3><p>A 3D model, not a guess.</p></div>
+      </div>
+      <div class="m-item" aria-hidden="true">
+        <div class="shot-card"><img src="screens/diet.jpg" alt="" loading="lazy"><span class="badge"><span class="dot"></span>Nutrition</span></div>
+        <div class="m-cap"><h3>Log it in seconds</h3><p>Hand entry, barcode, or a photo.</p></div>
+      </div>
+      <div class="m-item" aria-hidden="true">
+        <div class="shot-card"><img src="screens/habits.jpg" alt="" loading="lazy"><span class="badge"><span class="dot"></span>Habits</span></div>
+        <div class="m-cap"><h3>The small stuff, tracked too</h3><p>Sleep, water, the habits that actually move things.</p></div>
       </div>
     </div>
   </div>
@@ -379,22 +481,50 @@
       create in the first place — your logs live on your phone, full stop. The details are in the
       <a href="privacy.html">privacy policy</a>.</p>
     </div>
-    <div class="score">
-      <div class="row"><span class="k">Accounts to create</span><span class="v">0</span></div>
-      <div class="row"><span class="k">Ad trackers</span><span class="v">0</span></div>
-      <div class="row"><span class="k">Analytics on what you do</span><span class="v">0</span></div>
-      <div class="row"><span class="k">Backup destinations you control</span><span class="v">3</span></div>
-      <div class="row"><span class="k">AI providers it can report to without you choosing</span><span class="v">0</span></div>
-      <div class="row"><span class="k">Data left behind after uninstall</span><span class="v">0</span></div>
+    <div class="score" id="score">
+      <div class="cmp-legend"><span><i class="typical"></i>Typical fitness app</span><span><i class="us"></i>KattuOna</span></div>
+
+      <div class="cmp-row">
+        <div class="cmp-label">Accounts to create</div>
+        <div class="cmp-bar typical"><span class="tag">Typical</span><div class="track"><div class="fill" data-w="92"></div></div><span class="val">1+</span></div>
+        <div class="cmp-bar kattuona"><span class="tag">KattuOna</span><div class="track"><div class="fill" data-w="0"></div></div><span class="val">0</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-label">Ad trackers</div>
+        <div class="cmp-bar typical"><span class="tag">Typical</span><div class="track"><div class="fill" data-w="85"></div></div><span class="val">3+</span></div>
+        <div class="cmp-bar kattuona"><span class="tag">KattuOna</span><div class="track"><div class="fill" data-w="0"></div></div><span class="val">0</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-label">Analytics on what you do</div>
+        <div class="cmp-bar typical"><span class="tag">Typical</span><div class="track"><div class="fill" data-w="95"></div></div><span class="val">Yes</span></div>
+        <div class="cmp-bar kattuona"><span class="tag">KattuOna</span><div class="track"><div class="fill" data-w="0"></div></div><span class="val">0</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-label">Backup destinations you control</div>
+        <div class="cmp-bar typical"><span class="tag">Typical</span><div class="track"><div class="fill" data-w="20"></div></div><span class="val">1</span></div>
+        <div class="cmp-bar kattuona"><span class="tag">KattuOna</span><div class="track"><div class="fill" data-w="100"></div></div><span class="val">3</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-label">AI providers it reports to without asking</div>
+        <div class="cmp-bar typical"><span class="tag">Typical</span><div class="track"><div class="fill" data-w="70"></div></div><span class="val">Often</span></div>
+        <div class="cmp-bar kattuona"><span class="tag">KattuOna</span><div class="track"><div class="fill" data-w="0"></div></div><span class="val">0</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-label">Data left behind after uninstall</div>
+        <div class="cmp-bar typical"><span class="tag">Typical</span><div class="track"><div class="fill" data-w="80"></div></div><span class="val">Some</span></div>
+        <div class="cmp-bar kattuona"><span class="tag">KattuOna</span><div class="track"><div class="fill" data-w="0"></div></div><span class="val">0</span></div>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="cta-final">
   <div class="wrap">
-    <h2>Kattu0na@gmail.com</h2>
-    <p>Questions, feedback, or want to join closed testing before launch? That's the fastest way to reach me.</p>
-    <a class="btn primary" href="mailto:Kattu0na@gmail.com">Get in touch</a>
+    <div class="cf-kicker"><span class="dot"></span>Closed testing, open inbox</div>
+    <h2>Nobody else is building this.</h2>
+    <p>No other app pairs real training and nutrition tracking with an AI coach you actually control — no
+    account, no ads, no analytics, ever. Email me to get into closed testing before the public launch.</p>
+    <a class="btn primary" href="mailto:Kattu0na@gmail.com">Email Kattu0na@gmail.com</a>
   </div>
 </section>
 
@@ -438,9 +568,9 @@
     });
   }
 
-  // ---- scroll reveal: bento tiles + showcase phones, once each ----
+  // ---- scroll reveal: bento tiles, once each ----
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var targets = document.querySelectorAll('.tile, .sc-item');
+  var targets = document.querySelectorAll('.tile');
   if (reduce || !('IntersectionObserver' in window)) {
     targets.forEach(function(t){ t.classList.add('in'); });
   } else {
@@ -454,6 +584,62 @@
       });
     }, { threshold:.2 });
     targets.forEach(function(t){ io.observe(t); });
+  }
+
+  // ---- scroll progress bar ----
+  var bar = document.getElementById('progress');
+  if (bar) {
+    window.addEventListener('scroll', function(){
+      var h = document.documentElement;
+      var pct = (h.scrollTop) / ((h.scrollHeight - h.clientHeight) || 1) * 100;
+      bar.style.width = pct + '%';
+    }, { passive:true });
+  }
+
+  // ---- hero kicker word rotator ----
+  var rotatorEl = document.getElementById('kickerRotator');
+  if (rotatorEl && !reduce) {
+    var phrases = ["Not another calorie counter.", "Not another subscription.", "Not spyware with a workout tab.", "An AI coach you actually control."];
+    var idx = 0;
+    setInterval(function(){
+      rotatorEl.classList.add('fading');
+      setTimeout(function(){
+        idx = (idx + 1) % phrases.length;
+        rotatorEl.textContent = phrases[idx];
+        rotatorEl.classList.remove('fading');
+      }, 250);
+    }, 3200);
+  }
+
+  // ---- animated privacy comparison bars, once in view ----
+  var score = document.getElementById('score');
+  if (score) {
+    var fills = score.querySelectorAll('.fill');
+    var fillBars = function(){ fills.forEach(function(f){ f.style.width = f.getAttribute('data-w') + '%'; }); };
+    if (reduce || !('IntersectionObserver' in window)) {
+      fillBars();
+    } else {
+      var scoreIo = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) { fillBars(); scoreIo.unobserve(entry.target); }
+        });
+      }, { threshold:.3 });
+      scoreIo.observe(score);
+    }
+  }
+
+  // ---- gentle 3D tilt on marquee screenshot cards ----
+  if (!reduce && window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('.m-item .shot-card').forEach(function(card){
+      card.style.transition = 'transform .25s ease';
+      card.addEventListener('mousemove', function(ev){
+        var r = card.getBoundingClientRect();
+        var px = (ev.clientX - r.left) / r.width - .5;
+        var py = (ev.clientY - r.top) / r.height - .5;
+        card.style.transform = 'perspective(600px) rotateY(' + (px * 10) + 'deg) rotateX(' + (py * -10) + 'deg) translateY(-6px) scale(1.015)';
+      });
+      card.addEventListener('mouseleave', function(){ card.style.transform = ''; });
+    });
   }
 })();
 </script>
