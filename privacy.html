@@ -26,7 +26,7 @@
 <body>
 <main>
 <h1>KattuOna Privacy Policy</h1>
-<p class="muted">Last updated: 5 November 2026 · App: KattuOna (com.kattuona.app)</p>
+<p class="muted">Last updated: 8 November 2026 · App: KattuOna (com.kattuona.app)</p>
 
 <p>KattuOna is a personal fitness, nutrition, sleep and habit-tracking app with an optional AI coach. This page explains
 what the app stores and what, if anything, leaves your phone. In short: there is no KattuOna account and no sign-in;
@@ -150,6 +150,14 @@ reorders the list; it never adds, hides, or removes a product). Four sources, ea
 four switches, never sends anything anywhere -- the reordering happens entirely on your phone, and you can turn any
 part of it off again at any time from that same tune icon. A "Featured" section at the top of Shop is chosen by the
 developer and is the same for everyone; it isn't affected by personalization.</p>
+<p><strong>Rank with your AI engine (optional, off by default):</strong> in that same tune icon, a separate switch
+lets Shop ask your own configured AI engine -- the one you set up in Settings → AI engine, not a KattuOna server --
+to rank "Picked for today" instead of the plain on-device scoring above. It's a bigger step than the four switches
+above: turning it on sends whichever of those you've already allowed (your recent food/workout summary, stated goal,
+or soreness) to that AI engine, once a day, as plain text asking it to rank the product list -- never a photo,
+never your full logs, and never anything if you haven't set up an AI engine or haven't allowed any of the four
+sources it draws from. If the AI is unreachable or answers with something unusable, Shop just keeps the plain
+on-device order for that day. Like the switches above, it's entirely optional and reversible from the tune icon.</p>
 
 <h2>9. Anonymous, shared food and exercise database</h2>
 <p>When you log a food or workout that isn't already in the app's built-in list, the app may contribute that item's
@@ -185,6 +193,7 @@ from a genuine copy of the app, without needing a sign-in. See Google's own hand
   <tr><td>Name and values of a new custom food/exercise</td><td>Shared, anonymous list in Firestore</td><td>When you log an item that isn't already in KattuOna's built-in list</td></tr>
   <tr><td>Crash details, device model, a random installation ID</td><td>Firebase Crashlytics</td><td>When the app crashes</td></tr>
   <tr><td>Nothing about you -- just a request for the public product list and photos</td><td>KattuOna's own GitHub repository, and whichever image address is listed there</td><td>Every time you open the Shop screen</td></tr>
+  <tr><td>Whichever Shop personalization sources you've allowed (food/workout summary, goal, soreness) -- as plain text, never a photo or full logs</td><td>The AI server or provider <em>you</em> configured in Settings</td><td>Only if you turn on "Rank with your AI engine" in Shop's tune icon, at most once a day</td></tr>
   <tr><td>Steps and sleep sessions</td><td>Read from Health Connect, not sent anywhere by KattuOna</td><td>Only if you grant Health Connect access</td></tr>
   <tr><td>Whether a day is a holiday</td><td>Read from your calendar, not sent anywhere by KattuOna</td><td>Only if you grant calendar access</td></tr>
   <tr><td>Bedtime/wake times (plus confidence, motion and light readings for them)</td><td>Read from Android's Sleep API, not sent anywhere by KattuOna</td><td>Only if you grant the "Physical activity" permission and turn on automatic sleep detection</td></tr>
