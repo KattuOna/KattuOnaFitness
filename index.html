@@ -5,80 +5,144 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>KattuOna — fitness, nutrition &amp; an AI coach that's actually yours</title>
 <meta name="description" content="KattuOna is a private fitness, nutrition, sleep and habit-tracking app with an optional AI coach. No account, no ads, no analytics — your data stays on your phone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#ffffff; --fg:#1b1d1f; --muted:#5b6168; --accent:#0a7d55; --accent-fg:#ffffff; --line:#e3e6e8; --card:#f6f8f7; }
-  @media (prefers-color-scheme: dark) { :root { --bg:#111315; --fg:#eceef0; --muted:#a3a9b0; --accent:#3ddc97; --accent-fg:#0b1210; --line:#2a2e32; --card:#17191b; } }
-  * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  a { color:var(--accent); }
-  .wrap { max-width:1040px; margin:0 auto; padding:0 20px; }
-
-  header.top { padding:20px 0; }
-  .nav { display:flex; align-items:center; justify-content:space-between; }
-  .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.15rem; letter-spacing:-0.01em; }
-  .brand .mark { width:30px; height:30px; border-radius:9px; background:var(--accent); display:grid; place-items:center; color:var(--accent-fg); font-weight:900; }
-  nav.links { display:flex; gap:22px; font-size:.92rem; }
-  nav.links a { color:var(--muted); text-decoration:none; }
-  nav.links a:hover { color:var(--fg); }
-
-  .hero { padding:64px 0 48px; text-align:center; }
-  .badge { display:inline-flex; align-items:center; gap:8px; font-size:.82rem; color:var(--muted); background:var(--card); border:1px solid var(--line); padding:6px 14px; border-radius:999px; margin-bottom:22px; }
-  .badge .dot { width:7px; height:7px; border-radius:50%; background:var(--accent); }
-  h1 { font-size:2.6rem; line-height:1.12; margin:0 0 18px; letter-spacing:-0.02em; }
-  h1 span { color:var(--accent); }
-  .sub { max-width:600px; margin:0 auto 32px; color:var(--muted); font-size:1.08rem; }
-  .cta-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
-  .btn { display:inline-flex; align-items:center; gap:8px; padding:13px 24px; border-radius:11px; font-weight:700; font-size:.95rem; text-decoration:none; border:1px solid var(--line); }
-  .btn.primary { background:var(--accent); color:var(--accent-fg); border-color:transparent; }
-  .btn.ghost { color:var(--fg); }
-  .btn[aria-disabled="true"] { opacity:.6; cursor:default; }
-
-  .mock { margin:56px auto 0; max-width:760px; border-radius:20px; border:1px solid var(--line); background:var(--card); padding:28px; text-align:left; }
-  .mock .row { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
-  .mock .pill { font-size:.78rem; color:var(--muted); background:var(--bg); border:1px solid var(--line); padding:4px 10px; border-radius:999px; }
-  .mock .tiles { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-  .mock .tile { background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:14px; }
-  .mock .tile .n { font-size:1.35rem; font-weight:800; }
-  .mock .tile .l { font-size:.76rem; color:var(--muted); margin-top:2px; }
-
-  section.features { padding:64px 0; }
-  .features h2, .privacy h2, .cta-final h2 { font-size:1.7rem; text-align:center; margin:0 0 10px; letter-spacing:-0.01em; }
-  .features .lede { text-align:center; color:var(--muted); max-width:560px; margin:0 auto 40px; }
-  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:22px; }
-  .card .ic { width:38px; height:38px; border-radius:10px; background:var(--bg); border:1px solid var(--line); display:grid; place-items:center; margin-bottom:14px; font-size:1.1rem; }
-  .card h3 { margin:0 0 6px; font-size:1.02rem; }
-  .card p { margin:0; color:var(--muted); font-size:.92rem; }
-
-  .privacy { padding:56px 0; background:var(--card); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
-  .privacy .lede { text-align:center; color:var(--muted); max-width:620px; margin:0 auto 34px; }
-  .plist { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; max-width:680px; margin:0 auto; }
-  .plist div { display:flex; gap:10px; font-size:.93rem; }
-  .plist div .ok { color:var(--accent); font-weight:800; }
-
-  .cta-final { padding:64px 0 24px; text-align:center; }
-  .cta-final p { color:var(--muted); max-width:480px; margin:0 auto 26px; }
-
-  footer { padding:28px 0 48px; border-top:1px solid var(--line); margin-top:16px; }
-  footer .wrap { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
-  footer .flinks { display:flex; gap:18px; flex-wrap:wrap; font-size:.88rem; }
-  footer .flinks a { color:var(--muted); text-decoration:none; }
-  footer .flinks a:hover { color:var(--fg); }
-  footer .copy { color:var(--muted); font-size:.85rem; }
-
-  @media (max-width: 760px) {
-    h1 { font-size:2rem; }
-    .grid, .plist { grid-template-columns:1fr; }
-    .mock .tiles { grid-template-columns:1fr 1fr; }
-    nav.links { display:none; }
+  :root {
+    --paper:#FBFAF7; --ink:#14161D; --ink2:#1D212B;
+    --text-dark:#14161D; --text-light:#F6F4EF;
+    --muted-on-paper:rgba(20,22,29,.62); --muted-on-ink:rgba(246,244,239,.64);
+    --line-light:rgba(20,22,29,.12); --line-dark:rgba(246,244,239,.12);
+    --ember:#FF3B2F; --amber:#FFC233; --violet:#7C6CFF; --mint:#2FE6A6;
+    --grad: linear-gradient(100deg, var(--ember), var(--amber));
   }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#15171F; --ink:#0D0E13; --ink2:#1A1C25;
+      --text-dark:#F6F4EF;
+      --muted-on-paper:rgba(246,244,239,.64);
+      --line-light:rgba(246,244,239,.12);
+    }
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--paper); color:var(--text-dark); font-family:'Manrope',system-ui,sans-serif; }
+  h1,h2,h3,.display { font-family:'Bricolage Grotesque','Manrope',system-ui,sans-serif; }
+  a { color:inherit; }
+  img,svg { display:block; }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 24px; }
+  @media (max-width:640px) { .wrap { padding:0 20px; } }
+
+  /* ---------- nav ---------- */
+  header.top { padding:26px 0; position:relative; z-index:3; }
+  .nav { display:flex; align-items:center; justify-content:space-between; }
+  .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.2rem; letter-spacing:-0.01em; }
+  .brand .mark { width:32px; height:32px; border-radius:10px; background:var(--grad); display:grid; place-items:center; color:#171208; font-weight:800; font-size:1.05rem; }
+  nav.links { display:flex; gap:28px; font-size:.95rem; font-weight:600; }
+  nav.links a { text-decoration:none; opacity:.72; }
+  nav.links a:hover { opacity:1; }
+  @media (max-width:760px) { nav.links { display:none; } }
+
+  /* ---------- hero ---------- */
+  .hero { position:relative; padding:28px 0 86px; overflow:hidden; }
+  .streak { position:absolute; inset:0; z-index:0; pointer-events:none; }
+  .streak span { position:absolute; height:3px; border-radius:3px; background:var(--grad); opacity:.55; transform:rotate(-11deg); }
+  .streak span:nth-child(1){ width:620px; top:18%; right:-180px; }
+  .streak span:nth-child(2){ width:420px; top:30%; right:-60px; opacity:.3; }
+  .streak span:nth-child(3){ width:280px; top:44%; right:120px; opacity:.2; }
+  @media (max-width:760px) { .streak { display:none; } }
+
+  .hero-grid { position:relative; z-index:1; display:grid; grid-template-columns:1.1fr .9fr; gap:40px; align-items:center; }
+  @media (max-width:900px) { .hero-grid { grid-template-columns:1fr; } }
+
+  h1.display { font-size:3.4rem; line-height:1.03; font-weight:800; letter-spacing:-0.025em; margin:0 0 22px; }
+  h1.display .grad { background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  @media (max-width:900px) { h1.display { font-size:2.5rem; } }
+  @media (max-width:460px) { h1.display { font-size:2.05rem; } }
+
+  .lede { font-size:1.08rem; line-height:1.6; color:var(--muted-on-paper); max-width:480px; margin:0 0 30px; }
+  .cta-row { display:flex; gap:12px; flex-wrap:wrap; }
+  .btn { display:inline-flex; align-items:center; gap:8px; padding:14px 24px; border-radius:12px; font-weight:700; font-size:.96rem; text-decoration:none; border:1.5px solid transparent; }
+  .btn.primary { background:var(--grad); color:#1A1206; }
+  .btn.ghost { border-color:var(--line-light); color:var(--text-dark); }
+  .btn[aria-disabled="true"] { cursor:default; }
+  .note { margin-top:16px; font-size:.84rem; color:var(--muted-on-paper); }
+
+  /* scattered stat cluster */
+  .cluster { position:relative; height:360px; }
+  @media (max-width:900px) { .cluster { height:auto; display:flex; flex-direction:column; gap:14px; margin-top:8px; } }
+  .stat { background:var(--ink); color:var(--text-light); border-radius:16px; padding:18px 20px; box-shadow:0 18px 40px -16px rgba(20,16,10,.35); }
+  .stat .n { font-family:'Bricolage Grotesque'; font-size:1.7rem; font-weight:800; }
+  .stat .l { font-size:.8rem; color:var(--muted-on-ink); margin-top:2px; }
+  .stat.a { position:absolute; top:0; left:10%; width:230px; transform:rotate(-5deg); }
+  .stat.b { position:absolute; top:130px; right:0; width:210px; transform:rotate(4deg); background:var(--ink2); }
+  .stat.c { position:absolute; top:258px; left:0; width:190px; transform:rotate(-3deg); }
+  .stat.c .n { background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  @media (max-width:900px) { .stat.a,.stat.b,.stat.c { position:static; transform:none; width:auto; } }
+
+  /* ---------- features (ink band, bento grid) ---------- */
+  section.features { background:var(--ink); color:var(--text-light); padding:84px 0 92px; }
+  .features h2 { font-size:2rem; font-weight:800; letter-spacing:-0.02em; margin:0 0 10px; max-width:560px; }
+  .features .lede2 { color:var(--muted-on-ink); max-width:480px; margin:0 0 44px; font-size:1.02rem; }
+
+  .bento { display:grid; grid-template-columns:repeat(3,1fr); grid-auto-rows:150px; gap:14px;
+    grid-template-areas: "workouts workouts nutrition" "workouts workouts kattu" "sleep supplements privacy"; }
+  @media (max-width:860px) { .bento { grid-template-columns:1fr; grid-auto-rows:auto;
+    grid-template-areas: "workouts" "nutrition" "kattu" "sleep" "supplements" "privacy"; } }
+
+  .tile { background:var(--ink2); border-radius:18px; padding:24px; display:flex; flex-direction:column; justify-content:flex-end; position:relative; overflow:hidden; border:1px solid var(--line-dark); }
+  .tile .icon { width:38px; height:38px; margin-bottom:auto; }
+  .tile h3 { margin:14px 0 6px; font-size:1.08rem; font-weight:700; }
+  .tile p { margin:0; font-size:.88rem; color:var(--muted-on-ink); line-height:1.5; }
+  .tile.big { grid-area:workouts; padding:30px; }
+  .tile.big h3 { font-size:1.4rem; }
+  .tile.big p { font-size:.96rem; max-width:320px; }
+  .tile[data-a="ember"] .icon { color:var(--ember); }
+  .tile[data-a="amber"] .icon { color:var(--amber); }
+  .tile[data-a="violet"] .icon { color:var(--violet); }
+  .tile[data-a="mint"] .icon { color:var(--mint); }
+  .tile[data-a="line"] { background:transparent; border:1.5px solid var(--line-dark); }
+  .tile[data-a="line"] .icon { color:var(--text-light); }
+  .tile--workouts { grid-area:workouts; }
+  .tile--nutrition { grid-area:nutrition; }
+  .tile--kattu { grid-area:kattu; }
+  .tile--sleep { grid-area:sleep; }
+  .tile--supplements { grid-area:supplements; }
+  .tile--privacy { grid-area:privacy; }
+
+  /* ---------- privacy scorecard ---------- */
+  section.privacy { padding:80px 0; }
+  .privacy-grid { display:grid; grid-template-columns:.9fr 1.1fr; gap:48px; align-items:start; }
+  @media (max-width:860px) { .privacy-grid { grid-template-columns:1fr; } }
+  .privacy h2 { font-size:2rem; font-weight:800; letter-spacing:-0.02em; margin:0 0 16px; }
+  .privacy .lede { margin:0; }
+  .score { border-top:1px solid var(--line-light); }
+  .score .row { display:flex; justify-content:space-between; align-items:center; padding:18px 0; border-bottom:1px solid var(--line-light); gap:18px; }
+  .score .row span.k { font-weight:600; }
+  .score .row span.v { font-family:'Bricolage Grotesque'; font-weight:800; color:var(--ember); white-space:nowrap; }
+
+  /* ---------- final cta ---------- */
+  .cta-final { background:var(--grad); padding:72px 0; text-align:center; color:#1A1206; }
+  .cta-final h2 { font-size:1.9rem; font-weight:800; letter-spacing:-0.02em; margin:0 0 10px; }
+  .cta-final p { margin:0 0 26px; opacity:.82; max-width:440px; margin-left:auto; margin-right:auto; }
+  .cta-final .btn.primary { background:#1A1206; color:var(--text-light); }
+
+  footer { padding:34px 0 50px; }
+  footer .wrap { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+  footer .flinks { display:flex; gap:20px; flex-wrap:wrap; font-size:.88rem; }
+  footer .flinks a { color:var(--muted-on-paper); text-decoration:none; }
+  footer .flinks a:hover { color:var(--text-dark); }
+  footer .copy { color:var(--muted-on-paper); font-size:.85rem; }
+
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
 </style>
 </head>
 <body>
 
 <header class="top">
   <div class="wrap nav">
-    <div class="brand"><span class="mark">K</span> KattuOna</div>
+    <div class="brand"><span class="mark">K</span>KattuOna</div>
     <nav class="links">
       <a href="#features">Features</a>
       <a href="#privacy">Privacy</a>
@@ -89,89 +153,87 @@
 </header>
 
 <section class="hero">
-  <div class="wrap">
-    <span class="badge"><span class="dot"></span> Coming soon &mdash; in closed testing now</span>
-    <h1>Fitness, nutrition and sleep,<br>with an AI coach <span>that's actually yours</span>.</h1>
-    <p class="sub">KattuOna tracks your workouts, meals, sleep and recovery, and layers an AI coach on top &mdash; one
-    you can point at a provider of your choice, or run entirely on your own hardware. No account. No ads. No
-    analytics watching what you do.</p>
-    <div class="cta-row">
-      <a class="btn primary" href="#" aria-disabled="true" onclick="return false;">Coming soon to Google Play</a>
-      <a class="btn ghost" href="#features">See what it does &rarr;</a>
+  <div class="streak" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="wrap hero-grid">
+    <div>
+      <h1 class="display">Train hard.<br>Eat right.<br><span class="grad">Own your data.</span></h1>
+      <p class="lede">KattuOna tracks your workouts, meals, sleep and recovery, and layers an AI coach on top
+      that you control — a provider you pick, or a model running on your own hardware.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#" aria-disabled="true" onclick="return false;">Coming soon to Google Play</a>
+        <a class="btn ghost" href="#features">See what it does</a>
+      </div>
+      <p class="note">In closed testing now. No account to create, ever.</p>
     </div>
-
-    <div class="mock" aria-hidden="true">
-      <div class="row">
-        <strong>Today</strong>
-        <span class="pill">Recovery: Ready to train</span>
-      </div>
-      <div class="tiles">
-        <div class="tile"><div class="n">1,934</div><div class="l">kcal logged</div></div>
-        <div class="tile"><div class="n">142g</div><div class="l">protein</div></div>
-        <div class="tile"><div class="n">7h 42m</div><div class="l">sleep</div></div>
-      </div>
+    <div class="cluster" aria-hidden="true">
+      <div class="stat a"><div class="n">1,934 kcal</div><div class="l">logged today</div></div>
+      <div class="stat b"><div class="n">142g</div><div class="l">protein hit</div></div>
+      <div class="stat c"><div class="n">7h 42m</div><div class="l">sleep, recovery ready</div></div>
     </div>
   </div>
 </section>
 
 <section class="features" id="features">
   <div class="wrap">
-    <h2>Everything in one place</h2>
-    <p class="lede">Built to be genuinely simple for someone just starting out, without cutting the features
+    <h2>One app, not six subscriptions</h2>
+    <p class="lede2">Built to be genuinely simple for someone just starting out, without cutting the features
     people who've trained for years actually want.</p>
-    <div class="grid">
-      <div class="card">
-        <div class="ic">🏋️</div>
+
+    <div class="bento">
+      <div class="tile big tile--workouts" data-a="line">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9v6M8 7v10M20 9v6M16 7v10M8 12h8"/></svg>
         <h3>Workouts &amp; programs</h3>
-        <p>Log any workout, follow a structured program, or let KattuOna build one around your recovery and
-        schedule &mdash; calisthenics and home workouts included.</p>
+        <p>Log any session, follow a structured program, or let KattuOna build one around your recovery and
+        schedule — calisthenics and home workouts included, not bolted on.</p>
       </div>
-      <div class="card">
-        <div class="ic">🍽️</div>
-        <h3>Nutrition &amp; diet</h3>
-        <p>Log food by hand, by barcode, or by photo. The AI Chef can turn whatever's in your fridge into recipe
-        ideas that actually hit your calorie and protein targets.</p>
+      <div class="tile tile--nutrition" data-a="ember">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 3v7a3 3 0 0 0 6 0V3M9 10v11M17 3c-2 2-2 5 0 7v11"/></svg>
+        <h3>Nutrition</h3>
+        <p>Log by hand, barcode, or photo. The AI Chef turns what's in your fridge into recipes that actually
+        hit your calorie and protein targets.</p>
       </div>
-      <div class="card">
-        <div class="ic">🤖</div>
+      <div class="tile tile--kattu" data-a="violet">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2l1.8 5.6L19 9.4l-5.2 1.8L12 17l-1.8-5.8L5 9.4l5.2-1.8z"/></svg>
         <h3>Kattu, your AI coach</h3>
-        <p>Ask questions, get meal and training ideas, and check in on readiness &mdash; powered by a provider
-        you choose, or a model you run yourself.</p>
+        <p>Ask questions, get meal and training ideas, check in on readiness — powered by a provider you
+        choose, or a model you run yourself.</p>
       </div>
-      <div class="card">
-        <div class="ic">😴</div>
+      <div class="tile tile--sleep" data-a="mint">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
         <h3>Sleep &amp; recovery</h3>
-        <p>Automatic sleep detection and a daily readiness check feed straight into training recommendations,
-        inspired by published recovery research.</p>
+        <p>Automatic sleep detection and a daily readiness check feed straight into what KattuOna recommends
+        for training.</p>
       </div>
-      <div class="card">
-        <div class="ic">💊</div>
+      <div class="tile tile--supplements" data-a="amber">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="8" width="18" height="8" rx="4"/><path d="M12 8v8"/></svg>
         <h3>Supplements</h3>
-        <p>Track what you actually take &mdash; brand, dose, ingredients &mdash; with reminders, scanned by
-        barcode or described to the AI in a sentence.</p>
+        <p>Track what you actually take — brand, dose, ingredients — with reminders, scanned by barcode or
+        described to the AI.</p>
       </div>
-      <div class="card">
-        <div class="ic">🔒</div>
+      <div class="tile tile--privacy" data-a="line">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6z"/></svg>
         <h3>Your data, your call</h3>
-        <p>Backups go to a destination you pick &mdash; your own server, your own Google Drive, or nowhere at
-        all &mdash; never to the developer.</p>
+        <p>Backups go wherever you choose — your own server, your own Drive, or nowhere at all. Never to the
+        developer.</p>
       </div>
     </div>
   </div>
 </section>
 
 <section class="privacy" id="privacy">
-  <div class="wrap">
-    <h2>No account. No ads. No analytics.</h2>
-    <p class="lede">Most apps ask you to sign up before they'll even let you look around. KattuOna doesn't have
-    an account to create in the first place &mdash; your logs live on your phone, full stop.</p>
-    <div class="plist">
-      <div><span class="ok">&#10003;</span> Nothing to sign up for, nothing to lose in a breach</div>
-      <div><span class="ok">&#10003;</span> No ad tracking, no advertising ID</div>
-      <div><span class="ok">&#10003;</span> No analytics on what you do in the app</div>
-      <div><span class="ok">&#10003;</span> Backups only go where you choose to send them</div>
-      <div><span class="ok">&#10003;</span> AI requests go only to a provider you set up yourself</div>
-      <div><span class="ok">&#10003;</span> Uninstall the app and every copy on your phone is gone</div>
+  <div class="wrap privacy-grid">
+    <div>
+      <h2>No account. No ads.<br>No analytics.</h2>
+      <p class="lede">Most apps make you sign up before you've even looked around. KattuOna has no account to
+      create in the first place — your logs live on your phone, full stop.</p>
+    </div>
+    <div class="score">
+      <div class="row"><span class="k">Accounts to create</span><span class="v">0</span></div>
+      <div class="row"><span class="k">Ad trackers</span><span class="v">0</span></div>
+      <div class="row"><span class="k">Analytics on what you do</span><span class="v">0</span></div>
+      <div class="row"><span class="k">Backup destinations you control</span><span class="v">3</span></div>
+      <div class="row"><span class="k">AI providers it can report to without you choosing</span><span class="v">0</span></div>
+      <div class="row"><span class="k">Data left behind after uninstall</span><span class="v">0</span></div>
     </div>
   </div>
 </section>
