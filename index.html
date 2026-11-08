@@ -6,6 +6,10 @@
 <meta name="robots" content="noindex, nofollow">
 <title>KattuOna — fitness, nutrition &amp; an AI coach that's actually yours</title>
 <meta name="description" content="KattuOna is a private fitness, nutrition, sleep and habit-tracking app with an optional AI coach. No account, no ads, no analytics — your data stays on your phone.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="icons/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -40,7 +44,7 @@
   .gate { position:fixed; inset:0; z-index:50; display:flex; align-items:center; justify-content:center;
     background:radial-gradient(circle at 30% 20%, rgba(255,59,47,.18), transparent 55%), var(--ink); padding:24px; }
   .gate-card { max-width:380px; width:100%; background:var(--ink2); border:1px solid var(--line-dark); border-radius:22px; padding:34px 30px; text-align:center; }
-  .gate-card .knot { width:46px; height:46px; margin:0 auto 18px; }
+  .gate-card img.app-icon { width:56px; height:56px; border-radius:14px; margin:0 auto 18px; }
   .gate-card h1 { color:var(--text-light); font-size:1.3rem; margin:0 0 10px; letter-spacing:-0.01em; }
   .gate-card p { color:var(--muted-on-ink); font-size:.92rem; line-height:1.55; margin:0 0 22px; }
   .gate-form { display:flex; flex-direction:column; gap:10px; }
@@ -57,7 +61,7 @@
   header.top { padding:26px 0; position:relative; z-index:3; }
   .nav { display:flex; align-items:center; justify-content:space-between; }
   .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.2rem; letter-spacing:-0.01em; }
-  .brand .knot { width:30px; height:30px; }
+  .brand img.app-icon { width:34px; height:34px; border-radius:9px; display:block; }
   nav.links { display:flex; gap:28px; font-size:.95rem; font-weight:600; }
   nav.links a { text-decoration:none; opacity:.72; }
   nav.links a:hover { opacity:1; }
@@ -227,8 +231,7 @@
      needs to reach them without a password. -->
 <div class="gate" id="gate">
   <div class="gate-card">
-    <svg class="knot" viewBox="0 0 48 48" fill="none"><defs><linearGradient id="g0" x1="0" y1="0" x2="48" y2="48"><stop offset="0" stop-color="#FF3B2F"/><stop offset="1" stop-color="#FFC233"/></linearGradient></defs>
-      <circle cx="18" cy="18" r="11" stroke="url(#g0)" stroke-width="4"/><circle cx="30" cy="30" r="11" stroke="url(#g0)" stroke-width="4"/></svg>
+    <img class="app-icon" src="icons/brand-mark.png" alt="" width="56" height="56">
     <h1>KattuOna isn't public yet</h1>
     <p>Still in closed testing. If you've got the password, come on in — otherwise, check back once it's launched.</p>
     <form class="gate-form" id="gateForm">
@@ -245,8 +248,7 @@
 <header class="top">
   <div class="wrap nav">
     <div class="brand">
-      <svg class="knot" viewBox="0 0 48 48" fill="none"><defs><linearGradient id="g1" x1="0" y1="0" x2="48" y2="48"><stop offset="0" stop-color="#FF3B2F"/><stop offset="1" stop-color="#FFC233"/></linearGradient></defs>
-        <circle cx="18" cy="18" r="11" stroke="url(#g1)" stroke-width="4"/><circle cx="30" cy="30" r="11" stroke="url(#g1)" stroke-width="4"/></svg>
+      <img class="app-icon" src="icons/brand-mark.png" alt="" width="34" height="34">
       KattuOna
     </div>
     <nav class="links">
