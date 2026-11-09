@@ -101,13 +101,39 @@ KattuOna -- skin temperature itself is currently only used to detect that a capa
 turned into a reading. None of this is sent anywhere; it stays on your phone the same as steps and sleep above. You
 can withdraw this access at any time in Health Connect or in KattuOna's Settings.</p>
 
-<h2>5. Calendar (optional)</h2>
+<h2>5. Diabetes-aware features (optional, off until you turn it on)</h2>
+<p>During setup, KattuOna asks once whether you manage diabetes (type 1, type 2, or prediabetes). You can also say
+"Prefer not to say," and you can change your answer at any time in Body metrics. If you don't say "Yes," the app
+works exactly as described everywhere else in this policy, with nothing extra shown or collected. This answer is
+stored on your phone the same way as your other body-metrics data (Section 1), and is included in a backup only if
+you turn one on (Section 2).</p>
+<p>If you say "Yes," a few extra, already-scoped things turn on, all local to your phone unless you've turned on a
+backup:</p>
+<ul>
+<li><strong>Net carbs and fiber:</strong> food items can carry a fiber value alongside the usual calories/protein/
+carbs/fat, so the app can show net carbs (carbs minus fiber) next to a logged food or meal. Fiber values you type in
+yourself, or that KattuOna's configured AI estimates (Section 3), are stored and shared the same way the rest of a
+food's nutrition data already is.</li>
+<li><strong>Safety cautions:</strong> a note that exercise can lower blood sugar appears on workout screens, and a
+caution appears on the app's optional morning-routine timing settings about not delaying a meal or medication dose
+around that schedule. These are static text, not personalized advice, and store nothing new about you.</li>
+<li><strong>Blood glucose logging:</strong> you can log a glucose reading by hand (a number and an optional note you
+write yourself), or sync read-only from a connected CGM or glucometer app via Health Connect, the same permission
+model as Section 4 -- KattuOna only ever reads blood glucose from Health Connect, never writes to it, and that
+permission is requested only when you tap "Sync" on this feature. Readings are stored on your phone like any other
+log, and included in a backup only if you turn one on.</li>
+</ul>
+<p>None of this is medical advice. KattuOna does not suggest medication, insulin dosing or timing, does not diagnose
+anything from your numbers, and does not interpret trends in your readings -- it shows you the numbers you logged
+or synced, and nothing more. Always follow your own care team's guidance.</p>
+
+<h2>6. Calendar (optional)</h2>
 <p>If you turn on holiday-aware Smart Wake, KattuOna <strong>reads</strong> your calendar to check whether a day is a
 holiday or marked as leave. It only checks event dates/titles for that purpose — nothing beyond "is this day a
 holiday" is kept, and nothing leaves your phone. You can withdraw calendar access at any time in Android Settings
 or in KattuOna's Settings.</p>
 
-<h2>6. Automatic sleep detection (optional)</h2>
+<h2>7. Automatic sleep detection (optional)</h2>
 <p>If you switch on automatic sleep detection, KattuOna can sense when you fall asleep and wake up in either (or both)
 of two ways, depending on what you grant:</p>
 <ul>
@@ -124,7 +150,7 @@ recovery check-in. It is not sent anywhere, including in backups of your other l
 behind them) kept on your phone. You can withdraw "Usage access" or "Physical activity" access at any time in
 Android Settings or in KattuOna's Settings.</p>
 
-<h2>7. Supplement tracking (optional)</h2>
+<h2>8. Supplement tracking (optional)</h2>
 <p>KattuOna lets you log the supplements you actually take -- brand, product, serving size and the ingredients on
 the label -- the same way it logs food and workouts, plus an optional reminder time you set yourself for each one.
 This stays on your phone like any other log, and is included in a backup only if you turn one on (Section 2).</p>
@@ -142,7 +168,7 @@ KattuOna can look up that product's name and nutrition facts. This is the one pl
 has built in a fixed third party rather than one you choose yourself; see Open Food Facts' own privacy policy,
 linked above, for how they handle that request.</p>
 
-<h2>8. Shop (optional)</h2>
+<h2>9. Shop (optional)</h2>
 <p>The Shop screen shows supplements and gear that may be useful for training, with a link to buy each one.
 KattuOna doesn't sell anything itself and doesn't handle payments: tapping a product opens that product's page in
 your browser, on the seller's own site, the same as tapping any other link -- you finish checkout there, and
@@ -168,21 +194,21 @@ never your full logs, and never anything if you haven't set up an AI engine or h
 sources it draws from. If the AI is unreachable or answers with something unusable, Shop just keeps the plain
 on-device order for that day. Like the switches above, it's entirely optional and reversible from the tune icon.</p>
 
-<h2>9. Anonymous, shared food and exercise database</h2>
+<h2>10. Anonymous, shared food and exercise database</h2>
 <p>When you log a food or workout that isn't already in the app's built-in list, the app may contribute that item's
 name and nutrition or exercise values to a shared, anonymous database (hosted on Google Firebase) so other users
 searching for the same item don't have to enter it from scratch. This only ever includes the food/workout name and
 its nutritional or exercise values — never your personal logs, your name, or anything that identifies you. It can't
 be traced back to you, and nothing you log privately is ever included.</p>
 
-<h2>10. Crash reports and app integrity</h2>
+<h2>11. Crash reports and app integrity</h2>
 <p>The app uses Firebase Crashlytics and Firebase App Check. Crashlytics sends a crash report (the error, device
 model, Android version and a random installation ID — not linked to your name or any account) so problems can be
 fixed; it never includes your logs or profile. App Check confirms requests to the shared database in Section 9 come
 from a genuine copy of the app, without needing a sign-in. See Google's own handling of this data at
 <a href="https://firebase.google.com/support/privacy">firebase.google.com/support/privacy</a>.</p>
 
-<h2>11. What the developer never does</h2>
+<h2>12. What the developer never does</h2>
 <ul>
   <li>No advertising, no ad tracking, no advertising ID.</li>
   <li>No analytics on what you do in the app.</li>
@@ -191,7 +217,7 @@ from a genuine copy of the app, without needing a sign-in. See Google's own hand
   <li>No account or login of any kind to create, lose, or have breached.</li>
 </ul>
 
-<h2>12. Summary of data that can leave your phone</h2>
+<h2>13. Summary of data that can leave your phone</h2>
 <div class="wrap">
 <table>
   <tr><th>Data</th><th>Sent to</th><th>When</th></tr>
@@ -205,12 +231,13 @@ from a genuine copy of the app, without needing a sign-in. See Google's own hand
   <tr><td>Whichever Shop personalization sources you've allowed (food/workout summary, goal, soreness) -- as plain text, never a photo or full logs</td><td>The AI server or provider <em>you</em> configured in Settings</td><td>Only if you turn on "Rank with your AI engine" in Shop's tune icon, at most once a day</td></tr>
   <tr><td>Steps and sleep sessions</td><td>Read from Health Connect, not sent anywhere by KattuOna</td><td>Only if you grant Health Connect access</td></tr>
   <tr><td>Skin temperature, heart-rate variability, VO2max, blood oxygen and respiratory rate</td><td>Read from Health Connect, not sent anywhere by KattuOna</td><td>Only if you connect a supported wearable and grant the separate advanced-wearable permission</td></tr>
+  <tr><td>Blood glucose readings</td><td>Read from Health Connect, not sent anywhere by KattuOna</td><td>Only if you've said you manage diabetes and tap "Sync" on the Blood glucose card</td></tr>
   <tr><td>Whether a day is a holiday</td><td>Read from your calendar, not sent anywhere by KattuOna</td><td>Only if you grant calendar access</td></tr>
   <tr><td>Bedtime/wake times (plus confidence, motion and light readings for them)</td><td>Read from Android's Sleep API, not sent anywhere by KattuOna</td><td>Only if you grant the "Physical activity" permission and turn on automatic sleep detection</td></tr>
 </table>
 </div>
 
-<h2>13. Deleting your data</h2>
+<h2>14. Deleting your data</h2>
 <p>There is no KattuOna account, so there is nothing to delete on the developer's end — every copy of your data is
 somewhere you control (a step-by-step version of this section is also at
 <a href="delete-account.html">delete-account.html</a>):</p>
@@ -223,11 +250,11 @@ somewhere you control (a step-by-step version of this section is also at
   <li><strong>Calendar:</strong> remove KattuOna's calendar access in Android Settings at any time.</li>
 </ul>
 
-<h2>14. Children</h2>
+<h2>15. Children</h2>
 <p>KattuOna is intended for users aged 14 and up, and the app enforces this at setup. It is not directed at children
 under 13, and the developer does not knowingly collect data from children under 13.</p>
 
-<h2>15. Changes and contact</h2>
+<h2>16. Changes and contact</h2>
 <p>If this policy changes, the date at the top changes too, and for any material change, notice will be given inside
 the app. Questions or requests: <a href="mailto:Kattu0na@gmail.com">Kattu0na@gmail.com</a>.</p>
 </main>
