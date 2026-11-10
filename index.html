@@ -390,6 +390,68 @@
   footer .flinks a { color:var(--muted-on-paper); text-decoration:none; }
   footer .flinks a:hover { color:var(--text-dark); }
   footer .copy { color:var(--muted-on-paper); font-size:.85rem; }
+
+  /* ---- Kattu chat widget ---- */
+  .kw { position:fixed; right:18px; bottom:18px; z-index:80; font-family:'Manrope',system-ui,sans-serif; }
+  .kw-avatar { width:44px; height:44px; border-radius:50%; background:var(--ink3); flex-shrink:0;
+    background-repeat:no-repeat; background-position:0 55%;
+    background-size:calc(var(--kw-frames,1) * 100%) 100%; background-image:var(--kw-src, none); }
+  .kw-avatar.kw-anim { animation-name:kwSprite; animation-timing-function:steps(var(--kw-steps,1));
+    animation-duration:var(--kw-dur,1s); animation-iteration-count:var(--kw-iter,infinite); }
+  .kw-avatar.kw-ping { animation-direction:alternate; }
+  @keyframes kwSprite { from { background-position:0 55%; } to { background-position:100% 55%; } }
+  .kw-bubble { display:flex; align-items:center; gap:10px; background:var(--ink2); border:1px solid var(--line-dark);
+    border-radius:100px; padding:6px 18px 6px 6px; cursor:pointer; box-shadow:0 14px 30px -12px rgba(0,0,0,.4);
+    transition:transform .2s ease, box-shadow .2s ease; }
+  .kw-bubble:hover { transform:translateY(-2px); box-shadow:0 18px 36px -12px rgba(0,0,0,.5); }
+  .kw-bubble .kw-avatar { width:48px; height:48px; }
+  .kw-bubble-text { color:var(--text-light); font-weight:700; font-size:.88rem; white-space:nowrap; }
+  .kw-bubble-dot { width:7px; height:7px; border-radius:50%; background:var(--mint); margin-left:2px;
+    box-shadow:0 0 0 0 rgba(47,230,166,.55); animation:dotPulse2 2s infinite; flex-shrink:0; }
+  .kw.open .kw-bubble { display:none; }
+  .kw-panel { width:328px; max-width:calc(100vw - 32px); max-height:min(76vh, 560px); display:flex; flex-direction:column;
+    background:var(--ink2); border:1px solid var(--line-dark); border-radius:22px; overflow:hidden;
+    box-shadow:0 26px 60px -18px rgba(0,0,0,.55); opacity:0; transform:translateY(14px) scale(.97);
+    pointer-events:none; transition:opacity .22s ease, transform .22s ease; }
+  .kw.open .kw-panel { opacity:1; transform:none; pointer-events:auto; }
+  .kw-head { display:flex; align-items:center; gap:11px; padding:14px 14px 14px 12px; border-bottom:1px solid var(--line-dark); }
+  .kw-head .kw-avatar { width:40px; height:40px; }
+  .kw-head-text { flex:1; min-width:0; }
+  .kw-head-text strong { display:block; color:var(--text-light); font-size:.92rem; font-family:'Bricolage Grotesque'; }
+  .kw-head-text span { display:block; color:var(--muted-on-ink); font-size:.76rem; margin-top:1px; }
+  .kw-close { background:none; border:none; color:var(--muted-on-ink); cursor:pointer; padding:6px; border-radius:8px;
+    display:grid; place-items:center; flex-shrink:0; }
+  .kw-close:hover { background:var(--ink3); color:var(--text-light); }
+  .kw-messages { flex:1; overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:9px; min-height:180px; }
+  .kw-msg { max-width:86%; padding:9px 13px; border-radius:15px; font-size:.86rem; line-height:1.45; }
+  .kw-msg.them { background:var(--ink3); color:var(--text-light); align-self:flex-start; border-bottom-left-radius:5px; }
+  .kw-msg.me { background:var(--violet); color:#fff; align-self:flex-end; border-bottom-right-radius:5px; }
+  .kw-msg.err { background:rgba(255,59,47,.14); color:var(--text-light); border:1px solid rgba(255,59,47,.3); align-self:flex-start; }
+  .kw-typing { display:flex; gap:4px; align-self:flex-start; background:var(--ink3); border-radius:15px; padding:11px 14px; }
+  .kw-typing span { width:6px; height:6px; border-radius:50%; background:var(--muted-on-ink); animation:kwTyping 1.2s infinite ease-in-out; }
+  .kw-typing span:nth-child(2) { animation-delay:.15s; } .kw-typing span:nth-child(3) { animation-delay:.3s; }
+  @keyframes kwTyping { 0%,60%,100% { transform:translateY(0); opacity:.5; } 30% { transform:translateY(-3px); opacity:1; } }
+  .kw-chips { display:flex; flex-wrap:wrap; gap:7px; padding:0 14px 12px; }
+  .kw-chip { background:var(--ink3); border:1px solid var(--line-dark); color:var(--text-light); border-radius:100px;
+    padding:7px 13px; font-size:.78rem; cursor:pointer; font-family:inherit; }
+  .kw-chip:hover { border-color:var(--violet); }
+  .kw-form { display:flex; gap:8px; padding:12px; border-top:1px solid var(--line-dark); }
+  .kw-form input { flex:1; min-width:0; background:var(--ink3); border:1.5px solid var(--line-dark); border-radius:11px;
+    padding:11px 13px; color:var(--text-light); font-size:.86rem; font-family:inherit; }
+  .kw-form input:focus { outline:none; border-color:var(--violet); }
+  .kw-form button { background:var(--violet); border:none; border-radius:11px; width:42px; flex-shrink:0; cursor:pointer;
+    display:grid; place-items:center; color:#fff; }
+  .kw-form button:disabled { opacity:.5; cursor:default; }
+  .kw-foot { margin:0; padding:0 14px 12px; font-size:.68rem; color:var(--muted-on-ink); text-align:center; }
+  .kw-foot a { color:var(--muted-on-ink); }
+  @media (max-width:480px) {
+    .kw { right:12px; bottom:12px; left:12px; }
+    .kw-bubble { margin-left:auto; }
+    .kw-panel { width:100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .kw-avatar.kw-anim { animation:none; }
+  }
 </style>
 </head>
 <body class="gated">
@@ -854,6 +916,34 @@
 </div><!-- /.page -->
 
 <!-- Lenis (MIT) -- smooth, weighted scrolling. canvas-confetti (MIT) -- the burst on unlock/CTA. -->
+<div class="kw" id="kw">
+  <div class="kw-panel" id="kwPanel">
+    <div class="kw-head">
+      <span class="kw-avatar" id="kwHeadAvatar"></span>
+      <div class="kw-head-text">
+        <strong>Kattu</strong>
+        <span>Ask about the app</span>
+      </div>
+      <button class="kw-close" id="kwClose" aria-label="Close chat" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="kw-messages" id="kwMessages" role="log" aria-live="polite"></div>
+    <div class="kw-chips" id="kwChips"></div>
+    <form class="kw-form" id="kwForm">
+      <input id="kwInput" type="text" placeholder="Ask Kattu something…" autocomplete="off" maxlength="400" aria-label="Your question for Kattu">
+      <button type="submit" aria-label="Send">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z"/></svg>
+      </button>
+    </form>
+    <p class="kw-foot">An AI, not the KattuOna team — see the <a href="privacy.html">privacy policy</a></p>
+  </div>
+  <button class="kw-bubble" id="kwBubble" type="button" aria-expanded="false" aria-controls="kwPanel">
+    <span class="kw-avatar" id="kwBubbleAvatar"></span>
+    <span class="kw-bubble-text">Ask Kattu<span class="kw-bubble-dot" aria-hidden="true"></span></span>
+  </button>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
@@ -1055,6 +1145,178 @@
       card.addEventListener('mouseleave', function(){ card.style.transform = ''; });
     });
   }
+})();
+</script>
+
+<script>
+(function(){
+  // ---- Kattu chat widget ----
+  // WORKER_URL: set this once the Cloudflare Worker proxy is deployed --
+  // see ai-widget/worker/SETUP.md. Left as a placeholder, the bubble still
+  // shows and the avatar still waves, but sending a question explains it's
+  // not wired up yet instead of failing silently.
+  var KATTU_WIDGET = {
+    WORKER_URL: "REPLACE_WITH_YOUR_WORKER_URL", // e.g. https://kattuona-widget-ai.<you>.workers.dev
+  };
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Sprite sheets built from the app's own kattu_f/ animated-character frames
+  // (wave, happy, think) -- each a horizontal strip of 120x120 frames.
+  var SPRITES = {
+    greet:    { url: "kattu/greet.png",    frames: 9,  dur: "0.9s",  iter: "1",        ping: false },
+    idle:     { url: "kattu/idle.png",     frames: 12, dur: "2.4s",  iter: "infinite", ping: true  },
+    thinking: { url: "kattu/thinking.png", frames: 14, dur: "2.1s",  iter: "infinite", ping: true  },
+  };
+
+  function setAvatar(el, mood, onDone) {
+    var s = SPRITES[mood];
+    if (!el || !s) return;
+    el.style.setProperty('--kw-src', 'url(' + s.url + ')');
+    el.style.setProperty('--kw-frames', s.frames);
+    el.style.setProperty('--kw-steps', Math.max(1, s.frames - 1));
+    el.style.setProperty('--kw-dur', s.dur);
+    el.style.setProperty('--kw-iter', s.iter);
+    el.classList.remove('kw-anim', 'kw-ping');
+    if (reduce) { el.style.backgroundPosition = '0 55%'; return; }
+    // restart the animation cleanly
+    void el.offsetWidth;
+    el.classList.add('kw-anim');
+    if (s.ping) el.classList.add('kw-ping');
+    if (s.iter === '1' && onDone) {
+      el.addEventListener('animationend', function handler(){
+        el.removeEventListener('animationend', handler);
+        onDone();
+      });
+    }
+  }
+
+  var kw = document.getElementById('kw');
+  var bubble = document.getElementById('kwBubble');
+  var panel = document.getElementById('kwPanel');
+  var closeBtn = document.getElementById('kwClose');
+  var messagesEl = document.getElementById('kwMessages');
+  var chipsEl = document.getElementById('kwChips');
+  var form = document.getElementById('kwForm');
+  var input = document.getElementById('kwInput');
+  var bubbleAvatar = document.getElementById('kwBubbleAvatar');
+  var headAvatar = document.getElementById('kwHeadAvatar');
+  if (!kw || !bubble) return;
+
+  setAvatar(bubbleAvatar, 'idle');
+
+  var history = []; // {role, content} -- only what's sent upstream, never anything else
+  var opened = false;
+  var sending = false;
+
+  var GREETINGS = [
+    "Hey! I'm Kattu — ask me anything about the app.",
+    "Hi there. Curious how KattuOna works? Go ahead and ask.",
+    "Hello! Happy to explain anything about workouts, nutrition, privacy, the AI setup — whatever you're wondering."
+  ];
+  var STARTER_CHIPS = [
+    "What does it track?",
+    "Is my data private?",
+    "How does the AI coach work?"
+  ];
+
+  function addMsg(role, text) {
+    var div = document.createElement('div');
+    div.className = 'kw-msg ' + (role === 'user' ? 'me' : role === 'error' ? 'err' : 'them');
+    div.textContent = text;
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return div;
+  }
+
+  function addChips(list) {
+    chipsEl.innerHTML = '';
+    list.forEach(function(q){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'kw-chip'; b.textContent = q;
+      b.addEventListener('click', function(){ chipsEl.innerHTML = ''; sendMessage(q); });
+      chipsEl.appendChild(b);
+    });
+  }
+
+  function openPanel() {
+    kw.classList.add('open');
+    bubble.setAttribute('aria-expanded', 'true');
+    if (!opened) {
+      opened = true;
+      setAvatar(headAvatar, 'greet', function(){ setAvatar(headAvatar, 'idle'); });
+      addMsg('assistant', GREETINGS[Math.floor(Math.random() * GREETINGS.length)]);
+      addChips(STARTER_CHIPS);
+    } else {
+      setAvatar(headAvatar, 'idle');
+    }
+    setTimeout(function(){ input.focus(); }, 180);
+  }
+
+  function closePanel() {
+    kw.classList.remove('open');
+    bubble.setAttribute('aria-expanded', 'false');
+    bubble.focus();
+  }
+
+  bubble.addEventListener('click', openPanel);
+  closeBtn.addEventListener('click', closePanel);
+  document.addEventListener('keydown', function(ev){
+    if (ev.key === 'Escape' && kw.classList.contains('open')) closePanel();
+  });
+
+  function sendMessage(text) {
+    text = (text || '').trim();
+    if (!text || sending) return;
+    addMsg('user', text);
+    history.push({ role: 'user', content: text });
+    input.value = '';
+    sending = true;
+    input.disabled = true;
+
+    if (!KATTU_WIDGET.WORKER_URL || KATTU_WIDGET.WORKER_URL.indexOf('REPLACE_WITH') === 0) {
+      setTimeout(function(){
+        addMsg('error', "Kattu's chat isn't connected yet — the site owner still has to set up the AI proxy (see ai-widget/worker/SETUP.md).");
+        sending = false; input.disabled = false; input.focus();
+      }, 300);
+      return;
+    }
+
+    setAvatar(headAvatar, 'thinking');
+    var typing = document.createElement('div');
+    typing.className = 'kw-typing';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    messagesEl.appendChild(typing);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+
+    fetch(KATTU_WIDGET.WORKER_URL.replace(/\/$/, '') + '/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: history })
+    }).then(function(res){ return res.json().then(function(data){ return { ok: res.ok, data: data }; }); })
+      .then(function(r){
+        typing.remove();
+        if (!r.ok || !r.data || !r.data.reply) {
+          addMsg('error', (r.data && r.data.error) || "Couldn't get an answer just now — try again in a bit.");
+        } else {
+          addMsg('assistant', r.data.reply);
+          history.push({ role: 'assistant', content: r.data.reply });
+        }
+      })
+      .catch(function(){
+        typing.remove();
+        addMsg('error', "Couldn't reach Kattu right now — check your connection and try again.");
+      })
+      .finally(function(){
+        setAvatar(headAvatar, 'idle');
+        sending = false; input.disabled = false; input.focus();
+      });
+  }
+
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    sendMessage(input.value);
+  });
 })();
 </script>
 

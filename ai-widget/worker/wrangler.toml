@@ -1,0 +1,19 @@
+name = "kattuona-widget-ai"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+# Non-secret config. The key itself is set separately as a secret -- see SETUP.md --
+# and never goes in this file or anywhere in the repo.
+[vars]
+# Any OpenAI-chat-completions-compatible base URL (no trailing /chat/completions).
+# Example for Groq's free tier: "https://api.groq.com/openai/v1"
+AI_BASE_URL = "https://api.groq.com/openai/v1"
+AI_MODEL = "llama-3.1-8b-instant"
+ALLOWED_ORIGINS = "https://kattuona.com,https://www.kattuona.com,https://kattuona.github.io"
+RATE_LIMIT_MAX = "20"
+
+# Created with `wrangler kv namespace create RATE_LIMIT` -- paste the real id
+# it prints in place of the placeholder below. See SETUP.md step 3.
+[[kv_namespaces]]
+binding = "RATE_LIMIT_KV"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
