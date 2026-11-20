@@ -26,7 +26,7 @@
 <body>
 <main>
 <h1>KattuOna Privacy Policy</h1>
-<p class="muted">Last updated: 9 November 2026 · App: KattuOna (com.kattuona.app)</p>
+<p class="muted">Last updated: 20 November 2026 · App: KattuOna (com.kattuona.app)</p>
 
 <p>KattuOna is a personal fitness, nutrition, sleep and habit-tracking app with an optional AI coach. This page explains
 what the app stores and what, if anything, leaves your phone. In short: there is no KattuOna account and no sign-in;
@@ -172,7 +172,20 @@ KattuOna can look up that product's name and nutrition facts. This is the one pl
 has built in a fixed third party rather than one you choose yourself; see Open Food Facts' own privacy policy,
 linked above, for how they handle that request.</p>
 
-<h2>9. Shop (optional)</h2>
+<h2>9. Live weather for water reminders (optional, off by default)</h2>
+<p>Settings → Reminders has a "Use live weather" switch. Turning it on sends the state/country you
+already set (Food settings, or onboarding) — never GPS or precise location, and nothing new to grant
+in Android — to a geocoding lookup and then to <a href="https://open-meteo.com/">Open-Meteo</a>, a
+free weather service, once a day, to read today's temperature and humidity near that place. KattuOna
+uses that solely to decide whether today counts as hot and humid for your water target and reminder
+pacing (Settings → Reminders also has a manual version of this same switch, used automatically
+whenever live weather is off or a day's check fails). The result (temperature, humidity, and the
+place name they were looked up for) stays on your phone like any other setting; it is not logged
+anywhere by the developer and is included in your backup only if you've turned one on (Section 2).
+Open-Meteo receives only that place name's coordinates — never your profile, logs, or anything else —
+each time it's checked; see their own privacy policy for how they handle that request.</p>
+
+<h2>10. Shop (optional)</h2>
 <p>The Shop screen shows supplements and gear that may be useful for training, with a link to buy each one.
 KattuOna doesn't sell anything itself and doesn't handle payments: tapping a product opens that product's page in
 your browser, on the seller's own site, the same as tapping any other link -- you finish checkout there, and
@@ -198,36 +211,37 @@ never your full logs, and never anything if you haven't set up an AI engine or h
 sources it draws from. If the AI is unreachable or answers with something unusable, Shop just keeps the plain
 on-device order for that day. Like the switches above, it's entirely optional and reversible from the tune icon.</p>
 
-<h2>10. Anonymous, shared food and exercise database</h2>
+<h2>11. Anonymous, shared food and exercise database</h2>
 <p>When you log a food or workout that isn't already in the app's built-in list, the app may contribute that item's
 name and nutrition or exercise values to a shared, anonymous database (hosted on Google Firebase) so other users
 searching for the same item don't have to enter it from scratch. This only ever includes the food/workout name and
 its nutritional or exercise values — never your personal logs, your name, or anything that identifies you. It can't
 be traced back to you, and nothing you log privately is ever included.</p>
 
-<h2>11. Crash reports and app integrity</h2>
+<h2>12. Crash reports and app integrity</h2>
 <p>The app uses Firebase Crashlytics and Firebase App Check. Crashlytics sends a crash report (the error, device
 model, Android version and a random installation ID — not linked to your name or any account) so problems can be
-fixed; it never includes your logs or profile. App Check confirms requests to the shared database in Section 9 come
+fixed; it never includes your logs or profile. App Check confirms requests to the shared database in Section 11 come
 from a genuine copy of the app, without needing a sign-in. See Google's own handling of this data at
 <a href="https://firebase.google.com/support/privacy">firebase.google.com/support/privacy</a>.</p>
 
-<h2>12. What the developer never does</h2>
+<h2>13. What the developer never does</h2>
 <ul>
   <li>No advertising, no ad tracking, no advertising ID.</li>
   <li>No analytics on what you do in the app.</li>
-  <li>Never sells your data, and never shares anything that identifies you with advertisers or third parties. (The one exception, by design: a barcode number you choose to scan is sent to Open Food Facts to look that product up -- see Section 7. It carries no personal information.)</li>
+  <li>Never sells your data, and never shares anything that identifies you with advertisers or third parties. (Two narrow exceptions, by design: a barcode number you choose to scan is sent to Open Food Facts to look that product up -- see Section 8; and, only if you turn on live weather, the state/country you set is sent to a geocoder and to Open-Meteo to check today's weather -- see Section 9. Neither carries any personal information.)</li>
   <li>Never has access to your logs, your AI server, or your backup destination.</li>
   <li>No account or login of any kind to create, lose, or have breached.</li>
 </ul>
 
-<h2>13. Summary of data that can leave your phone</h2>
+<h2>14. Summary of data that can leave your phone</h2>
 <div class="wrap">
 <table>
   <tr><th>Data</th><th>Sent to</th><th>When</th></tr>
   <tr><td>Your request plus the profile/log details it needs</td><td>The AI server or provider <em>you</em> configured in Settings</td><td>Only when you use an AI feature, and only after you've set one up</td></tr>
   <tr><td>A photo of a dish or a supplement label (resized, not saved by KattuOna)</td><td>The AI server or provider <em>you</em> configured in Settings</td><td>Only when you tap "Photo with AI" on a meal or supplement, and only if your AI setup supports it</td></tr>
   <tr><td>A scanned barcode number (not a photo, not personal information)</td><td>Open Food Facts</td><td>Only when you tap "Scan a barcode" on a supplement</td></tr>
+  <tr><td>Your set state/country (not GPS, not precise location)</td><td>A geocoding lookup, then Open-Meteo (weather)</td><td>Once a day, only if you turn on "Use live weather" (Settings → Reminders) -- see Section 9</td></tr>
   <tr><td>Your logs, settings and custom foods/exercises</td><td>Your own server, or your own Google Drive</td><td>Only if you turn that backup destination on</td></tr>
   <tr><td>Name and values of a new custom food/exercise</td><td>Shared, anonymous list in Firestore</td><td>When you log an item that isn't already in KattuOna's built-in list</td></tr>
   <tr><td>Crash details, device model, a random installation ID</td><td>Firebase Crashlytics</td><td>When the app crashes</td></tr>
@@ -241,7 +255,7 @@ from a genuine copy of the app, without needing a sign-in. See Google's own hand
 </table>
 </div>
 
-<h2>14. Deleting your data</h2>
+<h2>15. Deleting your data</h2>
 <p>There is no KattuOna account, so there is nothing to delete on the developer's end — every copy of your data is
 somewhere you control (a step-by-step version of this section is also at
 <a href="delete-account.html">delete-account.html</a>):</p>
@@ -254,11 +268,11 @@ somewhere you control (a step-by-step version of this section is also at
   <li><strong>Calendar:</strong> remove KattuOna's calendar access in Android Settings at any time.</li>
 </ul>
 
-<h2>15. Children</h2>
+<h2>16. Children</h2>
 <p>KattuOna is intended for users aged 14 and up, and the app enforces this at setup. It is not directed at children
 under 13, and the developer does not knowingly collect data from children under 13.</p>
 
-<h2>16. Changes and contact</h2>
+<h2>17. Changes and contact</h2>
 <p>If this policy changes, the date at the top changes too, and for any material change, notice will be given inside
 the app. Questions or requests: <a href="mailto:Kattu0na@gmail.com">Kattu0na@gmail.com</a>.</p>
 </main>
