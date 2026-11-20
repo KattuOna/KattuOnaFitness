@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>为 KattuOna 运行你自己的 AI 服务器</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="icons/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+  :root { --bg:#ffffff; --fg:#1b1d1f; --muted:#5b6168; --accent:#0a7d55; --line:#e3e6e8; --code-bg:#f3f5f6; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#111315; --fg:#eceef0; --muted:#a3a9b0; --accent:#3ddc97; --line:#2a2e32; --code-bg:#1b1e21; } }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width:760px; margin:0 auto; padding:32px 16px 64px; }
+  h1 { font-size:1.9rem; margin:0 0 4px; }
+  h2 { font-size:1.2rem; margin:32px 0 8px; padding-top:16px; border-top:1px solid var(--line); }
+  h3 { font-size:1.02rem; margin:20px 0 6px; }
+  p, li { color:var(--fg); } .muted { color:var(--muted); }
+  a { color:var(--accent); }
+  ol, ul { padding-left:22px; }
+  li { margin:6px 0; }
+  code { background:var(--code-bg); border:1px solid var(--line); border-radius:4px; padding:1px 5px; font-size:.9em; }
+  pre { background:var(--code-bg); border:1px solid var(--line); border-radius:8px; padding:14px; overflow-x:auto; font-size:.88rem; line-height:1.5; }
+  pre code { background:none; border:none; padding:0; }
+  .box { background:var(--code-bg); border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin:14px 0; }
+  .copybar { display:flex; justify-content:space-between; align-items:center; margin:18px 0 6px; }
+  button.copy { font:inherit; font-size:.85rem; background:var(--accent); color:#06231a; border:none; border-radius:6px; padding:6px 12px; cursor:pointer; }
+  button.copy:active { opacity:.8; }
+  .note { border-left:3px solid var(--accent); padding:2px 14px; margin:14px 0; }
+</style>
+</head>
+<body>
+<main>
+<p class="muted" style="font-size:.85rem; margin:0 0 20px; line-height:1.8;">
+  <a href="self-hosting.html">English</a> ·
+  <a href="self-hosting.hi.html">हिन्दी</a> ·
+  <a href="self-hosting.bn.html">বাংলা</a> ·
+  <a href="self-hosting.kn.html">ಕನ್ನಡ</a> ·
+  <a href="self-hosting.ml.html">മലയാളം</a> ·
+  <a href="self-hosting.ta.html">தமிழ்</a> ·
+  <a href="self-hosting.te.html">తెలుగు</a> ·
+  <a href="self-hosting.zh.html">中文</a>
+</p>
+<h1>为 KattuOna 运行你自己的 AI 服务器</h1>
+<p class="muted">适合那些不想依赖别人的服务器来提供 AI 教练的人。</p>
+
+<p>KattuOna 的 AI 功能(教练聊天、食物/运动查询、餐食建议、状态检查、方案构建器)可以与
+<strong>任何</strong>使用同一套简单协议的服务器对话 &mdash; 不只是应用内置的那一个。本页适合任何想要自己运行这台服务器的人:
+在一台闲置的电脑上,一台家用服务器上,一个小型 VPS 上,随便你有什么。这样,你的问题和你的健身数据就只会发往你自己控制的一台机器,
+它运行着一个免费的本地 AI 模型(没有订阅,中间没有任何公司)。</p>
+
+<p>你不需要懂编程。你需要一台能保持开机的电脑(或在你想用 AI 时打开),以及一个能替你运行命令的 AI 编程助手
+&mdash; 例如 Claude Code。下面的提示词会准确告诉这个助手要搭建什么。</p>
+
+<h2>1. 你最终会得到什么</h2>
+<ul>
+  <li>一个在你电脑上运行的小型、免费的本地 AI 模型(通过 <a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a>),这样回答问题时不会有任何内容离开你的网络。</li>
+  <li>一个架设在它前面的小型网关程序,KattuOna 可以访问它,它会在回答之前检查每个人各自的访问密钥。</li>
+  <li>为每一个将使用它的人(你自己、你的伴侣、每一位家庭成员)准备一个访问密钥 &mdash; 每个密钥只是一个名字加一串随机字符,创建或删除都很容易。</li>
+  <li>如果你想要,一种在不在家时从家庭网络外部访问它的方法(像 <a href="https://tailscale.com" target="_blank" rel="noopener">Tailscale</a> 这样的工具是最简单的方式 &mdash; 它会给你的家用电脑一个只有你自己的设备才能访问的私有地址,无需在公共互联网上开放任何端口)。</li>
+</ul>
+
+<h2>2. 你需要准备什么</h2>
+<ul>
+  <li>一台你可以让它一直运行的电脑(即使是一台旧笔记本电脑,运行小模型也没问题)。Linux、macOS 或 Windows(搭配 WSL)都可以。</li>
+  <li>在那台电脑上安装一个能代你运行 shell 命令的 AI 编程助手 &mdash; <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a> 是一个直接的选择,但任何具备同样能力的助手都可以。</li>
+  <li>大约 20&ndash;30 分钟。</li>
+</ul>
+
+<h2>3. 提示词</h2>
+<p>在将运行服务器的电脑上打开一个终端,在一个空文件夹中启动你的 AI 编程助手,把下面整个框中的内容作为你的第一条消息粘贴进去。
+它描述了 KattuOna 所期望的那个确切的小型 HTTP 服务,这样助手就能把它构建出来、测试它,并设置成自动启动。</p>
+
+<div class="copybar"><span class="muted">把它粘贴进你的本地 AI 助手</span>
+<button class="copy" onclick="copyPrompt()">Copy prompt</button></div>
+<div class="box"><pre id="promptBox"><code>I want to set up a small self-hosted AI server on this computer, for a fitness app called KattuOna to
+talk to. Please do all of the following, explaining each step as you go, and actually run the
+commands yourself rather than just telling me what to run:
+
+1. Install Ollama (https://ollama.com) if it isn't already installed, and pull a small, fast
+   instruction-tuned model suitable for CPU use (something in the 1-4B parameter range, such as
+   llama3.2:3b-instruct-q4_K_M or a similarly sized alternative you judge to be a good fit for this
+   machine's hardware). Confirm Ollama answers a test prompt on localhost:11434 before moving on.
+
+2. Write a small HTTP gateway program (Python standard library only, no extra dependencies beyond
+   what's already installed) that:
+   - Listens on a local port of your choice (pick one not already in use, e.g. 8766, and tell me
+     which).
+   - Exposes POST /chat/completions, accepting a JSON body shaped like an OpenAI-style chat
+     completion request: {"model": "...", "messages": [{"role": "...", "content": "..."}], ...}.
+     Forward the messages to the local Ollama model and return a response in the same
+     OpenAI-compatible shape: {"choices": [{"message": {"role": "assistant", "content": "..."}}]}.
+   - Requires an `Authorization: Bearer <key>` header on every request. Keep a plain text file of
+     valid keys, one per line, formatted as "name key" (e.g. "alex 7f3a9c2b1e..."), stored
+     somewhere only this machine's admin can read (not world-readable). Reject requests with a
+     missing or wrong key with HTTP 401, and don't log the key itself anywhere.
+   - Caps request body size at a sane limit (e.g. 50KB) and returns 413 if exceeded.
+   - Logs only minimal metadata per request (which person's key was used, timestamp, how long it
+     took) -- never the message content, since this may include personal health/fitness details.
+   - Add a small command-line helper (or a few short shell scripts) to add a new key for a person
+     ("add-key NAME" -- generates a random key, appends "NAME key" to the keys file, prints the new
+     key once so I can copy it), to remove one ("revoke NAME" -- deletes that person's line), and to
+     list current names without printing their keys ("list-keys").
+
+3. Set this gateway up as a service that starts automatically when the computer boots/restarts
+   (systemd on Linux, launchd on macOS, or Task Scheduler / NSSM on Windows -- whichever fits this
+   machine), and start it now.
+
+4. Test it end-to-end: create one key for me, send a real chat request with it using curl and
+   confirm a sensible model reply comes back, send a request with a wrong key and confirm I get
+   401, and send an oversized request and confirm I get 413.
+
+5. Tell me, in plain terms: the port number it's listening on, exactly how to run add-key / revoke /
+   list-keys afterwards, and where the keys file lives. If I want to reach this server from outside
+   my home network, suggest installing Tailscale (https://tailscale.com) and tell me the address
+   KattuOna should use once that's set up -- don't open any ports directly on my router.
+
+Please actually install, write, test and start all of this yourself rather than just giving me
+instructions to run manually, and show me the real output of each test so I can see it worked.
+</code></pre></div>
+
+<p class="muted">按你的需要替换其中的细节(如果你的电脑较慢或较快,可以换一个不同的模型大小、不同的端口,等等)
+再粘贴它。你的助手可能会就你这台具体机器问一两个后续问题 &mdash; 这很正常,回答它们,让它继续进行就好。</p>
+
+<h2>4. 让 KattuOna 指向它</h2>
+<p>一旦你的助手报告回地址和端口,打开 KattuOna &rarr; 设置 &rarr; AI 引擎 &rarr; <strong>其他
+服务器</strong>,然后输入:</p>
+<ul>
+  <li><strong>地址</strong> &mdash; 例如,如果你在使用 Tailscale,则是 <code>http://100.x.x.x:8766</code>,或者如果你只在家里使用它,则是你电脑的本地地址加端口号。</li>
+  <li><strong>密钥</strong> &mdash; 你的助手为你(或为正在设置手机的那位家庭成员)生成的那个密钥。</li>
+</ul>
+<p>在离开那个界面之前,先在同一个屏幕上测试一下连接。</p>
+
+<h2>5. 添加或移除用户</h2>
+<p>每一个将使用你服务器的人都应该有自己的密钥,这样你就能在日志中区分他们,日后也可以在不影响其他人的情况下
+单独移除某一个人的访问权限。</p>
+<h3>添加一个人</h3>
+<p>在运行服务器的电脑上(或通过 SSH),运行你的助手设置好的那个帮助程序,例如:</p>
+<div class="box"><pre><code>add-key NAME</code></pre></div>
+<p>这会显示一次新密钥。把它输入到那个人 KattuOna 应用中的"设置 &rarr; AI 引擎 &rarr; 其他
+服务器"里。</p>
+<h3>移除一个人</h3>
+<div class="box"><pre><code>revoke NAME</code></pre></div>
+<p>他们的密钥会立即失效。他们的 KattuOna 应用会显示连接错误,直到输入一个新的密钥。</p>
+<h3>查看目前有权访问的人</h3>
+<div class="box"><pre><code>list-keys</code></pre></div>
+<p>这只会列出名字,绝不会打印密钥本身,这样你就可以确认谁已设置好,而不会暴露任何人的密钥。</p>
+
+<div class="note"><p><strong>请记住：</strong>这是你自己的服务器,所以保持那台电脑的合理安全,以及其密钥的私密性,
+都是你的责任。如果你怀疑某个密钥已经泄露,请撤销它并发放一个新的。
+KattuOna 的开发者无法看到或访问你自己运行的服务器上的任何内容。</p></div>
+
+<h2>6. 问题</h2>
+<p><a href="mailto:Kattu0na@gmail.com">Kattu0na@gmail.com</a></p>
+</main>
+<script>
+function copyPrompt(){
+  try {
+    var text = document.getElementById('promptBox').innerText;
+    navigator.clipboard.writeText(text);
+    var btn = document.querySelector('button.copy');
+    var old = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(function(){ btn.textContent = old; }, 1500);
+  } catch(e) {}
+}
+</script>
+</body>
+</html>

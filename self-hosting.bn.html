@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KattuOna-র AI সেল্ফ-হোস্ট করা</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="icons/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+  :root { --bg:#ffffff; --fg:#1b1d1f; --muted:#5b6168; --accent:#0a7d55; --line:#e3e6e8; --code-bg:#f3f5f6; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#111315; --fg:#eceef0; --muted:#a3a9b0; --accent:#3ddc97; --line:#2a2e32; --code-bg:#1b1e21; } }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width:760px; margin:0 auto; padding:32px 16px 64px; }
+  h1 { font-size:1.9rem; margin:0 0 4px; }
+  h2 { font-size:1.2rem; margin:32px 0 8px; padding-top:16px; border-top:1px solid var(--line); }
+  h3 { font-size:1.02rem; margin:20px 0 6px; }
+  p, li { color:var(--fg); } .muted { color:var(--muted); }
+  a { color:var(--accent); }
+  ol, ul { padding-left:22px; }
+  li { margin:6px 0; }
+  code { background:var(--code-bg); border:1px solid var(--line); border-radius:4px; padding:1px 5px; font-size:.9em; }
+  pre { background:var(--code-bg); border:1px solid var(--line); border-radius:8px; padding:14px; overflow-x:auto; font-size:.88rem; line-height:1.5; }
+  pre code { background:none; border:none; padding:0; }
+  .box { background:var(--code-bg); border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin:14px 0; }
+  .copybar { display:flex; justify-content:space-between; align-items:center; margin:18px 0 6px; }
+  button.copy { font:inherit; font-size:.85rem; background:var(--accent); color:#06231a; border:none; border-radius:6px; padding:6px 12px; cursor:pointer; }
+  button.copy:active { opacity:.8; }
+  .note { border-left:3px solid var(--accent); padding:2px 14px; margin:14px 0; }
+</style>
+</head>
+<body>
+<main>
+<p class="muted" style="font-size:.85rem; margin:0 0 20px; line-height:1.8;">
+  <a href="self-hosting.html">English</a> ·
+  <a href="self-hosting.hi.html">हिन्दी</a> ·
+  <a href="self-hosting.bn.html">বাংলা</a> ·
+  <a href="self-hosting.kn.html">ಕನ್ನಡ</a> ·
+  <a href="self-hosting.ml.html">മലയാളം</a> ·
+  <a href="self-hosting.ta.html">தமிழ்</a> ·
+  <a href="self-hosting.te.html">తెలుగు</a> ·
+  <a href="self-hosting.zh.html">中文</a>
+</p>
+<h1>KattuOna-র জন্য আপনার নিজের AI সার্ভার চালান</h1>
+<p class="muted">যারা AI কোচের জন্য অন্য কারো সার্ভারের উপর ভরসা করতে চান না, তাদের জন্য।</p>
+
+<p>KattuOna-র AI ফিচারগুলো (কোচ চ্যাট, খাবার/ব্যায়াম লুকআপ, খাবারের আইডিয়া, রেডিনেস চেক, প্রোগ্রাম বিল্ডার)
+<strong>যে কোনো</strong> এমন সার্ভারের সাথে কথা বলতে পারে যা একই সরল প্রোটোকলে কথা বলে &mdash; শুধু অ্যাপে বিল্ট-ইন থাকা
+একটিই নয়। এই পেজটি তাদের জন্য যারা নিজেই সেই সার্ভার চালাতে চান: একটি বাড়তি কম্পিউটারে, একটি হোম সার্ভারে, একটি ছোট
+VPS-এ, আপনার কাছে যা আছে তাতেই। তখন আপনার প্রশ্ন ও আপনার ফিটনেস ডেটা শুধু আপনি নিয়ন্ত্রণ করা একটি মেশিনেই যায়, যেখানে
+একটি ফ্রি লোকাল AI মডেল চলে (কোনো সাবস্ক্রিপশন নেই, মাঝে কোনো কোম্পানি নেই)।</p>
+
+<p>আপনার কোড করা জানার প্রয়োজন নেই। আপনার প্রয়োজন এমন একটি কম্পিউটার যা চালু রাখা যায় (বা আপনি AI ব্যবহার করতে চাইলে
+চালু করা যায়), এবং একটি AI কোডিং অ্যাসিস্ট্যান্ট &mdash; যেমন Claude Code &mdash; যা আপনার জন্য তাতে কমান্ড চালাতে
+পারে। নিচের প্রম্পটটি সেই অ্যাসিস্ট্যান্টকে ঠিক কী তৈরি করতে হবে বলে দেয়।</p>
+
+<h2>1. আপনি যা নিয়ে শেষ করবেন</h2>
+<ul>
+  <li>আপনার কম্পিউটারে চলা একটি ছোট, ফ্রি লোকাল AI মডেল (<a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a>-র মাধ্যমে), যাতে একটি প্রশ্নের উত্তর দিতে আপনার নেটওয়ার্ক থেকে কিছুই বের না হয়।</li>
+  <li>এর সামনে একটি ছোট গেটওয়ে প্রোগ্রাম যা KattuOna পৌঁছাতে পারে, যা উত্তর দেওয়ার আগে প্রতিটি ব্যক্তির একটি অ্যাক্সেস key যাচাই করে।</li>
+  <li>যে প্রতিটি ব্যক্তি এটি ব্যবহার করবে (আপনি, আপনার পার্টনার, পরিবারের প্রতিটি সদস্য) তার জন্য একটি করে অ্যাক্সেস key &mdash; প্রতিটি key শুধু একটি নাম ও একটি র‍্যান্ডম স্ট্রিং, তৈরি বা মুছতে সহজ।</li>
+  <li>আপনি বাইরে থাকলে আপনার হোম নেটওয়ার্কের বাইরে থেকে এটি পৌঁছানোর একটি উপায়, যদি আপনি তা চান (<a href="https://tailscale.com" target="_blank" rel="noopener">Tailscale</a>-র মতো একটি টুল সবচেয়ে সহজ উপায় &mdash; এটি আপনার হোম কম্পিউটারকে একটি প্রাইভেট অ্যাড্রেস দেয় যা শুধু আপনার নিজের ডিভাইসগুলো পৌঁছাতে পারে, পাবলিক ইন্টারনেটে কোনো পোর্ট না খুলেই)।</li>
+</ul>
+
+<h2>2. আপনার যা প্রয়োজন হবে</h2>
+<ul>
+  <li>একটি কম্পিউটার যা আপনি চালু রেখে দিতে পারেন (একটি ছোট মডেলের জন্য একটি পুরোনো ল্যাপটপও কাজ করে)। Linux, macOS বা Windows (WSL সহ) সবই কাজ করে।</li>
+  <li>একটি AI কোডিং অ্যাসিস্ট্যান্ট সেখানে ইনস্টল করা যা আপনার পক্ষে শেল কমান্ড চালাতে পারে &mdash; <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a> একটি সহজ অপশন, কিন্তু একই ক্ষমতার যে কোনো অ্যাসিস্ট্যান্টই কাজ করবে।</li>
+  <li>প্রায় 20&ndash;30 মিনিট।</li>
+</ul>
+
+<h2>3. প্রম্পট</h2>
+<p>যে কম্পিউটারে সার্ভার চলবে তাতে একটি টার্মিনাল খুলুন, একটি খালি ফোল্ডারে আপনার AI কোডিং অ্যাসিস্ট্যান্ট শুরু করুন, এবং
+নিচের পুরো বক্সটি আপনার প্রথম মেসেজ হিসেবে পেস্ট করুন। এটি সেই নির্দিষ্ট ছোট HTTP সার্ভিস বর্ণনা করে যা KattuOna প্রত্যাশা
+করে, যাতে অ্যাসিস্ট্যান্ট এটি তৈরি করতে, টেস্ট করতে এবং স্বয়ংক্রিয়ভাবে চালু হওয়ার জন্য সেট আপ করতে পারে।</p>
+
+<div class="copybar"><span class="muted">আপনার লোকাল AI অ্যাসিস্ট্যান্টে এটি পেস্ট করুন</span>
+<button class="copy" onclick="copyPrompt()">প্রম্পট কপি করুন</button></div>
+<div class="box"><pre id="promptBox"><code>I want to set up a small self-hosted AI server on this computer, for a fitness app called KattuOna to
+talk to. Please do all of the following, explaining each step as you go, and actually run the
+commands yourself rather than just telling me what to run:
+
+1. Install Ollama (https://ollama.com) if it isn't already installed, and pull a small, fast
+   instruction-tuned model suitable for CPU use (something in the 1-4B parameter range, such as
+   llama3.2:3b-instruct-q4_K_M or a similarly sized alternative you judge to be a good fit for this
+   machine's hardware). Confirm Ollama answers a test prompt on localhost:11434 before moving on.
+
+2. Write a small HTTP gateway program (Python standard library only, no extra dependencies beyond
+   what's already installed) that:
+   - Listens on a local port of your choice (pick one not already in use, e.g. 8766, and tell me
+     which).
+   - Exposes POST /chat/completions, accepting a JSON body shaped like an OpenAI-style chat
+     completion request: {"model": "...", "messages": [{"role": "...", "content": "..."}], ...}.
+     Forward the messages to the local Ollama model and return a response in the same
+     OpenAI-compatible shape: {"choices": [{"message": {"role": "assistant", "content": "..."}}]}.
+   - Requires an `Authorization: Bearer <key>` header on every request. Keep a plain text file of
+     valid keys, one per line, formatted as "name key" (e.g. "alex 7f3a9c2b1e..."), stored
+     somewhere only this machine's admin can read (not world-readable). Reject requests with a
+     missing or wrong key with HTTP 401, and don't log the key itself anywhere.
+   - Caps request body size at a sane limit (e.g. 50KB) and returns 413 if exceeded.
+   - Logs only minimal metadata per request (which person's key was used, timestamp, how long it
+     took) -- never the message content, since this may include personal health/fitness details.
+   - Add a small command-line helper (or a few short shell scripts) to add a new key for a person
+     ("add-key NAME" -- generates a random key, appends "NAME key" to the keys file, prints the new
+     key once so I can copy it), to remove one ("revoke NAME" -- deletes that person's line), and to
+     list current names without printing their keys ("list-keys").
+
+3. Set this gateway up as a service that starts automatically when the computer boots/restarts
+   (systemd on Linux, launchd on macOS, or Task Scheduler / NSSM on Windows -- whichever fits this
+   machine), and start it now.
+
+4. Test it end-to-end: create one key for me, send a real chat request with it using curl and
+   confirm a sensible model reply comes back, send a request with a wrong key and confirm I get
+   401, and send an oversized request and confirm I get 413.
+
+5. Tell me, in plain terms: the port number it's listening on, exactly how to run add-key / revoke /
+   list-keys afterwards, and where the keys file lives. If I want to reach this server from outside
+   my home network, suggest installing Tailscale (https://tailscale.com) and tell me the address
+   KattuOna should use once that's set up -- don't open any ports directly on my router.
+
+Please actually install, write, test and start all of this yourself rather than just giving me
+instructions to run manually, and show me the real output of each test so I can see it worked.
+</code></pre></div>
+
+<p class="muted">পেস্ট করার আগে আপনি যা বদলাতে চান তা বদলে নিন (আপনার কম্পিউটার ধীর বা দ্রুত হলে আলাদা মডেল সাইজ, একটি
+আলাদা পোর্ট, ইত্যাদি)। আপনার অ্যাসিস্ট্যান্ট আপনার নির্দিষ্ট মেশিন নিয়ে কয়েকটি ফলো-আপ প্রশ্ন করতে পারে &mdash; এটা
+স্বাভাবিক, উত্তর দিন এবং এটিকে চালিয়ে যেতে দিন।</p>
+
+<h2>4. KattuOna-কে এর দিকে পয়েন্ট করা</h2>
+<p>আপনার অ্যাসিস্ট্যান্ট অ্যাড্রেস ও পোর্ট জানানোর পর, KattuOna &rarr; Settings &rarr; AI ইঞ্জিন &rarr; <strong>অন্য
+সার্ভার</strong> খুলুন, এবং লিখুন:</p>
+<ul>
+  <li><strong>অ্যাড্রেস</strong> &mdash; যেমন <code>http://100.x.x.x:8766</code> আপনি Tailscale ব্যবহার করলে, বা
+    আপনি শুধু বাড়িতে এটি ব্যবহার করলে আপনার কম্পিউটারের লোকাল অ্যাড্রেস ও পোর্ট।</li>
+  <li><strong>Key</strong> &mdash; আপনার অ্যাসিস্ট্যান্ট আপনার জন্য (বা যে পরিবারের সদস্যের ফোন সেট আপ করা হচ্ছে তার
+    জন্য) তৈরি করা key।</li>
+</ul>
+<p>সেই একই স্ক্রিন থেকে ছেড়ে যাওয়ার আগে কানেকশন টেস্ট করুন।</p>
+
+<h2>5. মানুষ যুক্ত করা বা সরানো</h2>
+<p>আপনার সার্ভার ব্যবহার করবেন এমন প্রতিটি ব্যক্তির নিজের একটি key থাকা উচিত, যাতে আপনি আপনার লগে তাদের আলাদা করে
+চিনতে পারেন এবং পরে অন্য কাউকে প্রভাবিত না করে শুধু একজনের অ্যাক্সেস সরাতে পারেন।</p>
+<h3>কাউকে যুক্ত করা</h3>
+<p>সার্ভার চালানো কম্পিউটারে (বা SSH-এর মাধ্যমে), আপনার অ্যাসিস্ট্যান্ট সেট করা হেল্পার চালান, উদাহরণস্বরূপ:</p>
+<div class="box"><pre><code>add-key NAME</code></pre></div>
+<p>এটি একবার একটি নতুন key দেখায়। সেই ব্যক্তির KattuOna অ্যাপে Settings &rarr; AI ইঞ্জিন &rarr; অন্য সার্ভার-এ এটি
+লিখুন।</p>
+<h3>কাউকে সরানো</h3>
+<div class="box"><pre><code>revoke NAME</code></pre></div>
+<p>তাদের key তখনই কাজ করা বন্ধ করে দেয়। নতুন একটি key না দেওয়া পর্যন্ত তাদের KattuOna অ্যাপে একটি কানেকশন এরর দেখাবে।</p>
+<h3>কার এখন অ্যাক্সেস আছে দেখা</h3>
+<div class="box"><pre><code>list-keys</code></pre></div>
+<p>এটি শুধু নাম দেখায়, কখনো key নিজে নয়, যাতে কারো key প্রকাশ না করেই আপনি কে সেট আপ করা আছে তা নিশ্চিত করতে পারেন।</p>
+
+<div class="note"><p><strong>মনে রাখবেন:</strong> এটি আপনার নিজের সার্ভার, তাই সেই কম্পিউটারটি যথাযথভাবে সুরক্ষিত রাখা
+এবং এর key-গুলো গোপন রাখা আপনার দায়িত্ব। কখনো যদি সন্দেহ হয় কোনো key লিক হয়ে গেছে, তাহলে এটি রিভোক করুন এবং একটি নতুন
+ইস্যু করুন। KattuOna-র ডেভেলপার আপনি নিজে চালানো একটি সার্ভারে কিছুই দেখতে বা অ্যাক্সেস করতে পারে না।</p></div>
+
+<h2>6. প্রশ্ন</h2>
+<p><a href="mailto:Kattu0na@gmail.com">Kattu0na@gmail.com</a></p>
+</main>
+<script>
+function copyPrompt(){
+  try {
+    var text = document.getElementById('promptBox').innerText;
+    navigator.clipboard.writeText(text);
+    var btn = document.querySelector('button.copy');
+    var old = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(function(){ btn.textContent = old; }, 1500);
+  } catch(e) {}
+}
+</script>
+</body>
+</html>

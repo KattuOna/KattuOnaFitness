@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KattuOna-র জন্য একটি API key নেওয়া</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="icons/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+  :root { --bg:#ffffff; --fg:#1b1d1f; --muted:#5b6168; --accent:#0a7d55; --line:#e3e6e8; --code-bg:#f3f5f6; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#111315; --fg:#eceef0; --muted:#a3a9b0; --accent:#3ddc97; --line:#2a2e32; --code-bg:#1b1e21; } }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width:760px; margin:0 auto; padding:32px 16px 64px; }
+  h1 { font-size:1.9rem; margin:0 0 4px; }
+  h2 { font-size:1.2rem; margin:32px 0 8px; padding-top:16px; border-top:1px solid var(--line); }
+  h3 { font-size:1.02rem; margin:20px 0 6px; }
+  p, li { color:var(--fg); } .muted { color:var(--muted); }
+  a { color:var(--accent); }
+  ol, ul { padding-left:22px; }
+  li { margin:6px 0; }
+  code { background:var(--code-bg); border:1px solid var(--line); border-radius:4px; padding:1px 5px; font-size:.9em; }
+  .box { background:var(--code-bg); border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin:14px 0; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--muted); font-weight:600; }
+  .note { border-left:3px solid var(--accent); padding:2px 14px; margin:14px 0; }
+</style>
+</head>
+<body>
+<main>
+<p class="muted" style="font-size:.85rem; margin:0 0 20px; line-height:1.8;">
+  <a href="api-keys.html">English</a> ·
+  <a href="api-keys.hi.html">हिन्दी</a> ·
+  <a href="api-keys.bn.html">বাংলা</a> ·
+  <a href="api-keys.kn.html">ಕನ್ನಡ</a> ·
+  <a href="api-keys.ml.html">മലയാളം</a> ·
+  <a href="api-keys.ta.html">தமிழ்</a> ·
+  <a href="api-keys.te.html">తెలుగు</a> ·
+  <a href="api-keys.zh.html">中文</a>
+</p>
+<h1>KattuOna-র জন্য একটি API key নিন</h1>
+<p class="muted">যারা নিজের সার্ভার চালানো বা KattuOna-র বিল্ট-ইন সার্ভার ব্যবহার করার বদলে AI-র জন্য সরাসরি একটি কোম্পানিকে টাকা দিতে চান, তাদের জন্য।</p>
+
+<p>KattuOna-র "API key ব্যবহার করুন" অপশন <strong>যে কোনো</strong> এমন কোম্পানির সাথে কাজ করে যার API সাধারণ OpenAI চ্যাট
+ফরম্যাটে কথা বলে &mdash; যা, আজকাল, তাদের বেশিরভাগই। নিচে থেকে একটি বেছে নিন, সাইন আপ করুন, একটি key তৈরি করুন, এবং এটি
+(সেই প্রোভাইডারের বেস অ্যাড্রেসের সাথে) KattuOna &rarr; Settings &rarr; AI ইঞ্জিন &rarr; <strong>API key ব্যবহার করুন</strong>-এ পেস্ট করুন।</p>
+
+<div class="note"><p>আপনার key শুধু আপনার ফোনে সেভ থাকে। KattuOna এটি সরাসরি আপনি বেছে নেওয়া কোম্পানিকে পাঠায়,
+অন্য কোনো অ্যাপের মতোই &mdash; KattuOna-র ডেভেলপার কখনো এটি বা এটি ব্যবহার করা কথোপকথন দেখে না।</p></div>
+
+<div class="note"><p><strong>মডেলের নাম নিয়ে:</strong> নিচের প্রতিটি কোম্পানি সময়ের সাথে পুরোনো মডেল বাদ দেয় এবং নতুন
+মডেল যুক্ত করে, তাই এই পেজে লেখা একটি মডেলের নাম পরে কাজ করা বন্ধ করে দিতে পারে (এই পেজের একটি আগের ভার্সনে এমনই
+হয়েছিল, যেখানে একটি Gemini মডেলের নাম লেখা ছিল যা Google পরে সরিয়ে দিয়েছে)। KattuOna-এ আপনার বেস অ্যাড্রেস ও key
+টাইপ করার পর, সেখানেই Settings &rarr; AI ইঞ্জিন-এ <strong>উপলব্ধ মডেল দেখুন</strong>-এ ট্যাপ করুন &mdash; KattuOna সরাসরি
+প্রোভাইডারকে, ঠিক তখনই, জিজ্ঞাসা করে আজ আপনার key-র জন্য কোন মডেলগুলো কাজ করে, এবং পুরোনো হয়ে যেতে পারে এমন একটি নাম
+টাইপ করার বদলে আপনাকে একটিতে ট্যাপ করতে দেয়। নিচের মডেলের নামগুলো শুধু একটি শুরুর বিন্দু, যদি আপনি তার বদলে নিজে একটি
+টাইপ করতে চান।</p></div>
+
+<h2>1. একটি প্রোভাইডার বেছে নিন এবং একটি key নিন</h2>
+
+<h3>OpenAI</h3>
+<p>ChatGPT-র পেছনের কোম্পানি। ভরসাযোগ্য, ব্যাপকভাবে ব্যবহৃত, ব্যবহার-ভিত্তিক প্রাইসিং।</p>
+<ol>
+  <li><a href="https://platform.openai.com/signup" target="_blank" rel="noopener">platform.openai.com</a>-এ যান এবং একটি অ্যাকাউন্ট তৈরি করুন।</li>
+  <li><strong>Billing</strong>-এর অধীনে একটি পেমেন্ট পদ্ধতি যুক্ত করুন (API ব্যবহার আপনার থাকা কোনো ChatGPT সাবস্ক্রিপশন থেকে আলাদা)।</li>
+  <li><strong>API keys</strong>-এ যান, <strong>Create new secret key</strong>-এ ক্লিক করুন, এবং এটি তখনই কপি করুন &mdash; এটি শুধু একবারই দেখানো হয়।</li>
+</ol>
+<table><tr><th>বেস অ্যাড্রেস</th><td><code>https://api.openai.com/v1</code></td></tr>
+<tr><th>চেষ্টা করার জন্য মডেল (হাতে টাইপ করলে)</th><td><code>gpt-4o-mini</code> (দ্রুত এবং সস্তা)</td></tr></table>
+
+<h3>Groq</h3>
+<p>খুব দ্রুত উত্তর, উদার ফ্রি টিয়ার, কম মডেল অপশন।</p>
+<ol>
+  <li><a href="https://console.groq.com" target="_blank" rel="noopener">console.groq.com</a>-এ যান এবং Google বা GitHub দিয়ে সাইন ইন করুন।</li>
+  <li><strong>API Keys</strong> &rarr; <strong>Create API Key</strong>, এর একটি নাম দিন, কপি করুন।</li>
+</ol>
+<table><tr><th>বেস অ্যাড্রেস</th><td><code>https://api.groq.com/openai/v1</code></td></tr>
+<tr><th>চেষ্টা করার জন্য মডেল (হাতে টাইপ করলে)</th><td><code>llama-3.3-70b-versatile</code></td></tr></table>
+
+<h3>Together AI</h3>
+<p>ওপেন-সোর্স মডেলের বিস্তৃত পছন্দ, শুরুতে একটু ফ্রি ক্রেডিট সহ পে-অ্যাজ-ইউ-গো।</p>
+<ol>
+  <li><a href="https://api.together.ai" target="_blank" rel="noopener">api.together.ai</a>-এ যান এবং সাইন আপ করুন।</li>
+  <li><strong>Settings &rarr; API Keys</strong>, ডিফল্ট key কপি করুন বা একটি নতুন তৈরি করুন।</li>
+</ol>
+<table><tr><th>বেস অ্যাড্রেস</th><td><code>https://api.together.xyz/v1</code></td></tr>
+<tr><th>চেষ্টা করার জন্য মডেল (হাতে টাইপ করলে)</th><td><code>meta-llama/Llama-3.3-70B-Instruct-Turbo</code></td></tr></table>
+
+<h3>Mistral</h3>
+<p>ফ্রেঞ্চ AI ল্যাব, তাদের নিজস্ব ফ্রন্টিয়ার মডেল, হালকা ব্যক্তিগত ব্যবহারের জন্য একটি ফ্রি টিয়ার।</p>
+<ol>
+  <li><a href="https://console.mistral.ai" target="_blank" rel="noopener">console.mistral.ai</a>-এ যান এবং একটি অ্যাকাউন্ট তৈরি করুন।</li>
+  <li><strong>API Keys</strong> &rarr; <strong>Create new key</strong>, কপি করুন।</li>
+</ol>
+<table><tr><th>বেস অ্যাড্রেস</th><td><code>https://api.mistral.ai/v1</code></td></tr>
+<tr><th>চেষ্টা করার জন্য মডেল (হাতে টাইপ করলে)</th><td><code>mistral-small-latest</code></td></tr></table>
+
+<h3>OpenRouter</h3>
+<p>একটি key, একটি বিল, একটি মাত্র অ্যাড্রেসের মাধ্যমে অন্য কয়েক ডজন কোম্পানির মডেলে (অনেক ফ্রি মডেলও সহ) অ্যাক্সেস
+&mdash; আলাদা আলাদা অ্যাকাউন্ট সামলানোর বদলে একসাথে কয়েকটি চেষ্টা করতে চাইলে এটি একটি ভালো অপশন।</p>
+<ol>
+  <li><a href="https://openrouter.ai" target="_blank" rel="noopener">openrouter.ai</a>-এ যান এবং সাইন ইন করুন।</li>
+  <li><strong>Keys</strong> &rarr; <strong>Create Key</strong>, কপি করুন।</li>
+</ol>
+<table><tr><th>বেস অ্যাড্রেস</th><td><code>https://openrouter.ai/api/v1</code></td></tr>
+<tr><th>চেষ্টা করার জন্য মডেল (হাতে টাইপ করলে)</th><td><code>meta-llama/llama-3.3-70b-instruct</code> (বা একটি নো-কস্ট অপশনের জন্য <code>:free</code> যুক্ত করুন)</td></tr></table>
+
+<h3>Google Gemini</h3>
+<p>Google-এর নিজস্ব মডেল, তাদের OpenAI-কম্প্যাটিবল অ্যাড্রেসের মাধ্যমে পাওয়া যায়।</p>
+<ol>
+  <li><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>-এ যান এবং একটি Google অ্যাকাউন্ট দিয়ে সাইন ইন করুন।</li>
+  <li><strong>Create API key</strong>, কপি করুন।</li>
+</ol>
+<table><tr><th>বেস অ্যাড্রেস</th><td><code>https://generativelanguage.googleapis.com/v1beta/openai</code></td></tr>
+<tr><th>চেষ্টা করার জন্য মডেল (হাতে টাইপ করলে)</th><td><code>gemini-3.8-flash</code> &mdash; কিন্তু Google এগুলোর নাম বদলায়/বাদ দেয় বাকিদের চেয়ে বেশি দ্রুত, তাই এখানে উপলব্ধ মডেল দেখুন ব্যবহার করা বিশেষভাবে কাজের</td></tr></table>
+
+<h2>2. KattuOna-এ এটি লেখা</h2>
+<p>KattuOna &rarr; Settings &rarr; AI ইঞ্জিন &rarr; <strong>API key ব্যবহার করুন</strong> খুলুন, তারপর পূরণ করুন:</p>
+<ul>
+  <li><strong>বেস অ্যাড্রেস</strong> &mdash; আপনি বেছে নেওয়া প্রোভাইডারের জন্য উপরের টেবিলের ঠিক অ্যাড্রেসটি।</li>
+  <li><strong>API key</strong> &mdash; আপনি এখন কপি করা key।</li>
+  <li><strong>মডেল</strong> &mdash; উপরের অ্যাড্রেস ও key পূরণ করার পর <strong>উপলব্ধ মডেল দেখুন</strong>-এ ট্যাপ করুন,
+  এবং KattuOna প্রোভাইডার থেকে ফিরে পাওয়া লাইভ লিস্ট থেকে একটি বেছে নিন। এই ফিল্ড পূরণ করার এটিই ভরসাযোগ্য উপায়, কারণ
+  এটি সবসময় সেই প্রোভাইডার আপনার key-র জন্য এখন কী দিচ্ছে তা প্রতিফলিত করে &mdash; কোনো পেজে লেখা পুরোনো হয়ে যেতে
+  পারে এমন একটি নাম নয়।</li>
+</ul>
+<p><strong>সেভ করুন ও টেস্ট করুন</strong>-এ ট্যাপ করুন &mdash; KattuOna একটি ছোট টেস্ট মেসেজ পাঠায় এবং key, অ্যাড্রেস,
+বা মডেল ভুল থাকলে আপনাকে তখনই জানায়।</p>
+
+<div class="note"><p><strong>খরচ:</strong> উপরের প্রতিটি প্রোভাইডার আপনার নিজের ব্যবহারের ভিত্তিতে বিল করে (বা রেট-লিমিট করে)।
+KattuOna-র ডেভেলপারের আপনাকে কত চার্জ করা হচ্ছে তার উপর কোনো দৃষ্টি বা নিয়ন্ত্রণ নেই &mdash; শুরু করার আগে প্রতিটি
+প্রোভাইডারের নিজস্ব প্রাইসিং পেজ দেখে নিন, এবং আপনি খরচ নিয়ে সচেতন হলে ব্যবহারের উপর চোখ রাখুন।</p></div>
+
+<h2>3. প্রশ্ন</h2>
+<p><a href="mailto:Kattu0na@gmail.com">Kattu0na@gmail.com</a></p>
+</main>
+</body>
+</html>

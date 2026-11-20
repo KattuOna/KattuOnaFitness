@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>为 KattuOna 获取 API key</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="icons/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+  :root { --bg:#ffffff; --fg:#1b1d1f; --muted:#5b6168; --accent:#0a7d55; --line:#e3e6e8; --code-bg:#f3f5f6; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#111315; --fg:#eceef0; --muted:#a3a9b0; --accent:#3ddc97; --line:#2a2e32; --code-bg:#1b1e21; } }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width:760px; margin:0 auto; padding:32px 16px 64px; }
+  h1 { font-size:1.9rem; margin:0 0 4px; }
+  h2 { font-size:1.2rem; margin:32px 0 8px; padding-top:16px; border-top:1px solid var(--line); }
+  h3 { font-size:1.02rem; margin:20px 0 6px; }
+  p, li { color:var(--fg); } .muted { color:var(--muted); }
+  a { color:var(--accent); }
+  ol, ul { padding-left:22px; }
+  li { margin:6px 0; }
+  code { background:var(--code-bg); border:1px solid var(--line); border-radius:4px; padding:1px 5px; font-size:.9em; }
+  .box { background:var(--code-bg); border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin:14px 0; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:.92rem; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--muted); font-weight:600; }
+  .note { border-left:3px solid var(--accent); padding:2px 14px; margin:14px 0; }
+</style>
+</head>
+<body>
+<main>
+<p class="muted" style="font-size:.85rem; margin:0 0 20px; line-height:1.8;">
+  <a href="api-keys.html">English</a> ·
+  <a href="api-keys.hi.html">हिन्दी</a> ·
+  <a href="api-keys.bn.html">বাংলা</a> ·
+  <a href="api-keys.kn.html">ಕನ್ನಡ</a> ·
+  <a href="api-keys.ml.html">മലയാളം</a> ·
+  <a href="api-keys.ta.html">தமிழ்</a> ·
+  <a href="api-keys.te.html">తెలుగు</a> ·
+  <a href="api-keys.zh.html">中文</a>
+</p>
+<h1>为 KattuOna 获取 API key</h1>
+<p class="muted">适合那些更愿意直接向某家公司付费使用 AI,而不想自己运行服务器或使用 KattuOna 内置选项的人。</p>
+
+<p>KattuOna 的"使用 API key"选项可以与<strong>任何</strong>其 API 采用通用 OpenAI 聊天格式的公司配合使用
+&mdash; 如今,这已经是大多数公司的做法。从下面选一个,注册,创建一个 key,然后把它(连同该服务商的基础地址)粘贴到
+KattuOna &rarr; 设置 &rarr; AI 引擎 &rarr; <strong>使用 API key</strong>中。</p>
+
+<div class="note"><p>你的 key 只会保存在你的手机上。KattuOna 会直接把它发送给你选择的那家公司,就像任何应用都会做的那样
+&mdash; KattuOna 的开发者永远不会看到它,也不会看到使用它进行的对话。</p></div>
+
+<div class="note"><p><strong>关于模型名称：</strong>下面的每家公司都会随着时间淘汰旧模型、增加新模型,所以本页上印出的某个模型名称
+以后可能会失效(本页的早期版本就发生过这种情况,当时列出的一个 Gemini 模型后来被 Google 移除了)。在 KattuOna 中输入好基础地址
+和 key 之后,点一下设置 &rarr; AI 引擎中就在那里的<strong>浏览可用模型</strong> &mdash; KattuOna 会直接向该服务商询问,当下你的
+key 能使用哪些模型,并让你点选其中一个,而不必输入一个可能已经过时的名字。下面给出的模型名称只是一个起点,供你愿意自己输入时参考。</p></div>
+
+<h2>1. 选择一个服务商并获取 key</h2>
+
+<h3>OpenAI</h3>
+<p>ChatGPT 背后的公司。可靠,广泛使用,按用量计费。</p>
+<ol>
+  <li>前往 <a href="https://platform.openai.com/signup" target="_blank" rel="noopener">platform.openai.com</a> 创建一个账号。</li>
+  <li>在<strong>Billing</strong>下添加一种付款方式(API 用量与你可能拥有的任何 ChatGPT 订阅是分开计费的)。</li>
+  <li>前往<strong>API keys</strong>,点击<strong>Create new secret key</strong>,并立刻复制它 &mdash; 它只会显示一次。</li>
+</ol>
+<table><tr><th>基础地址</th><td><code>https://api.openai.com/v1</code></td></tr>
+<tr><th>可以尝试的模型(如果想手动输入)</th><td><code>gpt-4o-mini</code>(快速且便宜)</td></tr></table>
+
+<h3>Groq</h3>
+<p>响应极快,免费额度丰厚,模型选择较少。</p>
+<ol>
+  <li>前往 <a href="https://console.groq.com" target="_blank" rel="noopener">console.groq.com</a>,用 Google 或 GitHub 登录。</li>
+  <li><strong>API Keys</strong> &rarr; <strong>Create API Key</strong>,给它起个名字,复制它。</li>
+</ol>
+<table><tr><th>基础地址</th><td><code>https://api.groq.com/openai/v1</code></td></tr>
+<tr><th>可以尝试的模型(如果想手动输入)</th><td><code>llama-3.3-70b-versatile</code></td></tr></table>
+
+<h3>Together AI</h3>
+<p>开源模型选择丰富,按量付费,起步时附带少量免费额度。</p>
+<ol>
+  <li>前往 <a href="https://api.together.ai" target="_blank" rel="noopener">api.together.ai</a> 注册。</li>
+  <li><strong>Settings &rarr; API Keys</strong>,复制默认的 key,或创建一个新的。</li>
+</ol>
+<table><tr><th>基础地址</th><td><code>https://api.together.xyz/v1</code></td></tr>
+<tr><th>可以尝试的模型(如果想手动输入)</th><td><code>meta-llama/Llama-3.3-70B-Instruct-Turbo</code></td></tr></table>
+
+<h3>Mistral</h3>
+<p>法国 AI 实验室,拥有自己的前沿模型,为轻度个人使用提供免费层级。</p>
+<ol>
+  <li>前往 <a href="https://console.mistral.ai" target="_blank" rel="noopener">console.mistral.ai</a> 创建一个账号。</li>
+  <li><strong>API Keys</strong> &rarr; <strong>Create new key</strong>,复制它。</li>
+</ol>
+<table><tr><th>基础地址</th><td><code>https://api.mistral.ai/v1</code></td></tr>
+<tr><th>可以尝试的模型(如果想手动输入)</th><td><code>mistral-small-latest</code></td></tr></table>
+
+<h3>OpenRouter</h3>
+<p>一个 key,一张账单,通过单一地址即可访问数十家其他公司的模型(其中许多是免费的)
+&mdash; 如果你想在不折腾多个独立账号的情况下尝试多种模型,这是个不错的选择。</p>
+<ol>
+  <li>前往 <a href="https://openrouter.ai" target="_blank" rel="noopener">openrouter.ai</a> 登录。</li>
+  <li><strong>Keys</strong> &rarr; <strong>Create Key</strong>,复制它。</li>
+</ol>
+<table><tr><th>基础地址</th><td><code>https://openrouter.ai/api/v1</code></td></tr>
+<tr><th>可以尝试的模型(如果想手动输入)</th><td><code>meta-llama/llama-3.3-70b-instruct</code>(或加上 <code>:free</code> 获取一个免费选项)</td></tr></table>
+
+<h3>Google Gemini</h3>
+<p>Google 自己的模型,可通过其 OpenAI 兼容地址访问。</p>
+<ol>
+  <li>前往 <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>,用一个 Google 账号登录。</li>
+  <li><strong>Create API key</strong>,复制它。</li>
+</ol>
+<table><tr><th>基础地址</th><td><code>https://generativelanguage.googleapis.com/v1beta/openai</code></td></tr>
+<tr><th>可以尝试的模型(如果想手动输入)</th><td><code>gemini-3.8-flash</code> &mdash; 但 Google 更改/淘汰这些模型名称的速度比大多数公司都快,所以在这里使用"浏览可用模型"特别值得</td></tr></table>
+
+<h2>2. 在 KattuOna 中输入</h2>
+<p>打开 KattuOna &rarr; 设置 &rarr; AI 引擎 &rarr; <strong>使用 API key</strong>,然后填写:</p>
+<ul>
+  <li><strong>基础地址</strong> &mdash; 对应你所选服务商在上表中的确切地址。</li>
+  <li><strong>API key</strong> &mdash; 你刚复制的那个 key。</li>
+  <li><strong>模型</strong> &mdash; 在上面的地址和 key 填好之后,点一下<strong>浏览可用模型</strong>,
+  从 KattuOna 收到的服务商实时列表中选一个。这是填写这一项的可靠方式,因为它始终反映该服务商当下为你的 key 提供的内容
+  &mdash; 而不是页面上印出的、可能已经过时的名字。</li>
+</ul>
+<p>点一下<strong>保存并测试</strong> &mdash; KattuOna 会发送一条简短的测试消息,并立即告诉你 key、地址或模型是否有误。</p>
+
+<div class="note"><p><strong>费用：</strong>上面每一家服务商都会按你自己的用量计费(或限速)。
+KattuOna 的开发者无法看到或控制你被收取的费用 &mdash; 在开始之前请查看每家服务商自己的定价页面,如果你很在意成本,
+请留意自己的用量。</p></div>
+
+<h2>3. 问题</h2>
+<p><a href="mailto:Kattu0na@gmail.com">Kattu0na@gmail.com</a></p>
+</main>
+</body>
+</html>
